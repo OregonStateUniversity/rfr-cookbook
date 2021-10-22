@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
 
 void main() => runApp(const ProtocolApp());
 
@@ -7,13 +7,8 @@ const String assetsPath = 'assets/';
 
 class Protocol {
   final String title;
-  PDFDocument? document;
 
   Protocol(this.title);
-
-  loadDocument() async {
-    document = await PDFDocument.fromAsset(assetsPath + title + '.pdf');
-  }
 }
 
 class ProtocolApp extends StatefulWidget {
@@ -160,7 +155,6 @@ class ProtocolRouterDelegate extends RouterDelegate<ProtocolRoutePath>
 
   void _handleProtocolTapped(Protocol protocol) async {
     _selectedProtocol = protocol;
-    await protocol.loadDocument();
     notifyListeners();
   }
 }
@@ -242,9 +236,11 @@ class ProtocolDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(protocol.title),),
       body: Center(
-          child: protocol.document == null
-              ? const Center(child: CircularProgressIndicator())
-              : PDFViewer(document: protocol.document!, showPicker: false,)
+          child: PdfView(
+            controller: PdfController(
+              document: PdfDocument.openAsset(assetsPath + protocol.title + '.pdf')
+            )
+          )
       )
     );
   }

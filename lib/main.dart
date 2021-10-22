@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 
 void main() => runApp(const ProtocolApp());
 
+const String assetsPath = 'assets/';
+
 class Protocol {
   final String title;
+  PDFDocument? document;
 
   Protocol(this.title);
+
+  loadDocument() async {
+    document = await PDFDocument.fromAsset(assetsPath + title + '.pdf');
+  }
 }
 
 class ProtocolApp extends StatefulWidget {
@@ -151,8 +158,9 @@ class ProtocolRouterDelegate extends RouterDelegate<ProtocolRoutePath>
     show404 = false;
   }
 
-  void _handleProtocolTapped(Protocol protocol) {
+  void _handleProtocolTapped(Protocol protocol) async {
     _selectedProtocol = protocol;
+    await protocol.loadDocument();
     notifyListeners();
   }
 }
@@ -233,15 +241,11 @@ class ProtocolDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(protocol.title),),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            // TODO: PDF file goes here
-          ],
-        ),
-      ),
+      body: Center(
+          child: protocol.document == null
+              ? const Center(child: CircularProgressIndicator())
+              : PDFViewer(document: protocol.document!, showPicker: false,)
+      )
     );
   }
 }

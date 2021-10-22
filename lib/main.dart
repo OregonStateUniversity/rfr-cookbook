@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 void main() => runApp(const ProtocolApp());
 
@@ -236,11 +236,7 @@ class ProtocolDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(protocol.title),),
       body: Center(
-          child: PdfView(
-            controller: PdfController(
-              document: PdfDocument.openAsset(assetsPath + protocol.title + '.pdf')
-            )
-          )
+          child: SfPdfViewer.asset(assetsPath + protocol.title + '.pdf')
       )
     );
   }

@@ -235,9 +235,7 @@ class ProtocolDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(protocol.title),),
-      body: Center(
-          child: SfPdfViewer.asset(assetsPath + protocol.title + '.pdf')
-      )
+      body: SfPdfViewer.asset(assetsPath + protocol.title + '.pdf')
     );
   }
 }

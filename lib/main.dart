@@ -167,7 +167,7 @@ class ProtocolDetailsPage extends Page {
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
       settings: this,
-      builder: (BuildContext context) {
+      builder: (BuildContext context){
         return ProtocolDetailsScreen(protocol: protocol!);
       },
     );

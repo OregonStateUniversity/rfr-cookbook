@@ -13,7 +13,6 @@ const List<String> protocolTitles = [
   'Medications',
   'Trauma System',
   'Hazardous Materials',
-  'Test Item',
 ];
 
 class Protocol {

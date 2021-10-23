@@ -5,10 +5,22 @@ void main() => runApp(const ProtocolApp());
 
 const String assetsPath = 'assets/';
 
+const List<String> protocolTitles = [
+  'Preface',
+  'Operations',
+  'Procedures',
+  'Treatment',
+  'Medications',
+  'Trauma System',
+  'Hazardous Materials',
+];
+
 class Protocol {
   final String title;
+  final SfPdfViewer document;
 
-  Protocol(this.title);
+  Protocol(this.title)
+    : document = SfPdfViewer.asset(assetsPath + title + '.pdf');
 }
 
 class ProtocolApp extends StatefulWidget {
@@ -78,15 +90,7 @@ class ProtocolRouterDelegate extends RouterDelegate<ProtocolRoutePath>
   Protocol? _selectedProtocol;
   bool show404 = false;
 
-  List<Protocol> protocols = [
-    Protocol('Preface'),
-    Protocol('Operations'),
-    Protocol('Procedures'),
-    Protocol('Treatment'),
-    Protocol('Medications'),
-    Protocol('Trauma System'),
-    Protocol('Hazardous Materials'),
-  ];
+  List<Protocol> protocols = [for (var title in protocolTitles) Protocol(title)];
 
   ProtocolRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
@@ -153,7 +157,7 @@ class ProtocolRouterDelegate extends RouterDelegate<ProtocolRoutePath>
     show404 = false;
   }
 
-  void _handleProtocolTapped(Protocol protocol) async {
+  void _handleProtocolTapped(Protocol protocol) {
     _selectedProtocol = protocol;
     notifyListeners();
   }
@@ -235,7 +239,7 @@ class ProtocolDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(protocol.title),),
-      body: SfPdfViewer.asset(assetsPath + protocol.title + '.pdf')
+      body: protocol.document,
     );
   }
 }

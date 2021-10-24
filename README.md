@@ -1,6 +1,6 @@
 # rfr_cookbook
 
-Redmond Fire and Rescue Cookbook
+Redmond Fire & Rescue Cookbook
 
 ## Getting Started
 

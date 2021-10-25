@@ -88,10 +88,10 @@ class ProtocolRouterDelegate extends RouterDelegate<ProtocolRoutePath>
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
+  final List<Protocol> protocols = [for (final title in protocolTitles) Protocol(title)];
+
   Protocol? _selectedProtocol;
   bool show404 = false;
-
-  List<Protocol> protocols = [for (final title in protocolTitles) Protocol(title)];
 
   ProtocolRouterDelegate()
       : navigatorKey = GlobalKey<NavigatorState>();

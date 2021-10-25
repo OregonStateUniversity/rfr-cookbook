@@ -59,6 +59,7 @@ class ProtocolRouteInformationParser extends RouteInformationParser<ProtocolRout
 
       var remaining = uri.pathSegments[1];
       var id = int.tryParse(remaining);
+
       if (id == null) return ProtocolRoutePath.unknown();
 
       return ProtocolRoutePath.details(id);
@@ -92,7 +93,8 @@ class ProtocolRouterDelegate extends RouterDelegate<ProtocolRoutePath>
 
   List<Protocol> protocols = [for (var title in protocolTitles) Protocol(title)];
 
-  ProtocolRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
+  ProtocolRouterDelegate()
+      : navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   ProtocolRoutePath get currentConfiguration {

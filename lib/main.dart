@@ -3,9 +3,9 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 void main() => runApp(const ProtocolApp());
 
-const String assetsPath = 'assets/';
+const String _assetsPath = 'assets/';
 
-const List<String> protocolTitles = [
+const List<String> _protocolTitles = [
   'Preface',
   'Operations',
   'Procedures',
@@ -20,7 +20,7 @@ class Protocol {
   final SfPdfViewer document;
 
   Protocol(this.title)
-    : document = SfPdfViewer.asset(assetsPath + title + '.pdf');
+    : document = SfPdfViewer.asset(_assetsPath + title + '.pdf');
 }
 
 class ProtocolApp extends StatefulWidget {
@@ -33,7 +33,7 @@ class ProtocolApp extends StatefulWidget {
 class _ProtocolAppState extends State<ProtocolApp> {
   final ProtocolRouterDelegate _routerDelegate = ProtocolRouterDelegate();
   final ProtocolRouteInformationParser _routeInformationParser =
-  ProtocolRouteInformationParser();
+    ProtocolRouteInformationParser();
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class ProtocolRouterDelegate extends RouterDelegate<ProtocolRoutePath>
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
-  final List<Protocol> protocols = [for (final title in protocolTitles) Protocol(title)];
+  final List<Protocol> protocols = [for (final title in _protocolTitles) Protocol(title)];
 
   Protocol? _selectedProtocol;
   bool show404 = false;

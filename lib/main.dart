@@ -91,7 +91,7 @@ class ProtocolRouterDelegate extends RouterDelegate<ProtocolRoutePath>
   Protocol? _selectedProtocol;
   bool show404 = false;
 
-  List<Protocol> protocols = [for (var title in protocolTitles) Protocol(title)];
+  List<Protocol> protocols = [for (final title in protocolTitles) Protocol(title)];
 
   ProtocolRouterDelegate()
       : navigatorKey = GlobalKey<NavigatorState>();

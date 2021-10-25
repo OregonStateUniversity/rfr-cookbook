@@ -86,15 +86,12 @@ class ProtocolRouteInformationParser extends RouteInformationParser<ProtocolRout
 class ProtocolRouterDelegate extends RouterDelegate<ProtocolRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<ProtocolRoutePath> {
   @override
-  final GlobalKey<NavigatorState> navigatorKey;
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   final List<Protocol> protocols = [for (final title in protocolTitles) Protocol(title)];
 
   Protocol? _selectedProtocol;
   bool show404 = false;
-
-  ProtocolRouterDelegate()
-      : navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   ProtocolRoutePath get currentConfiguration {

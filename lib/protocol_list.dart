@@ -12,7 +12,6 @@ class ProtocolList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: _leadingMenuBuilder(context),
         title: const Text(
           'Protocols',
           style: Styles.navBarTitle,
@@ -23,16 +22,6 @@ class ProtocolList extends StatelessWidget {
         itemCount: _protocols.length,
         itemBuilder: _listViewItemBuilder,
       ),
-    );
-  }
-
-  Widget _leadingMenuBuilder(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.menu),
-      onPressed: () {
-        Scaffold.of(context).openDrawer();
-      },
-      tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
     );
   }
 

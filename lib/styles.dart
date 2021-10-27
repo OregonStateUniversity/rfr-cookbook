@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Styles {
-  static const _textSizeLarge = 25.0;
   static const _textSizeDefault = 16.0;
-  static final Color _textColorStrong = _hexToColor('000000');
-  static final Color _textColorDefault = _hexToColor('666666');
+  static final Color _textColorDefault = _hexToColor('000000');
   static const String _fontNameDefault = 'Muli';
   static const navBarTitle = TextStyle(
     fontFamily: _fontNameDefault,
-  );
-  static final headerLarge = TextStyle(
-    fontFamily: _fontNameDefault,
-    fontSize: _textSizeLarge,
-    color: _textColorStrong,
   );
   static final textDefault = TextStyle(
     fontFamily: _fontNameDefault,

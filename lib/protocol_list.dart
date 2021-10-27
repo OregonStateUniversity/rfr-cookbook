@@ -26,11 +26,11 @@ class ProtocolList extends StatelessWidget {
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
-    var protocol = _protocols[index];
+    final protocol = _protocols[index];
     return ListTile(
       contentPadding: const EdgeInsets.all(10),
       title: _itemTitle(protocol),
-      onTap: () => _navigationToProtocolDetail(context, _protocols[index])
+      onTap: () => _navigationToProtocolDetail(context, protocol)
     );
   }
 

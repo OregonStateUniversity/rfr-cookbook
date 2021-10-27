@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'models/protocol.dart';
 import 'protocol_detail.dart';
 import 'styles.dart';
-import 'models/protocol.dart';
 
 class ProtocolList extends StatelessWidget {
   final List<Protocol> _protocols;

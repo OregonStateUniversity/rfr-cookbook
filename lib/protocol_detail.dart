@@ -6,7 +6,7 @@ import 'styles.dart';
 class ProtocolDetail extends StatelessWidget {
   final Protocol protocol;
 
-  ProtocolDetail(this.protocol);
+  const ProtocolDetail(this.protocol, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

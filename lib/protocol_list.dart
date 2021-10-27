@@ -6,7 +6,7 @@ import 'models/protocol.dart';
 class ProtocolList extends StatelessWidget {
   final List<Protocol> _protocols;
 
-  ProtocolList(this._protocols);
+  const ProtocolList(this._protocols, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ProtocolList extends StatelessWidget {
   Widget _listViewItemBuilder(BuildContext context, int index) {
     var protocol = _protocols[index];
     return ListTile(
-      contentPadding: EdgeInsets.all(10),
+      contentPadding: const EdgeInsets.all(10),
       title: _itemTitle(protocol),
       onTap: () => _navigationToProtocolDetail(context, _protocols[index])
     );

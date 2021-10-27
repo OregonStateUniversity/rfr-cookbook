@@ -4,15 +4,15 @@ import 'models/protocol.dart';
 import 'styles.dart';
 
 class ProtocolDetail extends StatelessWidget {
-  final Protocol protocol;
+  final Protocol _protocol;
 
-  const ProtocolDetail(this.protocol, {Key? key}) : super(key: key);
+  const ProtocolDetail(this._protocol, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(protocol.name, style: Styles.navBarTitle)),
-      body: _renderBody(protocol),
+      appBar: AppBar(title: Text(_protocol.name, style: Styles.navBarTitle)),
+      body: _renderBody(_protocol),
     );
   }
 

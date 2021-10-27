@@ -6,7 +6,7 @@ class Styles {
   static final Color _textColorStrong = _hexToColor('000000');
   static final Color _textColorDefault = _hexToColor('666666');
   static const String _fontNameDefault = 'Muli';
-  static final navBarTitle = TextStyle(
+  static const navBarTitle = TextStyle(
     fontFamily: _fontNameDefault,
   );
   static final headerLarge = TextStyle(

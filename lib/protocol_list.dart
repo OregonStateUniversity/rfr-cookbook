@@ -35,8 +35,10 @@ class ProtocolList extends StatelessWidget {
   }
 
   void _navigationToProtocolDetail(BuildContext context, Protocol protocol) {
-    Navigator.push(context,
-      MaterialPageRoute(builder: (context) => ProtocolDetail(protocol)));
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProtocolDetail(protocol))
+    );
   }
 
   Widget _itemTitle(Protocol protocol) {

@@ -12,7 +12,7 @@ class ProtocolList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Protocols',
           style: Styles.navBarTitle,
         )

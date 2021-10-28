@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'models/contact.dart';
 import 'styles.dart';
 
@@ -27,17 +28,18 @@ class ContactList extends StatelessWidget {
   Widget _listViewItemBuilder(BuildContext context, int index) {
     final contact = _contacts[index];
     return ListTile(
-      contentPadding: const EdgeInsets.all(10),
       title: _itemTitle(contact),
+      onTap: () => _launchURL('tel:' + contact.number),
     );
   }
 
+  void _launchURL(String url) async => 
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+
   Widget _itemTitle(Contact contact) {
-    return Center(
-      child: Text(
-        contact.name + ' : ' + contact.number,
-        style: Styles.textDefault,
-      )
+    return Text(
+      contact.name + ' : ' + contact.number,
+      style: Styles.textDefault,
     );
   }
 }

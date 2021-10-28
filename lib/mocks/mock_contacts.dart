@@ -2,18 +2,18 @@ import '../models/contact.dart';
 
 mixin MockContact implements Contact {
   static const _contactData = {
-    'Kehmna, Ken': '458-256-9440',
-    'Puller, Jeff': '541-410-8149',
-    'Cox, Diane': '541-979-5783',
-    'Wood, Jon': '541-350-6994',
-    'Welch, Bill': '458-218-2545',
-    'Miller, Dustin': '458-218-2546',
-    'Mooney, Tom': '541-362-6311',
-    'Gibson, Wade': '541-948-7887',
-    'Burch, Jodi': '503-551-8101',
-    'Biondi, Shannon': '541-420-0860',
-    'Jackson, Jessica': '541-788-2362',
-    'Johannsen, TJ': '541-948-7888'
+    'Kehmna, Ken': '4582569440',
+    'Puller, Jeff': '5414108149',
+    'Cox, Diane': '5419795783',
+    'Wood, Jon': '5413506994',
+    'Welch, Bill': '4582182545',
+    'Miller, Dustin': '4582182546',
+    'Mooney, Tom': '5413626311',
+    'Gibson, Wade': '5419487887',
+    'Burch, Jodi': '5035518101',
+    'Biondi, Shannon': '5414200860',
+    'Jackson, Jessica': '5417882362',
+    'Johannsen, TJ': '5419487888'
   };
 
   static final List<Contact> _items = _contactData.entries.map(

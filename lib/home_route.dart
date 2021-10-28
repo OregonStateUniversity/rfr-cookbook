@@ -28,16 +28,12 @@ class HomeRoute extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: _renderChildren(context)
+        children: [
+          _renderButton(context, 'Protocols'),
+          _renderButton(context, 'Contacts')
+        ]
       )
     );
-  }
-
-  List<Widget> _renderChildren(BuildContext context) {
-    return <Widget>[
-      _renderButton(context, 'Protocols'),
-      _renderButton(context, 'Contacts')
-    ];
   }
 
   Widget _renderButton(BuildContext context, String title) {

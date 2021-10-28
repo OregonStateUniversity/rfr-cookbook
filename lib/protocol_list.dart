@@ -12,10 +12,8 @@ class ProtocolList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Protocols',
-          style: Styles.navBarTitle,
-        )
+        title: const Text('Protocols', style: Styles.navBarTitle),
+        backgroundColor: Styles.navBarColor,
       ),
       body: ListView.separated(
         separatorBuilder: (BuildContext context, int index) => const Divider(),

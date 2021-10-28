@@ -6,10 +6,13 @@ class Styles {
   static const String _fontNameDefault = 'Muli';
   static final Color _textColorDefault = _hexToColor('000000');
   static final Color _textColorButton = _hexToColor('FFFFFF');
+  static final Color _firefighterRed = _hexToColor('CE2029');
 
   static const navBarTitle = TextStyle(
     fontFamily: _fontNameDefault,
   );
+
+  static final navBarColor = _firefighterRed;
 
   static final textDefault = TextStyle(
     fontFamily: _fontNameDefault,
@@ -21,6 +24,10 @@ class Styles {
     fontFamily: _fontNameDefault,
     fontSize: _textSizeButton,
     color: _textColorButton
+  );
+
+  static final buttonStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(_firefighterRed)
   );
 
   static Color _hexToColor(String code) {

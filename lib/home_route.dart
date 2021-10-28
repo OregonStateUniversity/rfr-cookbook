@@ -13,10 +13,8 @@ class HomeRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'The Cookbook',
-          style: Styles.navBarTitle,
-        ),
+        title: const Text('The Cookbook', style: Styles.navBarTitle),
+        backgroundColor: Styles.navBarColor,
       ),
       body: _renderBody(context),
     );
@@ -40,6 +38,7 @@ class HomeRoute extends StatelessWidget {
       height: 200,
       width: 200,
       child: ElevatedButton(
+        style: Styles.buttonStyle,
         child: Text(title, style: Styles.buttonText),
         onPressed: () {
           Navigator.push(

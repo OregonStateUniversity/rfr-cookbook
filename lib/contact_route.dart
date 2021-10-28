@@ -9,7 +9,10 @@ class ContactRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Contacts', style: Styles.navBarTitle)),
+      appBar: AppBar(
+        title: const Text('Contacts', style: Styles.navBarTitle),
+        backgroundColor: Styles.navBarColor,
+      ),
       body: SfPdfViewer.asset('assets/RFR Phone List.pdf')
     );
   }

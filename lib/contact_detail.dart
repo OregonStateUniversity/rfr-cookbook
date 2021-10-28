@@ -13,8 +13,19 @@ class ContactDetail extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Contacts', style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () => _renderSearch(),
+          )
+        ],
       ),
-      body: SfPdfViewer.asset(_phoneListPath)
+      body: SfPdfViewer.asset(_phoneListPath),
+      
     );
+  }
+
+  void _renderSearch() {
+    
   }
 }

@@ -12,11 +12,7 @@ class ProtocolDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(_protocol.name, style: Styles.navBarTitle)),
-      body: _renderBody(_protocol),
+      body: SfPdfViewer.asset(_protocol.url),
     );
-  }
-
-  Widget _renderBody(Protocol protocol) {
-    return SfPdfViewer.asset(protocol.url);
   }
 }

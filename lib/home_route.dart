@@ -1,6 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:rfr_cookbook/misc_list.dart';
+import 'package:rfr_cookbook/protocol_list.dart';
+import 'mocks/mock_protocols.dart';
 import 'styles.dart';
 
 class HomeRoute extends StatelessWidget {
+  final _mockProtocols = MockProtocol.fetchAll();
+
+  HomeRoute({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'The Cookbook',
+          style: Styles.navBarTitle,
+        ),
+      ),
+      body: _renderBody(context),
+    );
+  }
+
+  Widget _renderBody(BuildContext context) {
+    return Center(
+      child: Column(
+        children: _renderChildren(context)
+      )
+    );
+  }
+
+  List<Widget> _renderChildren(BuildContext context) {
+    return <Widget>[
+      ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MiscList()
+            )
+          );
+        },
+        child: Text('Miscellaneous', style: Styles.textDefault)
+      ),
+      ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProtocolList(_mockProtocols)
+            )
+          );
+        },
+        child: Text('Protocols', style: Styles.textDefault)
+      )
+    ];
+  }
 
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'mocks/mock_protocols.dart';
-import 'protocol_list.dart';
+import 'package:rfr_cookbook/home_route.dart';
+import 'home_route.dart';
 
 void main() {
-  final mockProtocols = MockProtocol.fetchAll();
-
-  return runApp(MaterialApp(home: ProtocolList(mockProtocols)));
+  return runApp(MaterialApp(home: HomeRoute()));
 }

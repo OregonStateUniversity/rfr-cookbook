@@ -42,6 +42,7 @@ class HomeRoute extends StatelessWidget {
       height: 200,
       width: 200,
       child: ElevatedButton(
+        child: Text(title, style: Styles.buttonText),
         onPressed: () {
           Navigator.push(
             context,
@@ -50,7 +51,6 @@ class HomeRoute extends StatelessWidget {
             )
           );
         },
-        child: Text(title, style: Styles.buttonText)
       ),
     );
   }

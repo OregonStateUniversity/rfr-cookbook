@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'models/contact.dart';
 import 'styles.dart';
 
-class MiscList extends StatelessWidget {
+class ContactList extends StatelessWidget {
   final List<Contact> _contacts;
 
-  const MiscList(this._contacts, {Key? key}) : super(key: key);
+  const ContactList(this._contacts, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

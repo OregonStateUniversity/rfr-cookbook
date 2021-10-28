@@ -35,27 +35,35 @@ class HomeRoute extends StatelessWidget {
 
   List<Widget> _renderChildren(BuildContext context) {
     return <Widget>[
-      ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProtocolList(_mockProtocols)
-            )
-          );
-        },
-        child: Text('Protocols', style: Styles.buttonText)
+      SizedBox(
+        height: 200,
+        width: 200,
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProtocolList(_mockProtocols)
+              )
+            );
+          },
+          child: Text('Protocols', style: Styles.buttonText)
+        ),
       ),
-      ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MiscList(_mockContacts)
-            )
-          );
-        },
-        child: Text('Contacts', style: Styles.buttonText)
+      SizedBox(
+        height: 200,
+        width: 200,
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ContactList(_mockContacts)
+              )
+            );
+          },
+          child: Text('Contacts', style: Styles.buttonText)
+        ),
       )
     ];
   }

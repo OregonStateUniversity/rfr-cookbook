@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'contact_route.dart';
+import 'contact_detail.dart';
 import 'protocol_list.dart';
 import 'mocks/mock_protocols.dart';
 import 'styles.dart';
@@ -33,7 +33,7 @@ class HomeRoute extends StatelessWidget {
   }
 
   Widget _renderButton(BuildContext context, String title) {
-    final route = title == 'Protocols' ? ProtocolList(_mockProtocols) : const ContactRoute();
+    final route = title == 'Protocols' ? ProtocolList(_mockProtocols) : const ContactDetail();
     return SizedBox(
       height: 200,
       width: 200,

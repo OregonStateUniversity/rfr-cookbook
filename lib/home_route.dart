@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'contact_list.dart';
 import 'protocol_list.dart';
-import 'mocks/mock_contacts.dart';
 import 'mocks/mock_protocols.dart';
 import 'styles.dart';
 
 class HomeRoute extends StatelessWidget {
-  final _mockContacts = MockContact.fetchAll();
   final _mockProtocols = MockProtocol.fetchAll();
 
   HomeRoute({Key? key}) : super(key: key);
@@ -37,7 +35,7 @@ class HomeRoute extends StatelessWidget {
   }
 
   Widget _renderButton(BuildContext context, String title) {
-    final route = title == 'Protocols' ? ProtocolList(_mockProtocols) : ContactList(_mockContacts);
+    final route = title == 'Protocols' ? ProtocolList(_mockProtocols) : const ContactRoute();
     return SizedBox(
       height: 200,
       width: 200,

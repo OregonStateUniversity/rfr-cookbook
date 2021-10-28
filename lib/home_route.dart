@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rfr_cookbook/contact_list.dart';
-import 'package:rfr_cookbook/protocol_list.dart';
+import 'contact_list.dart';
+import 'protocol_list.dart';
 import 'mocks/mock_contacts.dart';
 import 'mocks/mock_protocols.dart';
 import 'styles.dart';
@@ -44,7 +44,7 @@ class HomeRoute extends StatelessWidget {
             )
           );
         },
-        child: Text('Protocols', style: Styles.textDefault)
+        child: Text('Protocols', style: Styles.buttonText)
       ),
       ElevatedButton(
         onPressed: () {
@@ -55,7 +55,7 @@ class HomeRoute extends StatelessWidget {
             )
           );
         },
-        child: Text('Contacts', style: Styles.textDefault)
+        child: Text('Contacts', style: Styles.buttonText)
       )
     ];
   }

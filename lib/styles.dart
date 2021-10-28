@@ -4,9 +4,11 @@ class Styles {
   static const _textSizeDefault = 16.0;
   static final Color _textColorDefault = _hexToColor('000000');
   static const String _fontNameDefault = 'Muli';
+
   static const navBarTitle = TextStyle(
     fontFamily: _fontNameDefault,
   );
+  
   static final textDefault = TextStyle(
     fontFamily: _fontNameDefault,
     fontSize: _textSizeDefault,

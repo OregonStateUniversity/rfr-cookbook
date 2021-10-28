@@ -1,7 +1,6 @@
 import '../models/protocol.dart';
 
 mixin MockProtocol implements Protocol {
-
   static const _protocolData = [
     'Preface',
     'Operations',

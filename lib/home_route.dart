@@ -27,6 +27,7 @@ class HomeRoute extends StatelessWidget {
   Widget _renderBody(BuildContext context) {
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: _renderChildren(context)
       )
     );

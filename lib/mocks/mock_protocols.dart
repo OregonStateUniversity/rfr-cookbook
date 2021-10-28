@@ -2,18 +2,18 @@ import '../models/protocol.dart';
 
 mixin MockProtocol implements Protocol {
 
-  static const _protocolData = {
-    'Preface': 'assets/Preface.pdf',
-    'Operations': 'assets/Operations.pdf',
-    'Procedures': 'assets/Procedures.pdf',
-    'Treatment': 'assets/Treatment.pdf',
-    'Medications': 'assets/Medications.pdf',
-    'Trauma System': 'assets/Trauma System.pdf',
-    'Hazardous Materials': 'assets/Hazardous Materials.pdf',
-  };
+  static const _protocolData = [
+    'Preface',
+    'Operations',
+    'Procedures',
+    'Treatment',
+    'Medications',
+    'Trauma System',
+    'Hazardous Materials',
+  ];
 
-  static final List<Protocol> _items = _protocolData.entries.map(
-    (e) => Protocol(name: e.key, url: e.value)
+  static final List<Protocol> _items = _protocolData.map(
+    (protocol) => Protocol(name: protocol, url: 'assets/$protocol.pdf')
   ).toList();
 
   static Protocol fetchAny() {

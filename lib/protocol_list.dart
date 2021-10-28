@@ -43,10 +43,7 @@ class ProtocolList extends StatelessWidget {
 
   Widget _itemTitle(Protocol protocol) {
     return Center(
-      child: Text(
-        protocol.name,
-        style: Styles.textDefault,
-      )
+      child: Text(protocol.name, style: Styles.textDefault)
     );
   }
 }

@@ -1,7 +1,7 @@
 import '../models/protocol.dart';
 
 mixin MockProtocol implements Protocol {
-  static final List<Protocol> items = [
+  static final List<Protocol> _items = [
     Protocol(
       name: 'Preface',
       url: 'assets/Preface.pdf',
@@ -33,10 +33,10 @@ mixin MockProtocol implements Protocol {
   ];
 
   static Protocol fetchAny() {
-    return items[0];
+    return _items[0];
   }
 
   static List<Protocol> fetchAll() {
-    return items;
+    return _items;
   }
 }

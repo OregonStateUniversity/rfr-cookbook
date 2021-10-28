@@ -3,6 +3,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'styles.dart';
 
 class ContactRoute extends StatelessWidget {
+  final String _phoneListPath = 'assets/RFR Phone List.pdf';
 
   const ContactRoute({Key? key}) : super(key: key);
 
@@ -13,7 +14,7 @@ class ContactRoute extends StatelessWidget {
         title: const Text('Contacts', style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
       ),
-      body: SfPdfViewer.asset('assets/RFR Phone List.pdf')
+      body: SfPdfViewer.asset(_phoneListPath)
     );
   }
 }

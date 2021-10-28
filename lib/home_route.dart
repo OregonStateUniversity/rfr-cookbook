@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/misc_list.dart';
 import 'package:rfr_cookbook/protocol_list.dart';
+import 'mocks/mock_contacts.dart';
 import 'mocks/mock_protocols.dart';
 import 'styles.dart';
 
 class HomeRoute extends StatelessWidget {
+  final _mockContacts = MockContact.fetchAll();
   final _mockProtocols = MockProtocol.fetchAll();
 
   HomeRoute({Key? key}) : super(key: key);
@@ -37,22 +39,22 @@ class HomeRoute extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MiscList()
+              builder: (context) => ProtocolList(_mockProtocols)
             )
           );
         },
-        child: Text('Miscellaneous', style: Styles.textDefault)
+        child: Text('Protocols', style: Styles.textDefault)
       ),
       ElevatedButton(
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ProtocolList(_mockProtocols)
+              builder: (context) => MiscList(_mockContacts)
             )
           );
         },
-        child: Text('Protocols', style: Styles.textDefault)
+        child: Text('Miscellaneous', style: Styles.textDefault)
       )
     ];
   }

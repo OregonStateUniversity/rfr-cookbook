@@ -35,7 +35,7 @@ class MiscList extends StatelessWidget {
   Widget _itemTitle(Contact contact) {
     return Center(
       child: Text(
-        contact.name + '=>' + contact.number,
+        contact.name + ' : ' + contact.number,
         style: Styles.textDefault,
       )
     );

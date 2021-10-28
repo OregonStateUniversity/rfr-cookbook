@@ -5,7 +5,7 @@ mixin MockContact implements Contact {
     'Kehmna, Ken': '458-256-9440',
     'Puller, Jeff': '541-410-8149',
     'Cox, Diane': '541-979-5783',
-    'Wiid, Jon': '541-350-6994',
+    'Wood, Jon': '541-350-6994',
     'Welch, Bill': '458-218-2545',
     'Miller, Dustin': '458-218-2546',
     'Mooney, Tom': '541-362-6311',

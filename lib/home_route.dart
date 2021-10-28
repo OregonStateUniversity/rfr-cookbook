@@ -52,5 +52,4 @@ class HomeRoute extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -15,16 +15,12 @@ class ContactDetail extends StatelessWidget {
         backgroundColor: Styles.navBarColor,
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () => _renderSearch(),
+            icon: const Icon(Icons.menu),
+            onPressed: () => {},
           )
         ],
       ),
       body: SfPdfViewer.asset(_phoneListPath),
     );
-  }
-
-  void _renderSearch() {
-    
   }
 }

@@ -15,6 +15,12 @@ class HomeRoute extends StatelessWidget {
       appBar: AppBar(
         title: const Text('The Cookbook', style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => {},
+          )
+        ],
       ),
       body: _renderBody(context),
     );

@@ -16,16 +16,12 @@ class ProtocolDetail extends StatelessWidget {
         backgroundColor: Styles.navBarColor,
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () => _renderSearch(),
+            icon: const Icon(Icons.menu),
+            onPressed: () => {},
           )
         ],
       ),
       body: SfPdfViewer.asset(_protocol.url),
     );
-  }
-
-  void _renderSearch() {
-
   }
 }

@@ -21,7 +21,6 @@ class ContactDetail extends StatelessWidget {
         ],
       ),
       body: SfPdfViewer.asset(_phoneListPath),
-      
     );
   }
 

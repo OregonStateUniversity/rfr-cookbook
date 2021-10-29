@@ -15,8 +15,8 @@ class ProtocolList extends StatelessWidget {
         title: const Text('Protocols', style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
       ),
-      body: ListView.separated(
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
+      body: ListView.builder(
+        //separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemCount: _protocols.length,
         itemBuilder: _listViewItemBuilder,
       ),
@@ -25,10 +25,12 @@ class ProtocolList extends StatelessWidget {
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
     final protocol = _protocols[index];
-    return ListTile(
-      contentPadding: const EdgeInsets.all(10),
-      title: _itemTitle(protocol),
-      onTap: () => _navigationToProtocolDetail(context, protocol)
+    return Card(
+      child: ListTile(
+        trailing: Icon(Icons.arrow_forward_ios_rounded),
+        title: _itemTitle(protocol),
+        onTap: () => _navigationToProtocolDetail(context, protocol)
+      )
     );
   }
 
@@ -42,8 +44,7 @@ class ProtocolList extends StatelessWidget {
   }
 
   Widget _itemTitle(Protocol protocol) {
-    return Center(
-      child: Text(protocol.name, style: Styles.textDefault)
-    );
+    return
+      Text(protocol.name, style: Styles.textDefault);
   }
 }

@@ -13,13 +13,19 @@ class HomeRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('The Cookbook', style: Styles.navBarTitle),
+        title: const Text('theCookbook', style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
+        //probably need to move this somewhere so we can use it on every page
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () => {},
-          )
+            icon: const Icon(Icons.menu_rounded),
+            iconSize: 42,
+            //tooltip: 'Show Snackbar',
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('This is a hamburger menu')));
+            },
+          ),
         ],
       ),
       body: _renderBody(context),

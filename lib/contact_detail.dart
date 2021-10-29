@@ -16,6 +16,7 @@ class ContactDetail extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.menu),
+            iconSize: 42,
             onPressed: () => {},
           )
         ],

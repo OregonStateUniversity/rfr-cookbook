@@ -17,12 +17,12 @@ class ProtocolList extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.menu),
+            iconSize: 42,
             onPressed: () => {},
           )
         ],
       ),
       body: ListView.builder(
-        //separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemCount: _protocols.length,
         itemBuilder: _listViewItemBuilder,
       ),
@@ -33,7 +33,7 @@ class ProtocolList extends StatelessWidget {
     final protocol = _protocols[index];
     return Card(
       child: ListTile(
-        trailing: Icon(Icons.arrow_forward_ios_rounded),
+        trailing: const Icon(Icons.arrow_forward_ios_rounded),
         title: _itemTitle(protocol),
         onTap: () => _navigationToProtocolDetail(context, protocol)
       )
@@ -50,7 +50,6 @@ class ProtocolList extends StatelessWidget {
   }
 
   Widget _itemTitle(Protocol protocol) {
-    return
-      Text(protocol.name, style: Styles.textDefault);
+    return Text(protocol.name, style: Styles.textDefault);
   }
 }

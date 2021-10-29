@@ -47,4 +47,4 @@ app.*.map.json
 
 # User defined
 .vscode
-*.lock
+pubspec.lock

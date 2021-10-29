@@ -12,7 +12,7 @@ mixin MockProtocol implements Protocol {
   ];
 
   static final List<Protocol> _items = _protocolData.map(
-    (protocol) => Protocol(name: protocol, url: 'assets/$protocol.pdf')
+    (protocol) => Protocol(name: protocol, url: 'lib/assets/$protocol.pdf')
   ).toList();
 
   static Protocol fetchAny() {

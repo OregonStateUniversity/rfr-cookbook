@@ -3,7 +3,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'styles.dart';
 
 class ContactDetail extends StatelessWidget {
-  final String _phoneListPath = 'assets/RFR Phone List.pdf';
+  final String _phoneListPath = 'lib/assets/RFR Phone List.pdf';
 
   const ContactDetail({Key? key}) : super(key: key);
 

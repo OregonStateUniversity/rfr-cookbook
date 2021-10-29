@@ -34,7 +34,7 @@ class ProtocolList extends StatelessWidget {
     return Card(
       child: ListTile(
         trailing: const Icon(Icons.arrow_forward_ios_rounded),
-        title: _itemTitle(protocol),
+        title: Text(protocol.name, style: Styles.textDefault),
         onTap: () => _navigationToProtocolDetail(context, protocol)
       )
     );
@@ -49,7 +49,4 @@ class ProtocolList extends StatelessWidget {
     );
   }
 
-  Widget _itemTitle(Protocol protocol) {
-    return Text(protocol.name, style: Styles.textDefault);
-  }
 }

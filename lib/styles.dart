@@ -11,7 +11,7 @@ class Styles {
 
   static const navBarTitle = TextStyle(
     fontFamily: _fontNameDefault,
-    fontSize: _textSizeNavBar
+    fontSize: _textSizeNavBar,
   );
 
   static final navBarColor = _fireEngineRed;
@@ -25,7 +25,7 @@ class Styles {
   static final buttonText = TextStyle(
     fontFamily: _fontNameDefault,
     fontSize: _textSizeButton,
-    color: _textColorButton
+    color: _textColorButton,
   );
 
   static final buttonStyle = ButtonStyle(

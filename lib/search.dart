@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
-
+/*
 class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -10,14 +10,17 @@ class Search extends StatelessWidget {
       home: HomePage(),
     );
   }
-}
+}*/
 
-class HomePage extends StatefulWidget {
+class SearchBar extends StatefulWidget {
+  
+  const SearchBar({Key? key}) : super(key: key);
+
   @override
-  _HomePageState createState() => _HomePageState();
+  _SearchBarState createState() => _SearchBarState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SearchBarState extends State<SearchBar> {
   static const historyLength = 5;
 
   List<String> _searchHistory = [
@@ -27,12 +30,12 @@ class _HomePageState extends State<HomePage> {
     'resocoder',
   ];
 
-  List<String> filteredSearchHistory;
+  List<String> filteredSearchHistory = [""];
 
-  String selectedTerm;
+  String selectedTerm = "";
 
   List<String> filterSearchTerms({
-    @required String filter,
+    @required String filter = "", 
   }) {
     if (filter != null && filter.isNotEmpty) {
       return _searchHistory.reversed
@@ -54,12 +57,12 @@ class _HomePageState extends State<HomePage> {
       _searchHistory.removeRange(0, _searchHistory.length - historyLength);
     }
 
-    filteredSearchHistory = filterSearchTerms(filter: null);
+    filteredSearchHistory = filterSearchTerms(filter: "");
   }
 
   void deleteSearchTerm(String term) {
     _searchHistory.removeWhere((t) => t == term);
-    filteredSearchHistory = filterSearchTerms(filter: null);
+    filteredSearchHistory = filterSearchTerms(filter: "");
   }
 
   void putSearchTermFirst(String term) {
@@ -67,13 +70,13 @@ class _HomePageState extends State<HomePage> {
     addSearchTerm(term);
   }
 
-  FloatingSearchBarController controller;
+  late FloatingSearchBarController controller;
 
   @override
   void initState() {
     super.initState();
     controller = FloatingSearchBarController();
-    filteredSearchHistory = filterSearchTerms(filter: null);
+    filteredSearchHistory = filterSearchTerms(filter: "");
   }
 
   @override
@@ -188,6 +191,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
 
 class SearchResultsListView extends StatelessWidget {
   final String searchTerm;

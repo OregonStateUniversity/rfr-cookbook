@@ -3,7 +3,22 @@ import 'package:firebase_core/firebase_core.dart';
 import 'home_route.dart';
 
 Future<void> main() async {
+  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MaterialApp(home:HomeRoute()));
+  
+  runApp(MaterialApp(
+    home: FutureBuilder(
+      future: _fbApp,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else if (snapshot.hasData) {
+          return HomeRoute();
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    )));
 }

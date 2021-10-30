@@ -14,13 +14,6 @@ class ProtocolList extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Protocols', style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.menu),
-            iconSize: 42,
-            onPressed: () => {},
-          )
-        ],
       ),
       body: ListView.builder(
         itemCount: _protocols.length,

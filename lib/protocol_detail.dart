@@ -14,13 +14,6 @@ class ProtocolDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text(_protocol.name, style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.menu),
-            iconSize: 42,
-            onPressed: () => {},
-          )
-        ],
       ),
       body: SfPdfViewer.asset(_protocol.url),
     );

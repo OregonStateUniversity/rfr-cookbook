@@ -17,19 +17,32 @@ class HomeRoute extends StatelessWidget {
         backgroundColor: Styles.navBarColor,
         //probably need to move this somewhere so we can use it on every page
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.menu_rounded),
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.menu),
             iconSize: 42,
-            //tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a hamburger menu')));
+            onSelected: _handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout', 'Settings'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
             },
-          ),
+          )
         ],
       ),
       body: _renderBody(context),
     );
+  }
+
+  void _handleClick(String value) {
+    switch (value) {
+      case 'Logout':
+        break;
+      case 'Settings':
+        break;
+    }
   }
 
   Widget _renderBody(BuildContext context) {

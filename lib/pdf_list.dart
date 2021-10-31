@@ -3,11 +3,11 @@ import 'models/pdf.dart';
 import 'pdf_detail.dart';
 import 'styles.dart';
 
-class ProtocolList extends StatelessWidget {
+class PdfList extends StatelessWidget {
   final List<Pdf> _pdfList;
   final String _sectionTitle;
 
-  const ProtocolList(
+  const PdfList(
     this._pdfList,
     this._sectionTitle, 
     {Key? key}

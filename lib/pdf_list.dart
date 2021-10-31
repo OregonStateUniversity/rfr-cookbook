@@ -1,43 +1,48 @@
 import 'package:flutter/material.dart';
-import 'models/protocol.dart';
-import 'protocol_detail.dart';
+import 'models/pdf.dart';
+import 'pdf_detail.dart';
 import 'styles.dart';
 
 class ProtocolList extends StatelessWidget {
-  final List<Protocol> _protocols;
+  final List<Pdf> _pdfList;
+  final String _sectionTitle;
 
-  const ProtocolList(this._protocols, {Key? key}) : super(key: key);
+  const ProtocolList(
+    this._pdfList,
+    this._sectionTitle, 
+    {Key? key}
+  ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Protocols', style: Styles.navBarTitle),
+        title: Text(_sectionTitle, style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
       ),
       body: ListView.builder(
-        itemCount: _protocols.length,
+        itemCount: _pdfList.length,
         itemBuilder: _listViewItemBuilder,
       ),
     );
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
-    final protocol = _protocols[index];
+    final pdf = _pdfList[index];
     return Card(
       child: ListTile(
         trailing: const Icon(Icons.arrow_forward_ios_rounded),
-        title: Text(protocol.name, style: Styles.textDefault),
-        onTap: () => _navigationToProtocolDetail(context, protocol)
+        title: Text(pdf.title, style: Styles.textDefault),
+        onTap: () => _navigationToProtocolDetail(context, pdf)
       )
     );
   }
 
-  void _navigationToProtocolDetail(BuildContext context, Protocol protocol) {
+  void _navigationToProtocolDetail(BuildContext context, Pdf pdf) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProtocolDetail(protocol)
+        builder: (context) => PdfDetail(pdf)
       )
     );
   }

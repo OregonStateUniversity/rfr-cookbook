@@ -3,8 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'home_route.dart';
 
 Future<void> main() async {
-  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   WidgetsFlutterBinding.ensureInitialized();
+  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   
   runApp(MaterialApp(
     home: FutureBuilder(
@@ -20,5 +20,6 @@ Future<void> main() async {
           );
         }
       },
-    )));
+    )
+  ));
 }

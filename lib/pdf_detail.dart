@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'models/protocol.dart';
+import 'models/pdf.dart';
 import 'styles.dart';
 
-class ProtocolDetail extends StatelessWidget {
-  final Protocol _protocol;
+class PdfDetail extends StatelessWidget {
+  final Pdf _pdf;
 
-  const ProtocolDetail(this._protocol, {Key? key}) : super(key: key);
+  const PdfDetail(this._pdf, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_protocol.name, style: Styles.navBarTitle),
+        title: Text(_pdf.title, style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
       ),
-      body: SfPdfViewer.asset(_protocol.url),
+      body: SfPdfViewer.asset(_pdf.path),
     );
   }
 }

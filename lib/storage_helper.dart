@@ -14,7 +14,9 @@ class StorageHelper {
       final ListResult directoryList = await _storageInstance.ref(parentDirectory.fullPath).listAll();
 
       for (Reference file in directoryList.items) {
-        _downloadFile(file);
+        FullMetadata metadata = await file.getMetadata();
+
+        print(file.fullPath);
       }
     }
   }
@@ -38,13 +40,13 @@ class StorageHelper {
     return (await md5.bind(fileStream).first).toString();
   }
 
-  Future<void> _downloadFile(Reference ref) async {
+  Future<void> _downloadFile(String path) async {
     final String appDocDir = await _localRootPath;
-    final File downloadToFile = File('$appDocDir/${ref.fullPath}');
+    final File downloadToFile = File('$appDocDir/$path');
 
     try {
       await _storageInstance
-        .ref(ref.fullPath)
+        .ref(path)
         .writeToFile(downloadToFile);
     } on FirebaseException catch (e) {
       throw e.code;

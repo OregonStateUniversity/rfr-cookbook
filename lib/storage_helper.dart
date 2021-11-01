@@ -11,12 +11,10 @@ class StorageHelper {
     final ListResult remoteParentDirectories = await _remoteDirectoryList;
 
     for (Reference parentDirectory in remoteParentDirectories.prefixes) {
-      final ListResult directoryList = await _storageInstance.ref(parentDirectory.fullPath).listAll();
+      final ListResult directoryListing = await _storageInstance.ref(parentDirectory.fullPath).listAll();
 
-      for (Reference file in directoryList.items) {
-        FullMetadata metadata = await file.getMetadata();
-
-        print(file.fullPath);
+      for (Reference file in directoryListing.items) {
+        _downloadFile(file.fullPath);
       }
     }
   }
@@ -25,7 +23,7 @@ class StorageHelper {
     File file = File(localPath);
 
     SettableMetadata metadata = SettableMetadata(
-      customMetadata: <String, String>{'md5Hash': await _generateMd5(localPath)}
+      customMetadata: <String, String>{'md5Hash': await _generateMd5(file)}
     );
 
     try {
@@ -35,8 +33,8 @@ class StorageHelper {
     }
   }
 
-  Future<String> _generateMd5(String pathToFile) async {
-    final fileStream = File(pathToFile).openRead();
+  Future<String> _generateMd5(File file) async {
+    final fileStream = file.openRead();
     return (await md5.bind(fileStream).first).toString();
   }
 

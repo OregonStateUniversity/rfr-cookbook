@@ -7,17 +7,20 @@ import 'package:path_provider/path_provider.dart';
 
 class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
-  Map<String, List<File>> protocols = {};
 
   Future<Map> initialize() async {
     _verifyRootExists();
     _updateFiles();
-    return _initializeDirectoryMap();
+    return _directoryMap;
   }
 
   Future<void> _verifyRootExists() async {
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
-    Directory(appDocDir.path + '/protocols').create();
+    final appDocDir = await getApplicationDocumentsDirectory();
+    final rootProtocolDir = Directory(appDocDir.path + '/protocols');
+    
+    if (!await rootProtocolDir.exists()) {
+      rootProtocolDir.create();
+    }
   }
 
   Future<void> _updateFiles() async {
@@ -29,18 +32,15 @@ class StorageHelper {
         await _storageInstance.ref(parentDirectory.fullPath).listAll();
 
       for (Reference file in directoryListing.items) {
-        if (await _doesNotExist(file.fullPath)) {
+        if (!await _md5Match(file)) {
           _downloadFile(file.fullPath);
         }
       }
     }
   }
 
-  Future<bool> _doesNotExist(String filePath) async {
-    return false;
-  }
-
-  Future<Map> _initializeDirectoryMap() async {
+  Future<Map> get _directoryMap async {
+    Map<String, List<File>> protocols = {};
     final Directory appDocDir = await getApplicationDocumentsDirectory();
 
     await for (final directory in Directory('${appDocDir.path}/protocols').list()) {
@@ -95,6 +95,18 @@ class StorageHelper {
     } on FirebaseException catch (e) {
       throw e.code;
     }
+  }
+
+  Future<bool> _md5Match(Reference file) async {
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    final File localFile = File('${appDocDir.path}/${file.fullPath}');
+    final FullMetadata metadata = await file.getMetadata();
+
+    if (await localFile.exists()) {
+      return await _generateMd5(localFile) == metadata.customMetadata!['md5Hash'];
+    }
+
+    return false;
   }
 
  Future<String> _generateMd5(File file) async {

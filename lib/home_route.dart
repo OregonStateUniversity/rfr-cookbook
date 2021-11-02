@@ -7,14 +7,12 @@ import 'storage_helper.dart';
 import 'styles.dart';
 
 class HomeRoute extends StatelessWidget {
-  final StorageHelper _storageHelper = StorageHelper();
-
   HomeRoute({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _storageHelper.initialize(),
+      future: StorageHelper().initialize(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text(snapshot.error.toString());

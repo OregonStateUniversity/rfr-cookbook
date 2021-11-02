@@ -18,7 +18,7 @@ class Styles {
 
   static final textDefault = TextStyle(
     fontFamily: _fontNameDefault,
-    fontSize: _textSizeDefault * 1.25,
+    fontSize: _textSizeDefault,
     //fontWeight: FontWeight.bold,
     color: _textColorDefault,
   );

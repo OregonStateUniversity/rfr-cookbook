@@ -6,25 +6,39 @@ import 'pdf_list.dart';
 import 'storage_helper.dart';
 import 'styles.dart';
 
-class HomeRoute extends StatefulWidget {
-  const HomeRoute({Key? key}) : super(key: key);
-
-  @override
-  _HomeRouteState createState() => _HomeRouteState();
-}
-
-
-class _HomeRouteState extends State<HomeRoute> {
+class HomeRoute extends StatelessWidget {
   final StorageHelper _storageHelper = StorageHelper();
 
+  HomeRoute({Key? key}) : super(key: key);
 
   @override
-  void initState() {
-    super.initState();
-    _storageHelper.initializeStorage();
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _storageHelper.initialize(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else if (snapshot.hasData) {
+          return ProtocolList(snapshot.data as Map<String, List<File>>);
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      }
+    );
   }
+}
 
-  @override
+class ProtocolList extends StatelessWidget {
+  final Map<String, List<File>> protocols;
+
+  const ProtocolList(
+    this.protocols,
+    {Key? key}
+  ) : super(key: key);
+
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -32,16 +46,16 @@ class _HomeRouteState extends State<HomeRoute> {
         backgroundColor: Styles.navBarColor,
       ),
       body: ListView.builder(
-        itemCount: _storageHelper.protocols.length,
+        itemCount: protocols.length,
         itemBuilder: _listViewItemBuilder,
       )
     );
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
-    final targetDirectory = _storageHelper.protocols.keys.toList()[index];
+    final targetDirectory = protocols.keys.toList()[index];
     final directoryName = targetDirectory.split('/').last;
-    final fileList = _storageHelper.protocols[targetDirectory];
+    final fileList = protocols[targetDirectory];
     return Card(
       child: ListTile(
         trailing: const Icon(Icons.arrow_forward_ios_rounded),
@@ -56,7 +70,7 @@ class _HomeRouteState extends State<HomeRoute> {
       context,
       MaterialPageRoute(
         builder: (context) => PdfList(
-          fileList.map((e) => Pdf(title: e.path.split('/').last, path: e.path)).toList(),
+          fileList.map((e) => Pdf(title: e.path.split('/').last.split('.').first, file: e)).toList(),
           sectionTitle
         )
       )

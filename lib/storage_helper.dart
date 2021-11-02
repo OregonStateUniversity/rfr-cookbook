@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
@@ -8,9 +9,15 @@ class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
   Map<String, List<File>> protocols = {};
 
-  Future<void> initializeStorage() async {
-    //await _updateFiles();
-    _initializeMembers();
+  Future<Map> initialize() async {
+    _verifyRootExists();
+    _updateFiles();
+    return _initializeDirectoryMap();
+  }
+
+  Future<void> _verifyRootExists() async {
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    Directory(appDocDir.path + '/protocols').create();
   }
 
   Future<void> _updateFiles() async {
@@ -22,12 +29,18 @@ class StorageHelper {
         await _storageInstance.ref(parentDirectory.fullPath).listAll();
 
       for (Reference file in directoryListing.items) {
-        _downloadFile(file.fullPath);
+        if (await _doesNotExist(file.fullPath)) {
+          _downloadFile(file.fullPath);
+        }
       }
     }
   }
 
-  Future<void> _initializeMembers() async {
+  Future<bool> _doesNotExist(String filePath) async {
+    return false;
+  }
+
+  Future<Map> _initializeDirectoryMap() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
 
     await for (final directory in Directory('${appDocDir.path}/protocols').list()) {
@@ -39,6 +52,22 @@ class StorageHelper {
         protocols[directory.path]!.add(file as File);
       }
     }
+
+    // sort keys
+    var sortedKeys = protocols.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
+    protocols = LinkedHashMap.fromIterable(sortedKeys, key: (k) => k, value: (k) => protocols[k]!);
+    
+    // sort lists
+    for (var element in protocols.values) {
+      element.sort((a, b) => a.path.compareTo(b.path));
+    }
+
+    return protocols;
+  }
+
+  Future<void> _deleteRootDirectory() async {
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    Directory(appDocDir.path + '/protocols').delete();
   }
 
   Future<void> _uploadFileWithMetadata(String localPath, String remotePath) async {
@@ -55,11 +84,6 @@ class StorageHelper {
     }
   }
 
-  Future<String> _generateMd5(File file) async {
-    final fileStream = file.openRead();
-    return (await md5.bind(fileStream).first).toString();
-  }
-
   Future<void> _downloadFile(String path) async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     final File downloadToFile = File('${appDocDir.path}/$path');
@@ -71,5 +95,10 @@ class StorageHelper {
     } on FirebaseException catch (e) {
       throw e.code;
     }
+  }
+
+ Future<String> _generateMd5(File file) async {
+    final fileStream = file.openRead();
+    return (await md5.bind(fileStream).first).toString();
   }
 }

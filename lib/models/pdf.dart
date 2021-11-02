@@ -1,6 +1,8 @@
+import 'dart:io';
+
 class Pdf {
   final String title;
-  final String path;
+  final File file;
   
-  Pdf({required this.title, required this.path});
+  Pdf({required this.title, required this.file});
 }

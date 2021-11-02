@@ -8,10 +8,12 @@ class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
 
   Future<void> initializeStorage() async {
-    final ListResult remoteParentDirectories = await _remoteDirectoryList;
+    final ListResult remoteParentDirectories = 
+      await _storageInstance.ref('protocols/').listAll();
 
     for (Reference parentDirectory in remoteParentDirectories.prefixes) {
-      final ListResult directoryListing = await _storageInstance.ref(parentDirectory.fullPath).listAll();
+      final ListResult directoryListing = 
+        await _storageInstance.ref(parentDirectory.fullPath).listAll();
 
       for (Reference file in directoryListing.items) {
         _downloadFile(file.fullPath);
@@ -39,8 +41,8 @@ class StorageHelper {
   }
 
   Future<void> _downloadFile(String path) async {
-    final String appDocDir = await _localRootPath;
-    final File downloadToFile = File('$appDocDir/$path');
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    final File downloadToFile = File('${appDocDir.path}/$path');
 
     try {
       await _storageInstance
@@ -49,14 +51,5 @@ class StorageHelper {
     } on FirebaseException catch (e) {
       throw e.code;
     }
-  }
-
-  Future<String> get _localRootPath async {
-    final Directory directory = await getApplicationDocumentsDirectory();
-    return directory.path;
-  }
-
-  Future<ListResult> get _remoteDirectoryList async {
-    return await _storageInstance.ref('protocols/').listAll();
   }
 }

@@ -29,10 +29,10 @@ class HomeRoute extends StatelessWidget {
 }
 
 class ProtocolList extends StatelessWidget {
-  final Map<String, List<File>> protocols;
+  final Map<String, List<File>> _protocols;
 
   const ProtocolList(
-    this.protocols,
+    this._protocols,
     {Key? key}
   ) : super(key: key);
 
@@ -44,16 +44,16 @@ class ProtocolList extends StatelessWidget {
         backgroundColor: Styles.navBarColor,
       ),
       body: ListView.builder(
-        itemCount: protocols.length,
+        itemCount: _protocols.length,
         itemBuilder: _listViewItemBuilder,
       )
     );
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
-    final targetDirectory = protocols.keys.toList()[index];
+    final targetDirectory = _protocols.keys.toList()[index];
     final directoryName = targetDirectory.split('/').last;
-    final fileList = protocols[targetDirectory];
+    final fileList = _protocols[targetDirectory];
     return Card(
       child: ListTile(
         trailing: const Icon(Icons.arrow_forward_ios_rounded),

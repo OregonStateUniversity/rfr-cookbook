@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'models/pdf.dart';
@@ -15,7 +17,7 @@ class PdfDetail extends StatelessWidget {
         title: Text(_pdf.title, style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
       ),
-      body: SfPdfViewer.asset(_pdf.path),
+      body: SfPdfViewer.file(File(_pdf.path)),
     );
   }
 }

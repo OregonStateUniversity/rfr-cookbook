@@ -9,7 +9,7 @@ class PdfList extends StatelessWidget {
 
   const PdfList(
     this._pdfList,
-    this._sectionTitle, 
+    this._sectionTitle,
     {Key? key}
   ) : super(key: key);
 

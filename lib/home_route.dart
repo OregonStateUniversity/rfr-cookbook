@@ -7,7 +7,7 @@ import 'storage_helper.dart';
 import 'styles.dart';
 
 class HomeRoute extends StatelessWidget {
-  HomeRoute({Key? key}) : super(key: key);
+  const HomeRoute({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

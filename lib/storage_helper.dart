@@ -6,8 +6,14 @@ import 'package:path_provider/path_provider.dart';
 
 class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
+  Map<String, List<File>> protocols = {};
 
   Future<void> initializeStorage() async {
+    //await _updateFiles();
+    _initializeMembers();
+  }
+
+  Future<void> _updateFiles() async {
     final ListResult remoteParentDirectories = 
       await _storageInstance.ref('protocols/').listAll();
 
@@ -17,6 +23,20 @@ class StorageHelper {
 
       for (Reference file in directoryListing.items) {
         _downloadFile(file.fullPath);
+      }
+    }
+  }
+
+  Future<void> _initializeMembers() async {
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+
+    await for (final directory in Directory('${appDocDir.path}/protocols').list()) {
+      directory as Directory;
+
+      protocols[directory.path] = [];
+
+      await for (final file in directory.list()) {
+        protocols[directory.path]!.add(file as File);
       }
     }
   }

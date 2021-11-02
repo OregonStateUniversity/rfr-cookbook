@@ -33,6 +33,7 @@ dependencies:
   firebase_storage: ^10.0.6
   firebase_auth: ^3.1.4
 
+  crypto: ^3.0.1
   path_provider: ^2.0.6
   syncfusion_flutter_pdfviewer: 19.3.47-beta
   material_floating_search_bar: ^0.2.6

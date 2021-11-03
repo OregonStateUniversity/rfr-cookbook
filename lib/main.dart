@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'home_route.dart';
+import 'app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   
-  runApp(MaterialApp(
-    home: FutureBuilder(
+  runApp(FutureBuilder(
       future: _fbApp,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -21,5 +20,5 @@ Future<void> main() async {
         }
       },
     )
-  ));
+  );
 }

@@ -8,7 +8,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return MaterialApp(
+      home: FutureBuilder(
       future: StorageHelper().initialize(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -21,6 +22,7 @@ class App extends StatelessWidget {
           );
         }
       }
+      )
     );
   }
 }

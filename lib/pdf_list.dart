@@ -33,12 +33,12 @@ class PdfList extends StatelessWidget {
       child: ListTile(
         trailing: const Icon(Icons.arrow_forward_ios_rounded),
         title: Text(pdf.title, style: Styles.textDefault),
-        onTap: () => _navigationToProtocolDetail(context, pdf)
+        onTap: () => _navigationTo(context, pdf)
       )
     );
   }
 
-  void _navigationToProtocolDetail(BuildContext context, Pdf pdf) {
+  void _navigationTo(BuildContext context, Pdf pdf) {
     Navigator.push(
       context,
       MaterialPageRoute(

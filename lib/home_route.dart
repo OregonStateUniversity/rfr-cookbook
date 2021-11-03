@@ -31,12 +31,9 @@ class HomeRoute extends StatelessWidget {
 class ProtocolList extends StatelessWidget {
   final Map<String, List<File>> _protocols;
 
-  const ProtocolList(
-    this._protocols,
-    {Key? key}
-  ) : super(key: key);
+  const ProtocolList(this._protocols, {Key? key}) : super(key: key);
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

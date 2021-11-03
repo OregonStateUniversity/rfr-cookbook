@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'models/pdf.dart';
+import 'login_form.dart';
 import 'pdf_list.dart';
 import 'styles.dart';
 
@@ -15,6 +16,10 @@ class ProtocolList extends StatelessWidget {
       appBar: AppBar(
         title: const Text('theCookbook', style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () => _navigateToLoginForm(context),
+        ),
       ),
       body: ListView.builder(
         itemCount: _protocolDirectories.length,
@@ -31,12 +36,12 @@ class ProtocolList extends StatelessWidget {
       child: ListTile(
         trailing: const Icon(Icons.arrow_forward_ios_rounded),
         title: Text(directoryName, style: Styles.textDefault),
-        onTap: () => _navigationTo(context, directoryName, fileList!)
+        onTap: () => _navigationToPdfList(context, directoryName, fileList!)
       ),
     );
   }
 
-  void _navigationTo(BuildContext context, String sectionTitle, List<File> fileList) {
+  void _navigationToPdfList(BuildContext context, String sectionTitle, List<File> fileList) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -44,6 +49,15 @@ class ProtocolList extends StatelessWidget {
           fileList.map((file) => Pdf(title: _parseFileName(file), fileObject: file)).toList(),
           sectionTitle
         )
+      )
+    );
+  }
+
+  void _navigateToLoginForm(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginForm()
       )
     );
   }

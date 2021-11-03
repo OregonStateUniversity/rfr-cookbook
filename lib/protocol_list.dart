@@ -5,9 +5,9 @@ import 'pdf_list.dart';
 import 'styles.dart';
 
 class ProtocolList extends StatelessWidget {
-  final Map<String, List<File>> _protocols;
+  final Map<String, List<File>> _protocolDirectories;
 
-  const ProtocolList(this._protocols, {Key? key}) : super(key: key);
+  const ProtocolList(this._protocolDirectories, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +17,16 @@ class ProtocolList extends StatelessWidget {
         backgroundColor: Styles.navBarColor,
       ),
       body: ListView.builder(
-        itemCount: _protocols.length,
+        itemCount: _protocolDirectories.length,
         itemBuilder: _listViewItemBuilder,
       )
     );
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
-    final targetDirectory = _protocols.keys.toList()[index];
+    final targetDirectory = _protocolDirectories.keys.toList()[index];
     final directoryName = targetDirectory.split('/').last;
-    final fileList = _protocols[targetDirectory];
+    final fileList = _protocolDirectories[targetDirectory];
     return Card(
       child: ListTile(
         trailing: const Icon(Icons.arrow_forward_ios_rounded),

@@ -1,32 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'models/pdf.dart';
 import 'pdf_list.dart';
-import 'storage_helper.dart';
 import 'styles.dart';
-
-class HomeRoute extends StatelessWidget {
-  const HomeRoute({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: StorageHelper().initialize(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
-        } else if (snapshot.hasData) {
-          return ProtocolList(snapshot.data as Map<String, List<File>>);
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      }
-    );
-  }
-}
 
 class ProtocolList extends StatelessWidget {
   final Map<String, List<File>> _protocols;
@@ -71,5 +47,4 @@ class ProtocolList extends StatelessWidget {
       )
     );
   }
-
 }

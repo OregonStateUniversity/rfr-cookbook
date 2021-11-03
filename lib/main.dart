@@ -13,7 +13,7 @@ Future<void> main() async {
         if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else if (snapshot.hasData) {
-          return const HomeRoute();
+          return const App();
         } else {
           return const Center(
             child: CircularProgressIndicator(),

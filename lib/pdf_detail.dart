@@ -15,7 +15,7 @@ class PdfDetail extends StatelessWidget {
         title: Text(_pdf.title, style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
       ),
-      body: SfPdfViewer.file(_pdf.file),
+      body: SfPdfViewer.file(_pdf.fileObject),
     );
   }
 }

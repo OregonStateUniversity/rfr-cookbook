@@ -2,7 +2,7 @@ import 'dart:io';
 
 class Pdf {
   final String title;
-  final File file;
+  final File fileObject;
   
-  Pdf({required this.title, required this.file});
+  Pdf({required this.title, required this.fileObject});
 }

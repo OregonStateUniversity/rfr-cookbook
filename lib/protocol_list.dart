@@ -41,7 +41,7 @@ class ProtocolList extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => PdfList(
-          fileList.map((file) => Pdf(title: _parseFileName(file), file: file)).toList(),
+          fileList.map((file) => Pdf(title: _parseFileName(file), fileObject: file)).toList(),
           sectionTitle
         )
       )

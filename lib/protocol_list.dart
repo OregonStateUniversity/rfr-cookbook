@@ -41,10 +41,14 @@ class ProtocolList extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => PdfList(
-          fileList.map((e) => Pdf(title: e.path.split('/').last.split('.').first, file: e)).toList(),
+          fileList.map((file) => Pdf(title: _parseFileName(file), file: file)).toList(),
           sectionTitle
         )
       )
     );
+  }
+
+  String _parseFileName(File file) {
+    return file.path.split('/').last.split('.').first;
   }
 }

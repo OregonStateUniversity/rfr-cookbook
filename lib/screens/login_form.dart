@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:rfr_cookbook/auth_helper.dart';
+import 'package:rfr_cookbook/screens/admin_panel.dart';
 import 'package:rfr_cookbook/styles.dart';
 
 class LoginForm extends StatefulWidget {
@@ -32,14 +34,11 @@ class _LoginFormState extends State<LoginForm> {
               children: [
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'email'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter an email.';
-                    }
-                  },
+                  validator: (value) => EmailValidator.validate(value!) ? null : 'Please enter a valid email.',
                   onSaved: (value) => setState(() => _email = value!),
                 ),
                 TextFormField(
+                  obscureText: true,
                   decoration: const InputDecoration(labelText: 'password'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -53,11 +52,13 @@ class _LoginFormState extends State<LoginForm> {
                   child: ElevatedButton(
                     style: Styles.buttonStyle,
                     child: Text('Login', style: Styles.buttonText),
-                    onPressed: () {
+                    onPressed: () async {
                       final form = _formKey.currentState;
-                      if (form!.validate()) {
+                      if (form != null && form.validate()) {
                         form.save();
-                        _handleSignIn();
+                        await _signIn()
+                            ? _navigationToAdminPanel(context)
+                            : _badLoginSnackbar(context);
                       }
                     },
                   ),
@@ -70,7 +71,30 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Future<void> _handleSignIn() async {
-    
+  void _navigationToAdminPanel(BuildContext context) {
+    Navigator.of(context).pop();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AdminPanel()
+      )
+    );
+  }
+
+  void _badLoginSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context)
+      .showSnackBar(const SnackBar(content: Center(child: Text('Invalid credientails.'))));
+  }
+
+  Future<bool> _signIn() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _email!,
+          password: _password!
+        );
+      return userCredential.user != null;
+    } on FirebaseAuthException {
+      return false;
+    }
   }
 }

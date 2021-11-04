@@ -11,40 +11,33 @@ class AdminPanel extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Admin Panel', style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
-        actions: [
-          _renderPopupMenu(context),
-        ],
       ),
-      body: const Text('Admin Panel'),
-    );
-  }
-
-  PopupMenuButton _renderPopupMenu(BuildContext context) {
-    return PopupMenuButton(
-      onSelected: (item) => _selectedItem(context, item as int),
-      itemBuilder: (context) =>
-      [
-        PopupMenuItem(
-          value: 0,
-          child: Row(
-            children: const [
-              Icon(Icons.logout, color: Colors.red),
-              SizedBox(width: 7),
-              Text('Logout')
-            ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            child: ElevatedButton(
+              style: Styles.buttonStyle,
+              child: Text('Logout', style: Styles.buttonText),
+              onPressed: () {
+                _logout(context);
+              },
+            ),
           )
-        )
-      ]
+        ]
+      )
     );
   }
 
-  void _selectedItem(BuildContext context, int item) {
-    switch (item) {
-      case 0: // logout
-        FirebaseAuth.instance.signOut();
-        Navigator.of(context).pop();
-        break;
-    }
+  void _logout(BuildContext context) {
+    FirebaseAuth.instance.signOut();
+    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context)
+      .showSnackBar(
+        const SnackBar(
+          content: Text('You have been logged out.', textAlign: TextAlign.center)
+        )
+      );
   }
-  
 }

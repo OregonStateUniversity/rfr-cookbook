@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/pdf.dart';
 import 'package:rfr_cookbook/styles.dart';
+import 'admin_panel.dart';
 import 'pdf_list.dart';
 import 'login_form.dart';
 
@@ -54,10 +56,11 @@ class ProtocolList extends StatelessWidget {
   }
 
   void _navigationToLoginForm(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const LoginForm()
+        builder: (context) => user == null ? const LoginForm() : const AdminPanel()
       )
     );
   }

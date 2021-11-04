@@ -12,14 +12,14 @@ class AdminPanel extends StatelessWidget {
         title: const Text('Admin Panel', style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
         actions: [
-          _renderPopupMenuButton(context),
+          _renderPopupMenu(context),
         ],
       ),
       body: const Text('Admin Panel'),
     );
   }
 
-  PopupMenuButton _renderPopupMenuButton(BuildContext context) {
+  PopupMenuButton _renderPopupMenu(BuildContext context) {
     return PopupMenuButton(
       onSelected: (item) => _selectedItem(context, item as int),
       itemBuilder: (context) =>

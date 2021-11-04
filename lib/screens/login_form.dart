@@ -83,7 +83,11 @@ class _LoginFormState extends State<LoginForm> {
 
   void _badLoginSnackbar(BuildContext context) {
     ScaffoldMessenger.of(context)
-      .showSnackBar(const SnackBar(content: Center(child: Text('Invalid credientails.'))));
+      .showSnackBar(
+        const SnackBar(
+          content: Text('Invalid credientails.', textAlign: TextAlign.center)
+        )
+      );
   }
 
   Future<bool> _signIn() async {

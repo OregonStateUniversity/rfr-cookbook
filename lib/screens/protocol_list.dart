@@ -18,7 +18,7 @@ class ProtocolList extends StatelessWidget {
         backgroundColor: Styles.navBarColor,
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          onPressed: () => _navigateToLoginForm(context),
+          onPressed: () => _navigationToLoginForm(context),
         ),
       ),
       body: ListView.builder(
@@ -53,11 +53,11 @@ class ProtocolList extends StatelessWidget {
     );
   }
 
-  void _navigateToLoginForm(BuildContext context) {
+  void _navigationToLoginForm(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginForm()
+        builder: (context) => const LoginForm()
       )
     );
   }

@@ -79,6 +79,12 @@ class _LoginFormState extends State<LoginForm> {
         builder: (context) => const AdminPanel()
       )
     );
+    ScaffoldMessenger.of(context)
+      .showSnackBar(
+        const SnackBar(
+          content: Text('Logged in as administrator.', textAlign: TextAlign.center)
+        )
+      );
   }
 
   void _invalidCredentialsSnackbar(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'protocol_list.dart';
+import 'screens/protocol_list.dart';
 import 'storage_helper.dart';
 
 class App extends StatelessWidget {

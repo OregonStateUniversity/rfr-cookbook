@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'models/pdf.dart';
-import 'login_form.dart';
+import '../models/pdf.dart';
+import '../styles.dart';
 import 'pdf_list.dart';
-import 'styles.dart';
+import 'login_form.dart';
 
 class ProtocolList extends StatelessWidget {
   final Map<String, List<File>> _protocolDirectories;

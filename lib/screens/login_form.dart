@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rfr_cookbook/auth_helper.dart';
 import 'models/user.dart';
+import 'auth_helper.dart';
 import 'styles.dart';
 
 class LoginForm extends StatefulWidget {
@@ -11,6 +13,9 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  
+  String? _email;
+  String? _password;
 
   @override
   Widget build(BuildContext context) {
@@ -30,18 +35,20 @@ class _LoginFormState extends State<LoginForm> {
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'email'),
                   validator: (value) {
-                    if (value!.isEmpty) {
+                    if (value == null || value.isEmpty) {
                       return 'Please enter an email.';
                     }
                   },
+                  onSaved: (value) => setState(() => _email = value!),
                 ),
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'password'),
                   validator: (value) {
-                    if (value!.isEmpty) {
+                    if (value == null || value.isEmpty) {
                       return 'Please enter a password.';
                     }
                   },
+                  onSaved: (value) => setState(() => _password = value!),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
@@ -51,7 +58,8 @@ class _LoginFormState extends State<LoginForm> {
                     onPressed: () {
                       final form = _formKey.currentState;
                       if (form!.validate()) {
-                        
+                        form.save();
+                        _handleSignIn();
                       }
                     },
                   ),
@@ -62,5 +70,9 @@ class _LoginFormState extends State<LoginForm> {
         ),
       ),
     );
+  }
+
+  Future<void> _handleSignIn() async {
+    
   }
 }

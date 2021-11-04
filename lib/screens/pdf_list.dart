@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'models/pdf.dart';
+import '../models/pdf.dart';
+import '../styles.dart';
 import 'pdf_detail.dart';
-import 'styles.dart';
 
 class PdfList extends StatelessWidget {
   final List<Pdf> _pdfList;

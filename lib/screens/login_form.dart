@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/auth_helper.dart';
-import 'models/user.dart';
-import 'auth_helper.dart';
-import 'styles.dart';
+import 'package:rfr_cookbook/styles.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);

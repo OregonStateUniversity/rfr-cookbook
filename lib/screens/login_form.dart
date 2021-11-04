@@ -58,7 +58,7 @@ class _LoginFormState extends State<LoginForm> {
                         form.save();
                         await _signIn()
                             ? _navigationToAdminPanel(context)
-                            : _badLoginSnackbar(context);
+                            : _invalidCredentialsSnackbar(context);
                       }
                     },
                   ),
@@ -81,7 +81,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  void _badLoginSnackbar(BuildContext context) {
+  void _invalidCredentialsSnackbar(BuildContext context) {
     ScaffoldMessenger.of(context)
       .showSnackBar(
         const SnackBar(

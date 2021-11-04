@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import '../models/pdf.dart';
-import '../styles.dart';
+import 'package:rfr_cookbook/models/pdf.dart';
+import 'package:rfr_cookbook/styles.dart';
 
 class PdfDetail extends StatelessWidget {
   final Pdf _pdf;

@@ -2,12 +2,12 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/pdf.dart';
+import 'package:rfr_cookbook/search.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/styles.dart';
 import 'admin_panel.dart';
 import 'pdf_list.dart';
 import 'login_form.dart';
-import '../search.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -66,7 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
       child: ListTile(
           trailing: const Icon(Icons.arrow_forward_ios_rounded),
           title: Text(directoryName, style: Styles.textDefault),
-          onTap: () => _navigationToPdfList(context, directoryName, fileList!)),
+          onTap: () => _navigationToPdfList(context, directoryName, fileList!)
+      ),
     );
   }
 
@@ -99,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     ScaffoldMessenger.of(context)
       .showSnackBar(const SnackBar(
-        content: Text('File state updating...', textAlign: TextAlign.center))
+        content: Text('Files updated.', textAlign: TextAlign.center))
       );
   }
 

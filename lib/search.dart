@@ -1,237 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
-/*
-class Search extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Search Bar App',
-      home: HomePage(),
-    );
-  }
-}*/
-
-class SearchBar extends StatefulWidget {
-  
-  const SearchBar({Key? key}) : super(key: key);
-
-  @override
-  _SearchBarState createState() => _SearchBarState();
-}
-
-class _SearchBarState extends State<SearchBar> {
-  static const historyLength = 5;
-
-  List<String> _searchHistory = [
-    'fuchsia',
-    'flutter',
-    'widgets',
-    'resocoder',
+class SearchBar extends SearchDelegate<String> {
+  //change this to use firebase
+  final searchFor = [
+    "One thing",
+    "Two thing",
+    "Three thing",
+    "Four thing",
+    "Five thing",
+    "Six thing",
+    "Seven thing",
   ];
 
-  List<String> filteredSearchHistory = [""];
-
-  String selectedTerm = "";
-
-  List<String> filterSearchTerms({
-    @required String filter = "", 
-  }) {
-    if (filter != null && filter.isNotEmpty) {
-      return _searchHistory.reversed
-          .where((term) => term.startsWith(filter))
-          .toList();
-    } else {
-      return _searchHistory.reversed.toList();
-    }
-  }
-
-  void addSearchTerm(String term) {
-    if (_searchHistory.contains(term)) {
-      putSearchTermFirst(term);
-      return;
-    }
-
-    _searchHistory.add(term);
-    if (_searchHistory.length > historyLength) {
-      _searchHistory.removeRange(0, _searchHistory.length - historyLength);
-    }
-
-    filteredSearchHistory = filterSearchTerms(filter: "");
-  }
-
-  void deleteSearchTerm(String term) {
-    _searchHistory.removeWhere((t) => t == term);
-    filteredSearchHistory = filterSearchTerms(filter: "");
-  }
-
-  void putSearchTermFirst(String term) {
-    deleteSearchTerm(term);
-    addSearchTerm(term);
-  }
-
-  late FloatingSearchBarController controller;
+  final recentSearches = [
+    "One thing",
+    "Two thing",
+    "Three thing",
+    "Four thing",
+  ];
 
   @override
-  void initState() {
-    super.initState();
-    controller = FloatingSearchBarController();
-    filteredSearchHistory = filterSearchTerms(filter: "");
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            query = "";
+          })
+    ];
   }
 
   @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: FloatingSearchBar(
-        controller: controller,
-        body: FloatingSearchBarScrollNotifier(
-          child: SearchResultsListView(
-            searchTerm: selectedTerm,
-          ),
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+        icon: AnimatedIcon(
+          icon: AnimatedIcons.menu_arrow,
+          progress: transitionAnimation,
         ),
-        transition: CircularFloatingSearchBarTransition(),
-        physics: BouncingScrollPhysics(),
-        title: Text(
-          selectedTerm ?? 'The Search App',
-          style: Theme.of(context).textTheme.headline6,
+        onPressed: () {
+          close(context, "");
+        });
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    //I think this should return the pdf of the protocol....
+    //This is just a placeholder to see if it does something
+    return Container(
+      height: 100,
+      width: 100,
+      child: Card(
+        color: Colors.red,
+        child: Center(
+          child: Text(query),
         ),
-        hint: 'Search and find out...',
-        actions: [
-          FloatingSearchBarAction.searchToClear(),
-        ],
-        onQueryChanged: (query) {
-          setState(() {
-            filteredSearchHistory = filterSearchTerms(filter: query);
-          });
-        },
-        onSubmitted: (query) {
-          setState(() {
-            addSearchTerm(query);
-            selectedTerm = query;
-          });
-          controller.close();
-        },
-        builder: (context, transition) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Material(
-              color: Colors.white,
-              elevation: 4,
-              child: Builder(
-                builder: (context) {
-                  if (filteredSearchHistory.isEmpty &&
-                      controller.query.isEmpty) {
-                    return Container(
-                      height: 56,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Start searching',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                    );
-                  } else if (filteredSearchHistory.isEmpty) {
-                    return ListTile(
-                      title: Text(controller.query),
-                      leading: const Icon(Icons.search),
-                      onTap: () {
-                        setState(() {
-                          addSearchTerm(controller.query);
-                          selectedTerm = controller.query;
-                        });
-                        controller.close();
-                      },
-                    );
-                  } else {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: filteredSearchHistory
-                          .map(
-                            (term) => ListTile(
-                              title: Text(
-                                term,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              leading: const Icon(Icons.history),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.clear),
-                                onPressed: () {
-                                  setState(() {
-                                    deleteSearchTerm(term);
-                                  });
-                                },
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  putSearchTermFirst(term);
-                                  selectedTerm = term;
-                                });
-                                controller.close();
-                              },
-                            ),
-                          )
-                          .toList(),
-                    );
-                  }
-                },
-              ),
-            ),
-          );
-        },
       ),
     );
   }
-}
-
-
-class SearchResultsListView extends StatelessWidget {
-  final String searchTerm;
-
-  const SearchResultsListView({
-    Key key,
-    @required this.searchTerm,
-  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    if (searchTerm == null) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.search,
-              size: 64,
-            ),
-            Text(
-              'Start searching',
-              style: Theme.of(context).textTheme.headline5,
-            )
-          ],
-        ),
-      );
-    }
+  Widget buildSuggestions(BuildContext context) {
+    final suggestionList = query.isEmpty
+        ? recentSearches
+        : searchFor.where((typedWord) => typedWord.startsWith(query)).toList();
 
-    final fsb = FloatingSearchBar.of(context);
-
-    return ListView(
-      padding: EdgeInsets.only(top: fsb.height + fsb.margins.vertical),
-      children: List.generate(
-        50,
-        (index) => ListTile(
-          title: Text('$searchTerm search result'),
-          subtitle: Text(index.toString()),
-        ),
+    return ListView.builder(
+      itemBuilder: (context, index) => ListTile(
+        onTap: () {
+          showResults(context);
+        },
+        leading: const Icon(Icons.location_city),
+        title: RichText(
+            text: TextSpan(
+                text: suggestionList[index].substring(0, query.length),
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                children: [
+              TextSpan(
+                  text: suggestionList[index].substring(query.length),
+                  style: const TextStyle(color: Colors.grey))
+            ])),
       ),
+      itemCount: suggestionList.length,
     );
   }
 }

@@ -15,7 +15,6 @@ class ProtocolList extends StatefulWidget {
   _ProtocolListState createState() => _ProtocolListState();
 }
 
-
 class _ProtocolListState extends State<ProtocolList> {
   Map<String, List<File>> _protocolDirectories = {};
 
@@ -28,7 +27,7 @@ class _ProtocolListState extends State<ProtocolList> {
           return Text(snapshot.error.toString());
         } else if (snapshot.hasData) {
           _protocolDirectories = snapshot.data as Map<String, List<File>>;
-          return _renderMaterialApp(context);
+          return _renderScaffold(context);
         } else {
           return const Center(
             child: SizedBox(
@@ -42,7 +41,7 @@ class _ProtocolListState extends State<ProtocolList> {
     );
   }
 
-  Widget _renderMaterialApp(BuildContext context) {
+  Widget _renderScaffold(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('theCookbook', style: Styles.navBarTitle),
@@ -104,12 +103,8 @@ class _ProtocolListState extends State<ProtocolList> {
     );
   }
 
-  Future<void> _updateFileState(BuildContext context) async {
-    final newFileState = await StorageHelper().updateFileState() as Map<String, List<File>>;
-    
-    setState(() {
-      _protocolDirectories = newFileState;
-    });
+  Future<void> _updateFileState(BuildContext context) async {    
+    setState(() {});
 
     ScaffoldMessenger.of(context)
       .showSnackBar(const SnackBar(

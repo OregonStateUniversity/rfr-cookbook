@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Styles.navBarColor,
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          onPressed: () => _navigationToLoginForm(context),
+          onPressed: () => _navigationToAdminPanel(context),
         ),
         actions: [
           IconButton(
@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _navigationToLoginForm(BuildContext context) {
+  void _navigationToAdminPanel(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     Navigator.push(
       context,

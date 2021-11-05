@@ -8,14 +8,14 @@ import 'admin_panel.dart';
 import 'pdf_list.dart';
 import 'login_form.dart';
 
-class ProtocolList extends StatefulWidget {
-  const ProtocolList({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _ProtocolListState createState() => _ProtocolListState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _ProtocolListState extends State<ProtocolList> {
+class _HomeScreenState extends State<HomeScreen> {
   Map<String, List<File>> _protocolDirectories = {};
 
   @override

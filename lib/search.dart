@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'styles.dart';
 
 class SearchBar extends SearchDelegate<String> {
   //change this to use firebase
@@ -18,6 +19,20 @@ class SearchBar extends SearchDelegate<String> {
     "Three thing",
     "Four thing",
   ];
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    assert(context != null);
+    final ThemeData theme = Theme.of(context);
+    assert(theme != null);
+    return theme.copyWith(
+      appBarTheme: AppBarTheme(
+        backgroundColor: Styles.navBarColor,
+        //to-do: change text to white
+        //to-do: get rid of weird underline
+      )
+    );
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {

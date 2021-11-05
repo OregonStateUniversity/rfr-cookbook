@@ -8,14 +8,41 @@ import 'admin_panel.dart';
 import 'pdf_list.dart';
 import 'login_form.dart';
 
+class ProtocolList extends StatefulWidget {
+  const ProtocolList({Key? key}) : super(key: key);
 
-class ProtocolList extends StatelessWidget {
-  Map<String, List<File>> _protocolDirectories;
+  @override
+  _ProtocolListState createState() => _ProtocolListState();
+}
 
-  ProtocolList(this._protocolDirectories, {Key? key}) : super(key: key);
+
+class _ProtocolListState extends State<ProtocolList> {
+  Map<String, List<File>> _protocolDirectories = {};
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: StorageHelper().updateFileState(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else if (snapshot.hasData) {
+          _protocolDirectories = snapshot.data as Map<String, List<File>>;
+          return _renderMaterialApp(context);
+        } else {
+          return const Center(
+            child: SizedBox(
+              child: CircularProgressIndicator(),
+              height: 50.0,
+              width: 50.0,
+            )
+          );
+        }
+      }
+    );
+  }
+
+  Widget _renderMaterialApp(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('theCookbook', style: Styles.navBarTitle),
@@ -78,7 +105,12 @@ class ProtocolList extends StatelessWidget {
   }
 
   Future<void> _updateFileState(BuildContext context) async {
-    _protocolDirectories = await StorageHelper().updateFileState() as Map<String, List<File>>;
+    final newFileState = await StorageHelper().updateFileState() as Map<String, List<File>>;
+    
+    setState(() {
+      _protocolDirectories = newFileState;
+    });
+
     ScaffoldMessenger.of(context)
       .showSnackBar(const SnackBar(
         content: Text('File state updated.', textAlign: TextAlign.center,)

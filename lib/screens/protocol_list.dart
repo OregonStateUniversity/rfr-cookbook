@@ -25,7 +25,7 @@ class ProtocolList extends StatelessWidget {
           onPressed: () => _navigationToLoginForm(context),
         ),
         actions: [
-          _renderIconButton(),
+          _renderIconButton(context),
         ],
       ),
       body: ListView.builder(
@@ -70,15 +70,20 @@ class ProtocolList extends StatelessWidget {
     );
   }
 
-  Widget _renderIconButton() {
+  Widget _renderIconButton(BuildContext context) {
     return IconButton(
-      onPressed: () => _updateFileState,
+      onPressed: () => _updateFileState(context),
       icon: const Icon(Icons.refresh)
     );
   }
 
-  Future<void> _updateFileState() async {
+  Future<void> _updateFileState(BuildContext context) async {
     _protocolDirectories = await StorageHelper().updateFileState() as Map<String, List<File>>;
+    ScaffoldMessenger.of(context)
+      .showSnackBar(const SnackBar(
+        content: Text('File state updated.', textAlign: TextAlign.center,)
+        )
+      );
   }
 
   String _parseFileName(File file) {

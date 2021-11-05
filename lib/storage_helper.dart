@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -10,7 +9,7 @@ class StorageHelper {
   Future<Map> updateFileState() async {
     _verifyRootExists();
     _updateFiles();
-    return _directoryMap;
+    return _directoryMap();
   }
 
   Future<void> _verifyRootExists() async {
@@ -38,7 +37,7 @@ class StorageHelper {
     }
   }
 
-  Future<Map> get _directoryMap async {
+  Future<Map> _directoryMap() async {
     Map<String, List<File>> protocols = {};
     final Directory appDocDir = await getApplicationDocumentsDirectory();
 
@@ -53,12 +52,12 @@ class StorageHelper {
     }
 
     // sort keys
-    var sortedKeys = protocols.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
-    protocols = LinkedHashMap.fromIterable(sortedKeys, key: (k) => k, value: (k) => protocols[k]!);
+    final sortedKeys = protocols.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
+    protocols = { for (final k in sortedKeys) k : protocols[k]! };
     
     // sort lists
-    for (var element in protocols.values) {
-      element.sort((a, b) => a.path.compareTo(b.path));
+    for (final list in protocols.values) {
+      list.sort((a, b) => a.path.compareTo(b.path));
     }
 
     return protocols;
@@ -66,7 +65,7 @@ class StorageHelper {
 
   Future<void> _deleteLocalRootDirectory() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
-    Directory(appDocDir.path + '/protocols').delete();
+    Directory(appDocDir.path + '/protocols').delete(recursive: true);
   }
 
   Future<void> _uploadFileWithMetadata(String localPath, String remotePath) async {
@@ -86,6 +85,10 @@ class StorageHelper {
   Future<void> _downloadFile(String path) async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     final File downloadToFile = File('${appDocDir.path}/$path');
+
+    if (!await downloadToFile.parent.exists()) {
+      downloadToFile.parent.create();
+    }
 
     try {
       await _storageInstance

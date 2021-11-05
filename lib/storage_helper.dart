@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
 
-  Future<Map> initialize() async {
+  Future<Map> updateFileState() async {
     _verifyRootExists();
     _updateFiles();
     return _directoryMap;
@@ -64,7 +64,7 @@ class StorageHelper {
     return protocols;
   }
 
-  Future<void> _deleteRootDirectory() async {
+  Future<void> _deleteLocalRootDirectory() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     Directory(appDocDir.path + '/protocols').delete();
   }

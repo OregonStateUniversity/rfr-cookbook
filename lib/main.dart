@@ -4,10 +4,9 @@ import 'app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   
   runApp(FutureBuilder(
-      future: _fbApp,
+      future: Firebase.initializeApp(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text(snapshot.error.toString());

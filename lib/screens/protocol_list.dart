@@ -2,15 +2,17 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/pdf.dart';
+import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/styles.dart';
 import 'admin_panel.dart';
 import 'pdf_list.dart';
 import 'login_form.dart';
 
-class ProtocolList extends StatelessWidget {
-  final Map<String, List<File>> _protocolDirectories;
 
-  const ProtocolList(this._protocolDirectories, {Key? key}) : super(key: key);
+class ProtocolList extends StatelessWidget {
+  Map<String, List<File>> _protocolDirectories;
+
+  ProtocolList(this._protocolDirectories, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,9 @@ class ProtocolList extends StatelessWidget {
           icon: const Icon(Icons.menu),
           onPressed: () => _navigationToLoginForm(context),
         ),
+        actions: [
+          _renderIconButton(),
+        ],
       ),
       body: ListView.builder(
         itemCount: _protocolDirectories.length,
@@ -63,6 +68,17 @@ class ProtocolList extends StatelessWidget {
         builder: (context) => user == null ? const LoginForm() : const AdminPanel()
       )
     );
+  }
+
+  Widget _renderIconButton() {
+    return IconButton(
+      onPressed: () => _updateFileState,
+      icon: const Icon(Icons.refresh)
+    );
+  }
+
+  Future<void> _updateFileState() async {
+    _protocolDirectories = await StorageHelper().updateFileState() as Map<String, List<File>>;
   }
 
   String _parseFileName(File file) {

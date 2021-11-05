@@ -69,7 +69,7 @@ class SearchBar extends SearchDelegate<String> {
         onTap: () {
           showResults(context);
         },
-        leading: const Icon(Icons.location_city),
+        //leading: const Icon(Icons.location_city),
         title: RichText(
             text: TextSpan(
                 text: suggestionList[index].substring(0, query.length),

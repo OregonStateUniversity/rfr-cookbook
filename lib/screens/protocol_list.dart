@@ -51,7 +51,10 @@ class _ProtocolListState extends State<ProtocolList> {
           onPressed: () => _navigationToLoginForm(context),
         ),
         actions: [
-          _renderIconButton(context),
+          IconButton(
+            onPressed: () => _updateFileState(context),
+            icon: const Icon(Icons.refresh)
+          ),
         ],
       ),
       body: ListView.builder(
@@ -93,13 +96,6 @@ class _ProtocolListState extends State<ProtocolList> {
       MaterialPageRoute(
         builder: (context) => user == null ? const LoginForm() : const AdminPanel()
       )
-    );
-  }
-
-  Widget _renderIconButton(BuildContext context) {
-    return IconButton(
-      onPressed: () => _updateFileState(context),
-      icon: const Icon(Icons.refresh)
     );
   }
 

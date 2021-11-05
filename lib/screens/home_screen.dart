@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           IconButton(
-              onPressed: () => _updateFileState(context),
+              onPressed: () => _updateFiles(context),
               icon: const Icon(Icons.refresh)),
           IconButton(
               icon: const Icon(Icons.search),
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<void> _updateFileState(BuildContext context) async {
+  Future<void> _updateFiles(BuildContext context) async {
     final fileList = await _storageHelper.updateFileState();
 
     setState(() {

@@ -6,10 +6,9 @@ import 'package:path_provider/path_provider.dart';
 class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
 
-  Future<Map> updateFileState() async {
+  Future<void> updateFileState() async {
     _verifyRootExists();
     _updateFiles();
-    return directoryMap();
   }
 
   Future<Map> directoryMap() async {

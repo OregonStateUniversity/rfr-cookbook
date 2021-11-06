@@ -9,7 +9,33 @@ class StorageHelper {
   Future<Map> updateFileState() async {
     _verifyRootExists();
     _updateFiles();
-    return _directoryMap();
+    return directoryMap();
+  }
+
+  Future<Map> directoryMap() async {
+    Map<String, List<File>> protocols = {};
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+
+    await for (final directory in Directory('${appDocDir.path}/protocols').list()) {
+      directory as Directory;
+
+      protocols[directory.path] = [];
+
+      await for (final file in directory.list()) {
+        protocols[directory.path]!.add(file as File);
+      }
+    }
+
+    // sort keys
+    final sortedKeys = protocols.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
+    protocols = { for (final k in sortedKeys) k : protocols[k]! };
+    
+    // sort lists
+    for (final list in protocols.values) {
+      list.sort((a, b) => a.path.compareTo(b.path));
+    }
+
+    return protocols;
   }
 
   Future<void> _verifyRootExists() async {
@@ -35,32 +61,6 @@ class StorageHelper {
         }
       }
     }
-  }
-
-  Future<Map> _directoryMap() async {
-    Map<String, List<File>> protocols = {};
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
-
-    await for (final directory in Directory('${appDocDir.path}/protocols').list()) {
-      directory as Directory;
-
-      protocols[directory.path] = [];
-
-      await for (final file in directory.list()) {
-        protocols[directory.path]!.add(file as File);
-      }
-    }
-
-    // sort keys
-    final sortedKeys = protocols.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
-    protocols = { for (final k in sortedKeys) k : protocols[k]! };
-    
-    // sort lists
-    for (final list in protocols.values) {
-      list.sort((a, b) => a.path.compareTo(b.path));
-    }
-
-    return protocols;
   }
 
   Future<void> _deleteLocalRootDirectory() async {

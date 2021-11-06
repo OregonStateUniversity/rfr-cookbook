@@ -55,7 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadFiles() async {
-    final files = await _storageHelper.updateFileState();
+    _storageHelper.updateFileState();
+    final files = await _storageHelper.directoryMap();
 
     if (mounted) {
       setState(() {
@@ -98,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _updateFiles(BuildContext context) async {
-    final fileList = await _storageHelper.updateFileState();
+    _storageHelper.updateFileState();
+    final fileList = await _storageHelper.directoryMap();
 
     setState(() {
       _protocolDirectories = fileList as Map<String, List<File>>;

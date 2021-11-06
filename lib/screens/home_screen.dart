@@ -23,11 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _storageHelper.updateFileState().then((result) {
-      setState(() {
-        _protocolDirectories = result as Map<String, List<File>>;
-      });
-    });
+    _loadFiles();
   }
 
   @override
@@ -56,6 +52,16 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: _listViewItemBuilder,
       )
     );
+  }
+
+  Future<void> _loadFiles() async {
+    final files = await _storageHelper.updateFileState();
+
+    if (mounted) {
+      setState(() {
+        _protocolDirectories = files as Map<String, List<File>>;
+      });
+    }
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
@@ -99,8 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     ScaffoldMessenger.of(context)
-      .showSnackBar(const SnackBar(
-        content: Text('Files updated.', textAlign: TextAlign.center))
+      .showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.black.withOpacity(0.5),
+          content: const Text('Files updated.', textAlign: TextAlign.center)
+        )
       );
   }
 

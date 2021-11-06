@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/styles.dart';
 
-const FooterHeight = 100.0;
-
 class AdminPanel extends StatefulWidget {
   const AdminPanel({Key? key}) : super(key: key);
 
@@ -83,24 +81,33 @@ class _AdminPanelState extends State<AdminPanel> {
     return Card(
       child: ExpansionTile(
         title: Text(directoryName, style: Styles.textDefault),
-        children: _buildExpandableContent(fileList!),
+        children: _buildExpandableContent(context, fileList!),
       )
     );
   }
 
-  List<Widget> _buildExpandableContent(List<File> list) {
+  List<Widget> _buildExpandableContent(BuildContext context, List<File> list) {
     return list.map((file) => 
       Card(
         child: ListTile(
           title: Text(_parseFileName(file), style: Styles.textDefault),
-          onTap: () => _renderAdminMenu(file),
+          onTap: () => _renderActionSnackbar(context, file),
         )
       )
     ).toList();
   }
 
-  void _renderAdminMenu(File file) {
-    
+  void _renderActionSnackbar(BuildContext context, File file) {
+    ScaffoldMessenger.of(context)
+      .showSnackBar(
+        SnackBar(
+          content: Text('Delete "${_parseFileName(file)}"?'),
+          action: SnackBarAction(
+            label: 'Delete',
+            onPressed: () => _storageHelper.deleteFile(file),
+          ),
+        )
+      );
   }
 
   String _parseFileName(File file) {

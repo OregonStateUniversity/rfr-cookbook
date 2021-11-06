@@ -33,7 +33,10 @@ class _AdminPanelState extends State<AdminPanel> {
           _renderPopupMenu(context)
         ],
       ),
-      body: _renderBody(context)
+      body: ListView.builder(
+        itemCount: _protocolDirectories.length,
+        itemBuilder: _listViewItemBuilder
+      )
     );
   }
 
@@ -64,10 +67,6 @@ class _AdminPanelState extends State<AdminPanel> {
     );
   }
 
-  Widget _renderBody(BuildContext context) {
-    return const Text('Admin Panel Body');
-  }
-
   void _selectedItem(BuildContext context, int item) {
     switch (item) {
       case 0: // logout
@@ -75,6 +74,37 @@ class _AdminPanelState extends State<AdminPanel> {
         break;
       default:
     }
+  }
+
+  Widget _listViewItemBuilder(BuildContext context, int index) {
+    final targetDirectory = _protocolDirectories.keys.toList()[index];
+    final directoryName = targetDirectory.split('/').last;
+    final fileList = _protocolDirectories[targetDirectory];
+    return Card(
+      child: ExpansionTile(
+        title: Text(directoryName, style: Styles.textDefault),
+        children: _buildExpandableContent(fileList!),
+      )
+    );
+  }
+
+  List<Widget> _buildExpandableContent(List<File> list) {
+    return list.map((file) => 
+      Card(
+        child: ListTile(
+          title: Text(_parseFileName(file), style: Styles.textDefault),
+          onTap: () => _renderAdminMenu(file),
+        )
+      )
+    ).toList();
+  }
+
+  void _renderAdminMenu(File file) {
+    
+  }
+
+  String _parseFileName(File file) {
+    return file.path.split('/').last.split('.').first;
   }
 
   void _handleLogout(BuildContext context) {

@@ -54,17 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<void> _loadFiles() async {
-    _storageHelper.updateFileState();
-    final files = await _storageHelper.directoryMap();
-
-    if (mounted) {
-      setState(() {
-        _protocolDirectories = files as Map<String, List<File>>;
-      });
-    }
-  }
-
   Widget _listViewItemBuilder(BuildContext context, int index) {
     final targetDirectory = _protocolDirectories.keys.toList()[index];
     final directoryName = targetDirectory.split('/').last;
@@ -98,19 +87,25 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<void> _updateFiles(BuildContext context) async {
+  Future<void> _loadFiles() async {
     _storageHelper.updateFileState();
-    final fileList = await _storageHelper.directoryMap();
+    final directoryMap = await _storageHelper.directoryMap();
 
-    setState(() {
-      _protocolDirectories = fileList as Map<String, List<File>>;
-    });
+    if (mounted) {
+      setState(() {
+        _protocolDirectories = directoryMap as Map<String, List<File>>;
+      });
+    }
+  }
+
+  Future<void> _updateFiles(BuildContext context) async {
+    _loadFiles();
 
     ScaffoldMessenger.of(context)
       .showSnackBar(
         SnackBar(
           backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Files updated.', textAlign: TextAlign.center)
+          content: const Text('Checking for new files...', textAlign: TextAlign.center)
         )
       );
   }

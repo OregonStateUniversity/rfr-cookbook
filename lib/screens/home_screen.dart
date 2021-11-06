@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/pdf.dart';
+import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/search.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/styles.dart';
@@ -18,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final StorageHelper _storageHelper = StorageHelper();
-  Map<String, List<File>> _protocolDirectories = {};
+  Map<String, List<StoredItem>> _storageMap = {};
 
   @override
   void initState() {
@@ -48,16 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: ListView.builder(
-        itemCount: _protocolDirectories.length,
+        itemCount: _storageMap.length,
         itemBuilder: _listViewItemBuilder,
       )
     );
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
-    final targetDirectory = _protocolDirectories.keys.toList()[index];
+    final targetDirectory = _storageMap.keys.toList()[index];
     final directoryName = targetDirectory.split('/').last;
-    final fileList = _protocolDirectories[targetDirectory];
+    final fileList = _storageMap[targetDirectory];
     return Card(
       child: ListTile(
           trailing: const Icon(Icons.arrow_forward_ios_rounded),
@@ -67,11 +68,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _navigationToPdfList(BuildContext context, String sectionTitle, List<File> fileList) {
+  void _navigationToPdfList(BuildContext context, String sectionTitle, List<StoredItem> fileList) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => PdfList(
-        fileList.map((file) => Pdf(title: _parseFileName(file), fileObject: file)).toList(),
+        fileList.map((file) => Pdf(title: file.fileName, fileObject: file.localFile)).toList(),
         sectionTitle)
       )
     );
@@ -89,11 +90,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadFiles() async {
     _storageHelper.updateFileState();
-    final directoryMap = await _storageHelper.directoryMap();
+    final storageMap = await _storageHelper.storageMap();
 
     if (mounted) {
       setState(() {
-        _protocolDirectories = directoryMap as Map<String, List<File>>;
+        _storageMap = storageMap;
       });
     }
   }
@@ -108,9 +109,5 @@ class _HomeScreenState extends State<HomeScreen> {
           content: const Text('Checking for new files...', textAlign: TextAlign.center)
         )
       );
-  }
-
-  String _parseFileName(File file) {
-    return file.path.split('/').last.split('.').first;
   }
 }

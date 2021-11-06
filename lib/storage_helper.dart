@@ -2,39 +2,68 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:rfr_cookbook/models/stored_item.dart';
 
 class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
 
   Future<void> updateFileState() async {
     _verifyRootExists();
-    _updateFiles();
+    _updateLocalFiles();
   }
 
-  Future<Map> directoryMap() async {
-    Map<String, List<File>> protocols = {};
+  Future<Map<String, List<StoredItem>>> storageMap() async {
+    Map<String, List<StoredItem>> storageMap = {};
     final Directory appDocDir = await getApplicationDocumentsDirectory();
 
     await for (final directory in Directory('${appDocDir.path}/protocols').list()) {
       directory as Directory;
 
-      protocols[directory.path] = [];
+      storageMap[directory.path] = [];
 
       await for (final file in directory.list()) {
-        protocols[directory.path]!.add(file as File);
+        storageMap[directory.path]!.add(
+          StoredItem(
+            fileName: file.path.split('/').last.split('.').first,
+            localFile: file as File,
+            remoteReference: _storageInstance
+              .ref()
+              .child('/protocols')
+              .child(file.parent.toString().split('/').last)
+              .child(file.path.split('/').last.split('.').first)
+          )
+        );
       }
     }
 
-    // sort keys
-    final sortedKeys = protocols.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
-    protocols = { for (final k in sortedKeys) k : protocols[k]! };
+        // sort keys
+    final sortedKeys = storageMap.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
+    storageMap = { for (final k in sortedKeys) k : storageMap[k]! };
     
     // sort lists
-    for (final list in protocols.values) {
-      list.sort((a, b) => a.path.compareTo(b.path));
+    for (final list in storageMap.values) {
+      list.sort((a, b) => a.fileName.compareTo(b.fileName));
     }
 
-    return protocols;
+    return storageMap;
+  }
+
+  Future<void> uploadFileWithMetadata(String localPath, String remotePath) async {
+    File file = File(localPath);
+
+    SettableMetadata metadata = SettableMetadata(
+      customMetadata: <String, String>{'md5Hash': await _generateMd5(file)}
+    );
+
+    try {
+      await _storageInstance.ref(remotePath).putFile(file, metadata);
+    } on FirebaseException catch (e) {
+      throw e.code;
+    }
+  }
+
+  Future<void> deleteFile(File file) async {
+    print(file.toString().split('/'));
   }
 
   Future<void> _verifyRootExists() async {
@@ -46,8 +75,8 @@ class StorageHelper {
     }
   }
 
-  Future<void> _updateFiles() async {
-    final ListResult remoteParentDirectories = 
+  Future<void> _updateLocalFiles() async {
+    var remoteParentDirectories = 
       await _storageInstance.ref('protocols/').listAll();
 
     for (Reference parentDirectory in remoteParentDirectories.prefixes) {
@@ -65,20 +94,6 @@ class StorageHelper {
   Future<void> _deleteLocalRootDirectory() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     Directory(appDocDir.path + '/protocols').delete(recursive: true);
-  }
-
-  Future<void> _uploadFileWithMetadata(String localPath, String remotePath) async {
-    File file = File(localPath);
-
-    SettableMetadata metadata = SettableMetadata(
-      customMetadata: <String, String>{'md5Hash': await _generateMd5(file)}
-    );
-
-    try {
-      await _storageInstance.ref(remotePath).putFile(file, metadata);
-    } on FirebaseException catch (e) {
-      throw e.code;
-    }
   }
 
   Future<void> _downloadFile(String path) async {

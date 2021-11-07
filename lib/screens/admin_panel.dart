@@ -28,7 +28,11 @@ class _AdminPanelState extends State<AdminPanel> {
         title: const Text('Admin Panel', style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
         actions: [
-          _renderPopupMenu(context)
+          IconButton(
+            onPressed: () => _updateFiles(context),
+            icon: const Icon(Icons.refresh)
+          ),
+          _renderPopupMenu(context),
         ],
       ),
       body: ListView.builder(
@@ -39,6 +43,7 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   Future<void> _loadFiles() async {
+    _storageHelper.updateFileState();
     final storageMap = await _storageHelper.localStorageMap();
 
     if (mounted) {
@@ -46,6 +51,18 @@ class _AdminPanelState extends State<AdminPanel> {
         _storageMap = storageMap;
       });
     }
+  }
+
+  Future<void> _updateFiles(BuildContext context) async {
+    _loadFiles();
+
+    ScaffoldMessenger.of(context)
+      .showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.black.withOpacity(0.5),
+          content: const Text('Checking for new files...', textAlign: TextAlign.center)
+        )
+      );
   }
 
   Widget _renderPopupMenu(BuildContext context) {
@@ -104,10 +121,37 @@ class _AdminPanelState extends State<AdminPanel> {
           content: Text('Delete "${file.name}"?'),
           action: SnackBarAction(
             label: 'Delete',
-            onPressed: () => _storageHelper.deleteFile(file),
+            onPressed: () => _handleDelete(context, file),
           ),
         )
       );
+  }
+
+  void _handleDelete(BuildContext context, StoredItem file) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Are you sure you want to delete "${file.name}"?'),
+          actions: [
+            TextButton(
+              child: Text('Yes', style: Styles.textDefault),
+              onPressed: () {
+                _storageHelper.deleteFile(file);
+                _loadFiles();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('No', style: Styles.textDefault),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      }
+    );
   }
 
   void _handleLogout(BuildContext context) {

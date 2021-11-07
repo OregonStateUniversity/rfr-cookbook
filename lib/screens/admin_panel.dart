@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/styles.dart';
 
@@ -13,7 +14,7 @@ class AdminPanel extends StatefulWidget {
 
 class _AdminPanelState extends State<AdminPanel> {
   final StorageHelper _storageHelper = StorageHelper();
-  Map<String, List<File>> _protocolDirectories = {};
+  Map<String, List<StoredItem>> _storageMap = {};
 
   @override
   void initState() {
@@ -32,18 +33,18 @@ class _AdminPanelState extends State<AdminPanel> {
         ],
       ),
       body: ListView.builder(
-        itemCount: _protocolDirectories.length,
+        itemCount: _storageMap.length,
         itemBuilder: _listViewItemBuilder
       )
     );
   }
 
   Future<void> _loadFiles() async {
-    final files = await _storageHelper.directoryMap();
+    final storageMap = await _storageHelper.storageMap();
 
     if (mounted) {
       setState(() {
-        _protocolDirectories = files as Map<String, List<File>>;
+        _storageMap = storageMap;
       });
     }
   }
@@ -75,9 +76,9 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
-    final targetDirectory = _protocolDirectories.keys.toList()[index];
+    final targetDirectory = _storageMap.keys.toList()[index];
     final directoryName = targetDirectory.split('/').last;
-    final fileList = _protocolDirectories[targetDirectory];
+    final fileList = _storageMap[targetDirectory];
     return Card(
       child: ExpansionTile(
         title: Text(directoryName, style: Styles.textDefault),
@@ -86,32 +87,28 @@ class _AdminPanelState extends State<AdminPanel> {
     );
   }
 
-  List<Widget> _buildExpandableContent(BuildContext context, List<File> list) {
+  List<Widget> _buildExpandableContent(BuildContext context, List<StoredItem> list) {
     return list.map((file) => 
       Card(
         child: ListTile(
-          title: Text(_parseFileName(file), style: Styles.textDefault),
+          title: Text(file.fileName, style: Styles.textDefault),
           onTap: () => _renderActionSnackbar(context, file),
         )
       )
     ).toList();
   }
 
-  void _renderActionSnackbar(BuildContext context, File file) {
+  void _renderActionSnackbar(BuildContext context, StoredItem file) {
     ScaffoldMessenger.of(context)
       .showSnackBar(
         SnackBar(
-          content: Text('Delete "${_parseFileName(file)}"?'),
+          content: Text('Delete "${file.fileName}"?'),
           action: SnackBarAction(
             label: 'Delete',
             onPressed: () => _storageHelper.deleteFile(file),
           ),
         )
       );
-  }
-
-  String _parseFileName(File file) {
-    return file.path.split('/').last.split('.').first;
   }
 
   void _handleLogout(BuildContext context) {

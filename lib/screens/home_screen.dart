@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:rfr_cookbook/models/pdf.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/search.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
@@ -71,9 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void _navigationToPdfList(BuildContext context, String sectionTitle, List<StoredItem> fileList) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PdfList(
-        fileList.map((file) => Pdf(title: file.fileName, fileObject: file.localFile)).toList(),
-        sectionTitle)
+      MaterialPageRoute(builder: (context) => 
+        FileList(
+          fileList,
+          sectionTitle
+        )
       )
     );
   }

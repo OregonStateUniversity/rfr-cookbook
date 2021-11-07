@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:rfr_cookbook/models/pdf.dart';
+import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/styles.dart';
 import 'pdf_detail.dart';
 
-class PdfList extends StatelessWidget {
-  final List<Pdf> _pdfList;
+class FileList extends StatelessWidget {
+  final List<StoredItem> _fileList;
   final String _sectionTitle;
 
-  const PdfList(
-    this._pdfList,
+  const FileList(
+    this._fileList,
     this._sectionTitle,
     {Key? key}
   ) : super(key: key);
@@ -21,28 +21,28 @@ class PdfList extends StatelessWidget {
         backgroundColor: Styles.navBarColor,
       ),
       body: ListView.builder(
-        itemCount: _pdfList.length,
+        itemCount: _fileList.length,
         itemBuilder: _listViewItemBuilder,
       ),
     );
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
-    final pdf = _pdfList[index];
+    final pdf = _fileList[index];
     return Card(
       child: ListTile(
         trailing: const Icon(Icons.arrow_forward_ios_rounded),
-        title: Text(pdf.title, style: Styles.textDefault),
+        title: Text(pdf.fileName, style: Styles.textDefault),
         onTap: () => _navigationToDetail(context, pdf)
       )
     );
   }
 
-  void _navigationToDetail(BuildContext context, Pdf pdf) {
+  void _navigationToDetail(BuildContext context, StoredItem file) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PdfDetail(pdf)
+        builder: (context) => PdfDetail(file)
       )
     );
   }

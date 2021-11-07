@@ -22,15 +22,17 @@ class StorageHelper {
       storageMap[directory.path] = [];
 
       await for (final file in directory.list()) {
+        final fileName = file.path.split('/').last;
+        final parentDirectory = file.parent.toString().split('/').last;
         storageMap[directory.path]!.add(
           StoredItem(
-            fileName: file.path.split('/').last.split('.').first,
+            fileName: fileName.split('.').first,
             localFile: file as File,
             remoteReference: _storageInstance
               .ref()
               .child('/protocols')
-              .child(file.parent.toString().split('/').last)
-              .child(file.path.split('/').last.split('.').first)
+              .child(parentDirectory)
+              .child(fileName)
           )
         );
       }
@@ -62,8 +64,9 @@ class StorageHelper {
     }
   }
 
-  Future<void> deleteFile(File file) async {
-    print(file.toString().split('/'));
+  Future<void> deleteFile(StoredItem file) async {
+    print(file.localFile);
+    print(file.remoteReference);
   }
 
   Future<void> _verifyRootExists() async {

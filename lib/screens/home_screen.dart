@@ -5,7 +5,7 @@ import 'package:rfr_cookbook/search.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/styles.dart';
 import 'admin_panel.dart';
-import 'pdf_list.dart';
+import 'file_list.dart';
 import 'login_form.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -70,10 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => 
-        FileList(
-          fileList,
-          sectionTitle
-        )
+        FileList(fileList, sectionTitle)
       )
     );
   }

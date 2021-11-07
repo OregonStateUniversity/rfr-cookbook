@@ -4,18 +4,18 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:rfr_cookbook/styles.dart';
 
 class FileDetail extends StatelessWidget {
-  final StoredItem _pdf;
+  final StoredItem _file;
 
-  const FileDetail(this._pdf, {Key? key}) : super(key: key);
+  const FileDetail(this._file, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_pdf.fileName, style: Styles.navBarTitle),
+        title: Text(_file.name, style: Styles.navBarTitle),
         backgroundColor: Styles.navBarColor,
       ),
-      body: SfPdfViewer.file(_pdf.localFile),
+      body: SfPdfViewer.file(_file.localFile),
     );
   }
 }

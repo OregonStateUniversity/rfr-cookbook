@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
@@ -40,7 +39,7 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   Future<void> _loadFiles() async {
-    final storageMap = await _storageHelper.storageMap();
+    final storageMap = await _storageHelper.localStorageMap();
 
     if (mounted) {
       setState(() {
@@ -91,7 +90,7 @@ class _AdminPanelState extends State<AdminPanel> {
     return list.map((file) => 
       Card(
         child: ListTile(
-          title: Text(file.fileName, style: Styles.textDefault),
+          title: Text(file.name, style: Styles.textDefault),
           onTap: () => _renderActionSnackbar(context, file),
         )
       )
@@ -102,7 +101,7 @@ class _AdminPanelState extends State<AdminPanel> {
     ScaffoldMessenger.of(context)
       .showSnackBar(
         SnackBar(
-          content: Text('Delete "${file.fileName}"?'),
+          content: Text('Delete "${file.name}"?'),
           action: SnackBarAction(
             label: 'Delete',
             onPressed: () => _storageHelper.deleteFile(file),

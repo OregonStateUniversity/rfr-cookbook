@@ -32,7 +32,7 @@ class FileList extends StatelessWidget {
     return Card(
       child: ListTile(
         trailing: const Icon(Icons.arrow_forward_ios_rounded),
-        title: Text(pdf.fileName, style: Styles.textDefault),
+        title: Text(pdf.name, style: Styles.textDefault),
         onTap: () => _navigationToDetail(context, pdf)
       )
     );

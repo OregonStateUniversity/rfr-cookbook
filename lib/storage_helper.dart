@@ -12,7 +12,7 @@ class StorageHelper {
     _updateLocalFiles();
   }
 
-  Future<Map<String, List<StoredItem>>> storageMap() async {
+  Future<Map<String, List<StoredItem>>> localStorageMap() async {
     Map<String, List<StoredItem>> storageMap = {};
     final Directory appDocDir = await getApplicationDocumentsDirectory();
 
@@ -26,7 +26,7 @@ class StorageHelper {
         final parentDirectory = file.parent.toString().split('/').last;
         storageMap[directory.path]!.add(
           StoredItem(
-            fileName: fileName.split('.').first,
+            name: fileName.split('.').first,
             localFile: file as File,
             remoteReference: _storageInstance
               .ref()
@@ -38,13 +38,13 @@ class StorageHelper {
       }
     }
 
-        // sort keys
+    // sort keys
     final sortedKeys = storageMap.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
     storageMap = { for (final k in sortedKeys) k : storageMap[k]! };
     
     // sort lists
     for (final list in storageMap.values) {
-      list.sort((a, b) => a.fileName.compareTo(b.fileName));
+      list.sort((a, b) => a.name.compareTo(b.name));
     }
 
     return storageMap;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
+import 'package:rfr_cookbook/screens/file_detail.dart';
 import 'package:rfr_cookbook/styles.dart';
-import 'pdf_detail.dart';
 
 class FileList extends StatelessWidget {
   final List<StoredItem> _fileList;
@@ -42,7 +42,7 @@ class FileList extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PdfDetail(file)
+        builder: (context) => FileDetail(file)
       )
     );
   }

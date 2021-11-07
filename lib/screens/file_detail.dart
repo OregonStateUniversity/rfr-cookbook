@@ -3,10 +3,10 @@ import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:rfr_cookbook/styles.dart';
 
-class PdfDetail extends StatelessWidget {
+class FileDetail extends StatelessWidget {
   final StoredItem _pdf;
 
-  const PdfDetail(this._pdf, {Key? key}) : super(key: key);
+  const FileDetail(this._pdf, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

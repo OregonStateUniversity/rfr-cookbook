@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
@@ -26,7 +29,7 @@ class _AdminPanelState extends State<AdminPanel> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Panel', style: Styles.navBarTitle),
-        backgroundColor: Styles.navBarColor,
+        backgroundColor: Styles.themeColor,
         actions: [
           IconButton(
             onPressed: () => _updateFiles(context),
@@ -42,7 +45,7 @@ class _AdminPanelState extends State<AdminPanel> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => _handleAddition(context),
         child: const Icon(Icons.add),
-        backgroundColor: Colors.red
+        backgroundColor: Styles.themeColor
       ),
     );
   }
@@ -77,10 +80,10 @@ class _AdminPanelState extends State<AdminPanel> {
         PopupMenuItem(
           value: 0,
           child: Row(
-            children: const [
-              Icon(Icons.logout, color: Colors.red),
-              SizedBox(width: 7),
-              Text('Logout')
+            children: [
+              Icon(Icons.logout, color: Styles.themeColor),
+              const SizedBox(width: 7),
+              const Text('Logout')
             ])
         )
       ]
@@ -132,8 +135,16 @@ class _AdminPanelState extends State<AdminPanel> {
       );
   }
 
-  void _handleAddition(BuildContext context) {
-    
+  Future<void> _handleAddition(BuildContext context) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+      allowMultiple: true,
+    );
+
+    if (result != null) {
+      List<File> files = result.paths.map((path) => File(path!)).toList();
+    }
   }
 
   void _handleDelete(BuildContext context, StoredItem file) {

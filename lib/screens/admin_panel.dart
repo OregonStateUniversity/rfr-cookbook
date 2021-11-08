@@ -38,7 +38,12 @@ class _AdminPanelState extends State<AdminPanel> {
       body: ListView.builder(
         itemCount: _storageMap.length,
         itemBuilder: _listViewItemBuilder
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _handleAddition(context),
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.red
+      ),
     );
   }
 
@@ -125,6 +130,10 @@ class _AdminPanelState extends State<AdminPanel> {
           ),
         )
       );
+  }
+
+  void _handleAddition(BuildContext context) {
+    
   }
 
   void _handleDelete(BuildContext context, StoredItem file) {

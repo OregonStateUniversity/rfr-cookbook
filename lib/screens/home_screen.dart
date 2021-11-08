@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('theCookbook', style: Styles.navBarTitle),
-        backgroundColor: Styles.navBarColor,
+        backgroundColor: Styles.themeColor,
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () => _navigationToAdminPanel(context),

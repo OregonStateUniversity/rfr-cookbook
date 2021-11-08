@@ -13,7 +13,7 @@ class FileDetail extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(_file.name, style: Styles.navBarTitle),
-        backgroundColor: Styles.navBarColor,
+        backgroundColor: Styles.themeColor,
       ),
       body: SfPdfViewer.file(_file.localFile),
     );

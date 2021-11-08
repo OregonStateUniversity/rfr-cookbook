@@ -22,7 +22,7 @@ class _LoginFormState extends State<LoginForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Login', style: Styles.navBarTitle),
-        backgroundColor: Styles.navBarColor
+        backgroundColor: Styles.themeColor
         ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),

@@ -18,7 +18,7 @@ class FileList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(_sectionTitle, style: Styles.navBarTitle),
-        backgroundColor: Styles.navBarColor,
+        backgroundColor: Styles.themeColor,
       ),
       body: ListView.builder(
         itemCount: _fileList.length,

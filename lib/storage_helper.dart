@@ -12,7 +12,7 @@ class StorageHelper {
     _updateLocalFiles();
   }
 
-  Future<Map<String, List<StoredItem>>> localStorageMap() async {
+  Future<Map<String, List<StoredItem>>> storageMap() async {
     Map<String, List<StoredItem>> storageMap = {};
     final Directory appDocDir = await getApplicationDocumentsDirectory();
 
@@ -23,16 +23,13 @@ class StorageHelper {
 
       await for (final file in directory.list()) {
         final fileName = file.path.split('/').last;
-        final parentDirectory = file.parent.toString().split('/').last;
+        final parentDirectory = file.parent.toString().split('/').last.replaceAll('\'', '');
         storageMap[directory.path]!.add(
           StoredItem(
             name: fileName.split('.').first,
             localFile: file as File,
             remoteReference: _storageInstance
-              .ref()
-              .child('/protocols')
-              .child(parentDirectory)
-              .child(fileName)
+              .ref('protocols/$parentDirectory/$fileName.pdf')
           )
         );
       }
@@ -50,8 +47,7 @@ class StorageHelper {
     return storageMap;
   }
 
-  Future<void> uploadFileWithMetadata(String localPath, String remotePath) async {
-    File file = File(localPath);
+  Future<void> uploadFileWithMetadata(File file, String remotePath) async {
 
     SettableMetadata metadata = SettableMetadata(
       customMetadata: <String, String>{'md5Hash': await _generateMd5(file)}
@@ -65,8 +61,8 @@ class StorageHelper {
   }
 
   Future<void> deleteFile(StoredItem file) async {
-    print(file.localFile);
-    print(file.remoteReference);
+    file.localFile.delete();
+    file.remoteReference.delete();
   }
 
   Future<void> _verifyRootExists() async {

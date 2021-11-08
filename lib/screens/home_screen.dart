@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadFiles() async {
     _storageHelper.updateFileState();
-    final storageMap = await _storageHelper.localStorageMap();
+    final storageMap = await _storageHelper.storageMap();
 
     if (mounted) {
       setState(() {

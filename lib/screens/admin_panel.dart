@@ -50,6 +50,29 @@ class _AdminPanelState extends State<AdminPanel> {
     );
   }
 
+  Widget _listViewItemBuilder(BuildContext context, int index) {
+    final targetDirectory = _storageMap.keys.toList()[index];
+    final directoryName = targetDirectory.split('/').last;
+    final fileList = _storageMap[targetDirectory];
+    return Card(
+      child: ExpansionTile(
+        title: Text(directoryName, style: Styles.textDefault),
+        children: _buildExpandableContent(context, fileList!),
+      )
+    );
+  }
+
+  List<Widget> _buildExpandableContent(BuildContext context, List<StoredItem> list) {
+    return list.map((file) => 
+      Card(
+        child: ListTile(
+          title: Text(file.name, style: Styles.textDefault),
+          onTap: () => _renderActionSnackbar(context, file),
+        )
+      )
+    ).toList();
+  }
+
   Future<void> _loadFiles() async {
     _storageHelper.updateFileState();
     final storageMap = await _storageHelper.storageMap();
@@ -112,29 +135,6 @@ class _AdminPanelState extends State<AdminPanel> {
     }
   }
 
-  Widget _listViewItemBuilder(BuildContext context, int index) {
-    final targetDirectory = _storageMap.keys.toList()[index];
-    final directoryName = targetDirectory.split('/').last;
-    final fileList = _storageMap[targetDirectory];
-    return Card(
-      child: ExpansionTile(
-        title: Text(directoryName, style: Styles.textDefault),
-        children: _buildExpandableContent(context, fileList!),
-      )
-    );
-  }
-
-  List<Widget> _buildExpandableContent(BuildContext context, List<StoredItem> list) {
-    return list.map((file) => 
-      Card(
-        child: ListTile(
-          title: Text(file.name, style: Styles.textDefault),
-          onTap: () => _renderActionSnackbar(context, file),
-        )
-      )
-    ).toList();
-  }
-
   void _renderActionSnackbar(BuildContext context, StoredItem file) {
     ScaffoldMessenger.of(context)
       .showSnackBar(
@@ -146,6 +146,31 @@ class _AdminPanelState extends State<AdminPanel> {
           ),
         )
       );
+  }
+
+  void _handleDelete(BuildContext context, StoredItem file) {
+    showPlatformDialog(
+      context: context,
+      builder: (context) => BasicDialogAlert(
+        title: Text('Are you sure you want to delete "${file.name}"?'),
+        actions: [
+          BasicDialogAction(
+            title: Text('Yes', style: Styles.textDefault),
+            onPressed: () {
+              _storageHelper.deleteFile(file);
+              _loadFiles();
+              Navigator.of(context).pop();
+            },
+          ),
+          BasicDialogAction(
+            title: Text('No', style: Styles.textDefault),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      )
+    );
   }
 
   Future<void> _handleAddition(BuildContext context) async {
@@ -186,35 +211,10 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   void _handleStorage(String directory, List<File> files) {
-    print(directory);
-    print(files);
-  }
-
-  void _handleDelete(BuildContext context, StoredItem file) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Are you sure you want to delete "${file.name}"?'),
-          actions: [
-            TextButton(
-              child: Text('Yes', style: Styles.textDefault),
-              onPressed: () {
-                _storageHelper.deleteFile(file);
-                _loadFiles();
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('No', style: Styles.textDefault),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        );
-      }
-    );
+    for (final file in files) {
+      final fileName = file.path.split('/').last.split('.').first;
+      _storageHelper.uploadFileWithMetadata(file, '/protocols/$directory/$fileName');
+    }
   }
 
   void _handleLogout(BuildContext context) {

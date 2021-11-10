@@ -7,14 +7,14 @@ import 'package:rfr_cookbook/models/stored_item.dart';
 class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
 
-  Future<void> updateFileState() async {
+  void updateFileState() {
     _verifyRootExists();
     _updateLocalFiles();
   }
 
   Future<Map<String, List<StoredItem>>> storageMap() async {
-    Map<String, List<StoredItem>> storageMap = {};
     final Directory appDocDir = await getApplicationDocumentsDirectory();
+    Map<String, List<StoredItem>> storageMap = {};
 
     await for (final directory in Directory('${appDocDir.path}/protocols').list()) {
       directory as Directory;
@@ -90,7 +90,7 @@ class StorageHelper {
     }
   }
 
-  Future<void> _deleteLocalRootDirectory() async {
+  Future<void> deleteLocalRootDirectory() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     Directory(appDocDir.path + '/protocols').delete(recursive: true);
   }

@@ -220,7 +220,7 @@ class _AdminPanelState extends State<AdminPanel> {
       .showSnackBar(
         SnackBar(
           backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('File being uploaded...', textAlign: TextAlign.center)
+          content: const Text('Uploading file to server...', textAlign: TextAlign.center)
         )
       );
   }

@@ -29,7 +29,7 @@ class StorageHelper {
             name: fileName.split('.').first,
             localFile: file as File,
             remoteReference: _storageInstance
-              .ref('protocols/$parentDirectory/$fileName.pdf')
+              .ref('protocols/$parentDirectory/$fileName')
           )
         );
       }

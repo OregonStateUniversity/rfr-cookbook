@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +78,16 @@ class _AdminPanelState extends State<AdminPanel> {
       onSelected: (item) => _selectedItem(context, item as int),
       itemBuilder: (context) => [
         PopupMenuItem(
+          value: 1,
+          child: Row(
+            children: [
+              Icon(Icons.delete, color: Styles.themeColor),
+              const SizedBox(width: 7),
+              const Text('Delete Local Root Directory')
+            ],
+          )
+        ),
+        PopupMenuItem(
           value: 0,
           child: Row(
             children: [
@@ -85,7 +95,7 @@ class _AdminPanelState extends State<AdminPanel> {
               const SizedBox(width: 7),
               const Text('Logout')
             ])
-        )
+        ),
       ]
     );
   }
@@ -94,6 +104,9 @@ class _AdminPanelState extends State<AdminPanel> {
     switch (item) {
       case 0: // logout
         _handleLogout(context);
+        break;
+      case 1: // delete root directory
+        _storageHelper.deleteLocalRootDirectory();
         break;
       default:
     }
@@ -143,8 +156,38 @@ class _AdminPanelState extends State<AdminPanel> {
     );
 
     if (result != null) {
-      List<File> files = result.paths.map((path) => File(path!)).toList();
+      final List<File> files = result.paths.map((path) => File(path!)).toList();
+      final parentDirectories = _storageMap.keys.map((name) => name.split('/').last).toList();
+
+      showPlatformDialog(
+        context: context,
+        builder: (context) => BasicDialogAlert(
+          title: Text('Select a directory in which to store:', style: Styles.textDefault),
+          content: SizedBox(
+            height: 400.0,
+            child: ListView.builder(
+              itemCount: parentDirectories.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    title: Text(parentDirectories[index], style: Styles.textDefault),
+                    onTap: () {
+                      Navigator.of(context).pop();  
+                      _handleStorage(parentDirectories[index], files);
+                    },
+                  )
+                );
+              }
+            ),
+          )
+        )
+      );
     }
+  }
+
+  void _handleStorage(String directory, List<File> files) {
+    print(directory);
+    print(files);
   }
 
   void _handleDelete(BuildContext context, StoredItem file) {

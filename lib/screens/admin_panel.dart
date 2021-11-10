@@ -198,7 +198,7 @@ class _AdminPanelState extends State<AdminPanel> {
                     title: Text(parentDirectories[index], style: Styles.textDefault),
                     onTap: () {
                       Navigator.of(context).pop();  
-                      _handleStorage(parentDirectories[index], files);
+                      _handleStorage(context, parentDirectories[index], files);
                     },
                   )
                 );
@@ -210,11 +210,19 @@ class _AdminPanelState extends State<AdminPanel> {
     }
   }
 
-  void _handleStorage(String directory, List<File> files) {
+  void _handleStorage(BuildContext context, String directory, List<File> files) {
     for (final file in files) {
-      final fileName = file.path.split('/').last.split('.').first;
+      final fileName = file.path.split('/').last;
       _storageHelper.uploadFileWithMetadata(file, '/protocols/$directory/$fileName');
     }
+
+    ScaffoldMessenger.of(context)
+      .showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.black.withOpacity(0.5),
+          content: const Text('File being uploaded...', textAlign: TextAlign.center)
+        )
+      );
   }
 
   void _handleLogout(BuildContext context) {

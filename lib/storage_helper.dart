@@ -48,21 +48,25 @@ class StorageHelper {
   }
 
   Future<void> uploadFileWithMetadata(File file, String remotePath) async {
-
     SettableMetadata metadata = SettableMetadata(
       customMetadata: <String, String>{'md5Hash': await _generateMd5(file)}
     );
 
     try {
-      await _storageInstance.ref(remotePath).putFile(file, metadata);
+      _storageInstance.ref(remotePath).putFile(file, metadata);
     } on FirebaseException catch (e) {
       throw e.code;
     }
   }
 
-  Future<void> deleteFile(StoredItem file) async {
+  void deleteFile(StoredItem file) {
     file.localFile.delete();
     file.remoteReference.delete();
+  }
+
+  Future<void> deleteLocalRootDirectory() async {
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    Directory(appDocDir.path + '/protocols').delete(recursive: true);
   }
 
   Future<void> _verifyRootExists() async {
@@ -88,11 +92,6 @@ class StorageHelper {
         }
       }
     }
-  }
-
-  Future<void> deleteLocalRootDirectory() async {
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
-    Directory(appDocDir.path + '/protocols').delete(recursive: true);
   }
 
   Future<void> _downloadFile(String path) async {

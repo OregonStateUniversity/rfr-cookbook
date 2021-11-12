@@ -164,9 +164,7 @@ class _AdminPanelState extends State<AdminPanel> {
           ),
           BasicDialogAction(
             title: Text('No', style: Styles.textDefault),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => Navigator.of(context).pop(),
           )
         ],
       )
@@ -187,6 +185,12 @@ class _AdminPanelState extends State<AdminPanel> {
       showPlatformDialog(
         context: context,
         builder: (context) => BasicDialogAlert(
+          actions: [
+            BasicDialogAction(
+              title: Text('Cancel', style: Styles.textDefault),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
           title: Text('Select a directory in which to store:', style: Styles.textDefault),
           content: SizedBox(
             height: 400.0,
@@ -198,7 +202,7 @@ class _AdminPanelState extends State<AdminPanel> {
                     title: Text(parentDirectories[index], style: Styles.textDefault),
                     onTap: () {
                       Navigator.of(context).pop();  
-                      _handleStorage(parentDirectories[index], files);
+                      _handleStorage(context, parentDirectories[index], files);
                     },
                   )
                 );
@@ -210,11 +214,19 @@ class _AdminPanelState extends State<AdminPanel> {
     }
   }
 
-  void _handleStorage(String directory, List<File> files) {
+  void _handleStorage(BuildContext context, String directory, List<File> files) {
     for (final file in files) {
-      final fileName = file.path.split('/').last.split('.').first;
+      final fileName = file.path.split('/').last;
       _storageHelper.uploadFileWithMetadata(file, '/protocols/$directory/$fileName');
     }
+
+    ScaffoldMessenger.of(context)
+      .showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.black.withOpacity(0.5),
+          content: const Text('Uploading file to server...', textAlign: TextAlign.center)
+        )
+      );
   }
 
   void _handleLogout(BuildContext context) {

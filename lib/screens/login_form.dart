@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:rfr_cookbook/screens/admin_panel.dart';
 import 'package:rfr_cookbook/styles.dart';
 
 class LoginForm extends StatefulWidget {
@@ -21,7 +22,7 @@ class _LoginFormState extends State<LoginForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Login', style: Styles.navBarTitle),
-        backgroundColor: Styles.navBarColor
+        backgroundColor: Styles.themeColor
         ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
@@ -89,10 +90,18 @@ class _LoginFormState extends State<LoginForm> {
 
   void _successfulSignIn(BuildContext context) {
     Navigator.of(context).pop();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AdminPanel()
+      )
+    );
+
     ScaffoldMessenger.of(context)
       .showSnackBar(
-        const SnackBar(
-          content: Text('Logged in as administrator.', textAlign: TextAlign.center)
+        SnackBar(
+          backgroundColor: Colors.black.withOpacity(0.5),
+          content: const Text('Logged in as administrator.', textAlign: TextAlign.center)
         )
       );
   }
@@ -100,8 +109,9 @@ class _LoginFormState extends State<LoginForm> {
   void _invalidCredentialsSnackbar(BuildContext context) {
     ScaffoldMessenger.of(context)
       .showSnackBar(
-        const SnackBar(
-          content: Text('Invalid credientails.', textAlign: TextAlign.center)
+        SnackBar(
+          backgroundColor: Colors.black.withOpacity(0.5),
+          content: const Text('Invalid credientails.', textAlign: TextAlign.center)
         )
       );
   }

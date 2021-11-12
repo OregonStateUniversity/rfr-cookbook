@@ -14,7 +14,7 @@ class Styles {
     fontSize: _textSizeNavBar,
   );
 
-  static final navBarColor = _fireEngineRed;
+  static final themeColor = _fireEngineRed;
 
   static final textDefault = TextStyle(
     fontFamily: _fontNameDefault,

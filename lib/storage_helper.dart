@@ -1,80 +1,54 @@
-import 'dart:collection';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:rfr_cookbook/models/stored_item.dart';
 
 class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
 
-  Future<Map> updateFileState() async {
+  void updateFileState() {
     _verifyRootExists();
-    _updateFiles();
-    return _directoryMap;
+    _updateLocalFiles();
   }
 
-  Future<void> _verifyRootExists() async {
-    final appDocDir = await getApplicationDocumentsDirectory();
-    final rootProtocolDir = Directory(appDocDir.path + '/protocols');
-
-    if (!await rootProtocolDir.exists()) {
-      rootProtocolDir.create();
-    }
-  }
-
-  Future<void> _updateFiles() async {
-    final ListResult remoteParentDirectories =
-        await _storageInstance.ref('protocols/').listAll();
-
-    for (Reference parentDirectory in remoteParentDirectories.prefixes) {
-      final ListResult directoryListing =
-          await _storageInstance.ref(parentDirectory.fullPath).listAll();
-
-      for (Reference file in directoryListing.items) {
-        if (!await _md5Match(file)) {
-          _downloadFile(file.fullPath);
-        }
-      }
-    }
-  }
-
-  Future<Map> get _directoryMap async {
-    Map<String, List<File>> protocols = {};
+  Future<Map<String, List<StoredItem>>> storageMap() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
+    Map<String, List<StoredItem>> storageMap = {};
 
     await for (final directory
         in Directory('${appDocDir.path}/protocols').list()) {
       directory as Directory;
 
-      protocols[directory.path] = [];
+      storageMap[directory.path] = [];
 
       await for (final file in directory.list()) {
-        protocols[directory.path]!.add(file as File);
+        final fileName = file.path.split('/').last;
+        final parentDirectory = file.parent.toString().split('/').last.replaceAll('\'', '');
+        storageMap[directory.path]!.add(
+          StoredItem(
+            name: fileName.split('.').first,
+            localFile: file as File,
+            remoteReference: _storageInstance
+              .ref('protocols/$parentDirectory/$fileName')
+          )
+        );
       }
     }
 
     // sort keys
-    var sortedKeys = protocols.keys.toList(growable: false)
-      ..sort((k1, k2) => k1.compareTo(k2));
-    protocols = LinkedHashMap.fromIterable(sortedKeys,
-        key: (k) => k, value: (k) => protocols[k]!);
-
+    final sortedKeys = storageMap.keys.toList(growable: false)..sort((k1, k2) => k1.compareTo(k2));
+    storageMap = { for (final k in sortedKeys) k : storageMap[k]! };
+    
     // sort lists
-    for (var element in protocols.values) {
-      element.sort((a, b) => a.path.compareTo(b.path));
+    for (final list in storageMap.values) {
+      list.sort((a, b) => a.name.compareTo(b.name));
     }
 
-    return protocols;
+    return storageMap;
   }
 
-  Future<void> _deleteLocalRootDirectory() async {
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
-    Directory(appDocDir.path + '/protocols').delete();
-  }
-
-  Future<void> _uploadFileWithMetadata(
-      String localPath, String remotePath) async {
-    File file = File(localPath);
+  Future<void> uploadFileWithMetadata(File file, String remotePath) async {
 
     SettableMetadata metadata = SettableMetadata(
         customMetadata: <String, String>{'md5Hash': await _generateMd5(file)});
@@ -84,6 +58,41 @@ class StorageHelper {
     } on FirebaseException catch (e) {
       throw e.code;
     }
+  }
+
+  Future<void> deleteFile(StoredItem file) async {
+    file.localFile.delete();
+    file.remoteReference.delete();
+  }
+
+  Future<void> _verifyRootExists() async {
+    final appDocDir = await getApplicationDocumentsDirectory();
+    final rootProtocolDir = Directory(appDocDir.path + '/protocols');
+    
+    if (!await rootProtocolDir.exists()) {
+      rootProtocolDir.create();
+    }
+  }
+
+  Future<void> _updateLocalFiles() async {
+    var remoteParentDirectories = 
+      await _storageInstance.ref('protocols/').listAll();
+
+    for (Reference parentDirectory in remoteParentDirectories.prefixes) {
+      final ListResult directoryListing = 
+        await _storageInstance.ref(parentDirectory.fullPath).listAll();
+
+      for (Reference file in directoryListing.items) {
+        if (!await _md5Match(file)) {
+          _downloadFile(file.fullPath);
+        }
+      }
+    }
+  }
+
+  Future<void> deleteLocalRootDirectory() async {
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    Directory(appDocDir.path + '/protocols').delete(recursive: true);
   }
 
   Future<void> _downloadFile(String path) async {

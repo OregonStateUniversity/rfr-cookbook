@@ -164,9 +164,7 @@ class _AdminPanelState extends State<AdminPanel> {
           ),
           BasicDialogAction(
             title: Text('No', style: Styles.textDefault),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => Navigator.of(context).pop(),
           )
         ],
       )
@@ -187,6 +185,12 @@ class _AdminPanelState extends State<AdminPanel> {
       showPlatformDialog(
         context: context,
         builder: (context) => BasicDialogAlert(
+          actions: [
+            BasicDialogAction(
+              title: Text('Cancel', style: Styles.textDefault),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
           title: Text('Select a directory in which to store:', style: Styles.textDefault),
           content: SizedBox(
             height: 400.0,

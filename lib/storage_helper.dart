@@ -16,8 +16,7 @@ class StorageHelper {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     Map<String, List<StoredItem>> storageMap = {};
 
-    await for (final directory
-        in Directory('${appDocDir.path}/protocols').list()) {
+    await for (final directory in Directory('${appDocDir.path}/protocols').list()) {
       directory as Directory;
 
       storageMap[directory.path] = [];
@@ -115,8 +114,7 @@ class StorageHelper {
     final FullMetadata metadata = await file.getMetadata();
 
     if (await localFile.exists()) {
-      return await _generateMd5(localFile) ==
-          metadata.customMetadata!['md5Hash'];
+      return await _generateMd5(localFile) == metadata.customMetadata!['md5Hash'];
     }
 
     return false;

@@ -27,7 +27,7 @@ class SearchBar extends SearchDelegate<String> {
     assert(theme != null);
     return theme.copyWith(
       appBarTheme: AppBarTheme(
-        backgroundColor: Styles.navBarColor,
+        backgroundColor: Styles.themeColor,
         //to-do: change text to white
         //to-do: get rid of weird underline
       )

@@ -37,8 +37,6 @@ class SearchBar extends SearchDelegate<String> {
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: Styles.themeColor,
-        //to-do: change text to white
-        //to-do: get rid of weird underline
       ),
     );
   }

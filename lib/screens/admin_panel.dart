@@ -45,18 +45,19 @@ class _AdminPanelState extends State<AdminPanel> {
       ),
       floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
+        spacing: 10,
         spaceBetweenChildren: 12,
         backgroundColor: Styles.themeColor,
         children: [
           SpeedDialChild(
-            child: const Icon(Icons.file_copy),
-            label: 'Add File',
-            onTap: () => _handleFileAddition(context),
-          ),
-          SpeedDialChild(
             child: const Icon(Icons.folder),
             label: 'Add Folder',
             onTap: () => _handleFolderAddition(context),
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.file_copy),
+            label: 'Add File',
+            onTap: () => _handleFileAddition(context),
           ),
         ],
       ),

@@ -10,5 +10,5 @@ class App extends StatelessWidget {
       title: 'The Cookbook',
       home: HomeScreen(),
     );
-  } 
+  }
 }

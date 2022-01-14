@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/styles.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class AdminPanel extends StatefulWidget {
   const AdminPanel({Key? key}) : super(key: key);
@@ -42,10 +43,23 @@ class _AdminPanelState extends State<AdminPanel> {
         itemCount: _storageMap.length,
         itemBuilder: _listViewItemBuilder
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _handleAddition(context),
-        child: const Icon(Icons.add),
-        backgroundColor: Styles.themeColor
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        spacing: 10,
+        spaceBetweenChildren: 12,
+        backgroundColor: Styles.themeColor,
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.folder),
+            label: 'Add Folder',
+            onTap: () => _handleFolderAddition(context),
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.file_copy),
+            label: 'Add File',
+            onTap: () => _handleFileAddition(context),
+          ),
+        ],
       ),
     );
   }
@@ -67,7 +81,7 @@ class _AdminPanelState extends State<AdminPanel> {
       Card(
         child: ListTile(
           title: Text(file.name, style: Styles.textDefault),
-          onTap: () => _renderActionSnackbar(context, file),
+          onTap: () => _handleDelete(context, file),
         )
       )
     ).toList();
@@ -135,24 +149,11 @@ class _AdminPanelState extends State<AdminPanel> {
     }
   }
 
-  void _renderActionSnackbar(BuildContext context, StoredItem file) {
-    ScaffoldMessenger.of(context)
-      .showSnackBar(
-        SnackBar(
-          content: Text('Delete "${file.name}"?'),
-          action: SnackBarAction(
-            label: 'Delete',
-            onPressed: () => _handleDelete(context, file),
-          ),
-        )
-      );
-  }
-
   void _handleDelete(BuildContext context, StoredItem file) {
     showPlatformDialog(
       context: context,
       builder: (context) => BasicDialogAlert(
-        title: Text('Are you sure you want to delete "${file.name}"?'),
+        title: Text('Delete "${file.name}"?'),
         actions: [
           BasicDialogAction(
             title: Text('Yes', style: Styles.textDefault),
@@ -171,7 +172,11 @@ class _AdminPanelState extends State<AdminPanel> {
     );
   }
 
-  Future<void> _handleAddition(BuildContext context) async {
+  Future<void> _handleFolderAddition(BuildContext context) async {
+    
+  }
+
+  Future<void> _handleFileAddition(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],

@@ -49,8 +49,7 @@ class StorageHelper {
 
   Future<void> uploadFileWithMetadata(File file, String remotePath) async {
     SettableMetadata metadata = SettableMetadata(
-      customMetadata: <String, String>{'md5Hash': await _generateMd5(file)}
-    );
+        customMetadata: <String, String>{'md5Hash': await _generateMd5(file)});
 
     try {
       _storageInstance.ref(remotePath).putFile(file, metadata);
@@ -103,9 +102,7 @@ class StorageHelper {
     }
 
     try {
-      await _storageInstance
-        .ref(path)
-        .writeToFile(downloadToFile);
+      await _storageInstance.ref(path).writeToFile(downloadToFile);
     } on FirebaseException catch (e) {
       throw e.code;
     }
@@ -123,7 +120,7 @@ class StorageHelper {
     return false;
   }
 
- Future<String> _generateMd5(File file) async {
+  Future<String> _generateMd5(File file) async {
     final fileStream = file.openRead();
     return (await md5.bind(fileStream).first).toString();
   }

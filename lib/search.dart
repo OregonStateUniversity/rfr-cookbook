@@ -29,7 +29,8 @@ class SearchBar extends SearchDelegate<String> {
     assert(theme != null);
     return theme.copyWith(
       inputDecorationTheme: InputDecorationTheme(
-        hintStyle: TextStyle(color: Colors.white)
+        hintStyle: TextStyle(color: Colors.white),
+        border: InputBorder.none,
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: Styles.themeColor,

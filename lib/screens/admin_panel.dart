@@ -81,7 +81,7 @@ class _AdminPanelState extends State<AdminPanel> {
       Card(
         child: ListTile(
           title: Text(file.name, style: Styles.textDefault),
-          onTap: () => _renderActionSnackbar(context, file),
+          onTap: () => _handleDelete(context, file),
         )
       )
     ).toList();
@@ -149,24 +149,11 @@ class _AdminPanelState extends State<AdminPanel> {
     }
   }
 
-  void _renderActionSnackbar(BuildContext context, StoredItem file) {
-    ScaffoldMessenger.of(context)
-      .showSnackBar(
-        SnackBar(
-          content: Text('Delete "${file.name}"?'),
-          action: SnackBarAction(
-            label: 'Delete',
-            onPressed: () => _handleDelete(context, file),
-          ),
-        )
-      );
-  }
-
   void _handleDelete(BuildContext context, StoredItem file) {
     showPlatformDialog(
       context: context,
       builder: (context) => BasicDialogAlert(
-        title: Text('Are you sure you want to delete "${file.name}"?'),
+        title: Text('Delete "${file.name}"?'),
         actions: [
           BasicDialogAction(
             title: Text('Yes', style: Styles.textDefault),

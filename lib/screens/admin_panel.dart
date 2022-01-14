@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/styles.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class AdminPanel extends StatefulWidget {
   const AdminPanel({Key? key}) : super(key: key);
@@ -42,10 +43,20 @@ class _AdminPanelState extends State<AdminPanel> {
         itemCount: _storageMap.length,
         itemBuilder: _listViewItemBuilder
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _handleAddition(context),
-        child: const Icon(Icons.add),
-        backgroundColor: Styles.themeColor
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.add_event,
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.file_copy),
+            label: 'File',
+            onTap: () => _handleFileAddition(context),
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.folder),
+            label: 'Folder',
+            onTap: () => _handleFolderAddition(context),
+          ),
+        ],
       ),
     );
   }
@@ -171,7 +182,11 @@ class _AdminPanelState extends State<AdminPanel> {
     );
   }
 
-  Future<void> _handleAddition(BuildContext context) async {
+  Future<void> _handleFolderAddition(BuildContext context) async {
+    
+  }
+
+  Future<void> _handleFileAddition(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],

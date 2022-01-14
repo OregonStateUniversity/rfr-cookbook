@@ -32,9 +32,11 @@ class SearchBar extends SearchDelegate<String> {
         hintStyle: TextStyle(color: Colors.white),
         border: InputBorder.none,
       ),
+      textTheme: Theme.of(context).textTheme.copyWith(
+        headline6: TextStyle(color: Colors.white, fontSize: 25.0),
+      ),
       appBarTheme: AppBarTheme(
         backgroundColor: Styles.themeColor,
-        foregroundColor: Colors.white,
         //to-do: change text to white
         //to-do: get rid of weird underline
       ),

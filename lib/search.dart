@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rfr_cookbook/styles.dart';
+
 
 class SearchBar extends SearchDelegate<String> {
   //change this to use firebase
@@ -18,6 +20,20 @@ class SearchBar extends SearchDelegate<String> {
     "Three thing",
     "Four thing",
   ];
+
+    @override
+  ThemeData appBarTheme(BuildContext context) {
+    assert(context != null);
+    final ThemeData theme = Theme.of(context);
+    assert(theme != null);
+    return theme.copyWith(
+      appBarTheme: AppBarTheme(
+        backgroundColor: Styles.themeColor,
+        //to-do: change text to white
+        //to-do: get rid of weird underline
+      )
+    );
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -69,12 +85,12 @@ class SearchBar extends SearchDelegate<String> {
         onTap: () {
           showResults(context);
         },
-        leading: const Icon(Icons.location_city),
+        //leading: const Icon(Icons.location_city),
         title: RichText(
             text: TextSpan(
                 text: suggestionList[index].substring(0, query.length),
                 style: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
+                    color: Colors.white, fontWeight: FontWeight.bold),
                 children: [
               TextSpan(
                   text: suggestionList[index].substring(query.length),

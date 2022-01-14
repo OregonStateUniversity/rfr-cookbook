@@ -44,7 +44,9 @@ class _AdminPanelState extends State<AdminPanel> {
         itemBuilder: _listViewItemBuilder
       ),
       floatingActionButton: SpeedDial(
-        animatedIcon: AnimatedIcons.add_event,
+        animatedIcon: AnimatedIcons.menu_close,
+        spaceBetweenChildren: 12,
+        backgroundColor: Styles.themeColor,
         children: [
           SpeedDialChild(
             child: const Icon(Icons.file_copy),

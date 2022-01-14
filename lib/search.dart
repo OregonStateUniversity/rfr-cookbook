@@ -3,6 +3,7 @@ import 'package:rfr_cookbook/styles.dart';
 
 
 class SearchBar extends SearchDelegate<String> {
+
   //change this to use firebase
   final searchFor = [
     "One thing",
@@ -21,17 +22,21 @@ class SearchBar extends SearchDelegate<String> {
     "Four thing",
   ];
 
-    @override
+  @override
   ThemeData appBarTheme(BuildContext context) {
     assert(context != null);
     final ThemeData theme = Theme.of(context);
     assert(theme != null);
     return theme.copyWith(
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle: TextStyle(color: Colors.white)
+      ),
       appBarTheme: AppBarTheme(
         backgroundColor: Styles.themeColor,
+        foregroundColor: Colors.white,
         //to-do: change text to white
         //to-do: get rid of weird underline
-      )
+      ),
     );
   }
 
@@ -85,7 +90,6 @@ class SearchBar extends SearchDelegate<String> {
         onTap: () {
           showResults(context);
         },
-        //leading: const Icon(Icons.location_city),
         title: RichText(
             text: TextSpan(
                 text: suggestionList[index].substring(0, query.length),

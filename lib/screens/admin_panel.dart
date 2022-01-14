@@ -50,12 +50,12 @@ class _AdminPanelState extends State<AdminPanel> {
         children: [
           SpeedDialChild(
             child: const Icon(Icons.file_copy),
-            label: 'File',
+            label: 'Add File',
             onTap: () => _handleFileAddition(context),
           ),
           SpeedDialChild(
             child: const Icon(Icons.folder),
-            label: 'Folder',
+            label: 'Add Folder',
             onTap: () => _handleFolderAddition(context),
           ),
         ],

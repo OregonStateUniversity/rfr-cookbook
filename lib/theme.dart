@@ -1,3 +1,7 @@
+//I know this is not the most important thing,
+//we don't need to use it yet and honestly I am afraid 
+//to add the code to the other files to make it work.
+//we can chat about it on Friday. - Adrianna
 import 'package:flutter/material.dart';
 
 class CustomTheme {
@@ -11,4 +15,4 @@ class CustomTheme {
       scaffoldBackgroundColor: Colors.white,
     );
   }
-}
+} 

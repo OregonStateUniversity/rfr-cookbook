@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/styles.dart';
 
-
 class SearchBar extends SearchDelegate<String> {
-
   //change this to use firebase
   final searchFor = [
-    "One thing",
-    "Two thing",
-    "Three thing",
-    "Four thing",
-    "Five thing",
-    "Six thing",
-    "Seven thing",
+    //0-Preface
+    "00-010 Scope of Practice",
+    "00-020 Advance Directives",
+    "00-030 Death in the Field",
+    "00-040 Glasgow Coma Scale",
+    "00-050 Medical Control for Drugs & Procedures",
+    "00-060 Universal Patient Care",
+    "00-070 BLS Guidelines for single role EMT's",
+    //1-Treatment
+    "10-010 Abdominal Pain",
+    "10-020 Altered Mental Status",
+    "10-030 Anaphylaxis",
+    "10-040 Burns",
+    "10-050 Cardiac Arrest - AED-CPR-HP CPR",
+    "10-051 Cardiac Arrest - Asystole"
+    //2-Medications
+    //3-Procedures
+    //4-Operations
+    //5-Trauma
+    //6-Hazmat
+    //7-Misc
   ];
 
   final recentSearches = [
@@ -33,8 +45,8 @@ class SearchBar extends SearchDelegate<String> {
         border: InputBorder.none,
       ),
       textTheme: Theme.of(context).textTheme.copyWith(
-        headline6: TextStyle(color: Colors.white, fontSize: 25.0),
-      ),
+            headline6: TextStyle(color: Colors.white, fontSize: 25.0),
+          ),
       appBarTheme: AppBarTheme(
         backgroundColor: Styles.themeColor,
       ),

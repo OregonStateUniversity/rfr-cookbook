@@ -18,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final StorageHelper _storageHelper = StorageHelper();
   Map<String, List<StoredItem>> _storageMap = {};
+  String selectedResult = '';
 
   @override
   void initState() {
@@ -41,13 +42,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: const Icon(Icons.refresh)),
             IconButton(
                 icon: const Icon(Icons.search),
-                onPressed: () {
-                  showSearch(
+                onPressed: () async {
+                  final finalResult = await showSearch(
                       context: context,
                       delegate: SearchBar(
                           allSearchResults: titleList,
                           searchSuggestions: titleList));
+                  setState(() {
+                    selectedResult = finalResult!;
+                  });
                 }),
+            selectedResult == ''
+                ? Container()
+                : Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 35.0, vertical: 15.0),
+                    color: Colors.deepOrange,
+                    child: Text(
+                      selectedResult,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
           ],
         ),
         body: ListView.builder(

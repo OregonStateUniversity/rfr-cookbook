@@ -6,64 +6,6 @@ class SearchBar extends SearchDelegate<String> {
   final List<String> searchSuggestions;
 
   SearchBar({required this.allSearchResults, required this.searchSuggestions});
-  /*
-  //change this to use firebase
-  final searchFor = [
-    //0-Preface
-    "00-010 Scope of Practice",
-    "00-020 Advance Directives",
-    "00-030 Death in the Field",
-    "00-040 Glasgow Coma Scale",
-    "00-050 Medical Control for Drugs & Procedures",
-    "00-060 Universal Patient Care",
-    "00-070 BLS Guidelines for single role EMT's",
-    //1-Treatment
-    "10-010 Abdominal Pain",
-    "10-020 Altered Mental Status",
-    "10-030 Anaphylaxis",
-    "10-040 Burns",
-    "10-050 Cardiac Arrest - AED-CPR-HP CPR",
-    "10-051 Cardiac Arrest - Asystole",
-    "10-052 Cardiac Arrest - PEA",
-    "10-053 Cardiac Arrest - VF_Pulseless VT",
-    "10-054 Cardiac Arrest - Post Resuscitation",
-    "10-060 Cardiac Dysrhythmias - Bradycardia",
-    "10-061 Cardiac Dysrhythmias - Tachycardia",
-    "10-070 Chest Pain ACS",
-    "10-080 Crush Injury",
-    "10-090 Eye Emergencies",
-    "10-100 Hyperkalemia",
-    "10-110 Hypertension",
-    "10-120 Hyperthermia",
-    "10-130 Hypothermia",
-    "10-140 Musculoskeletal Extremity Trauma",
-    "10-141 Musculoskeletal Spinal Injury",
-    "10-150 Nausea and Vomiting",
-    "10-160 Neonatal Resuscitation",
-    "10-170 OB GYN Emergencies",
-    "10-180 Pain Management",
-    "10-190 Poisoning and Overdose",
-    "10-200 Respiratory Distress",
-    "10-210 Seizures",
-    "10-220 Shock",
-    "10-230 Snakebike",
-    "10-240 Stroke-CVA",
-    "10-250 Submerged Patient",
-    "10-260 Traumatic Brain Injury",
-    //2-Medications
-    //3-Procedures
-    //4-Operations
-    //5-Trauma
-    //6-Hazmat
-    //7-Misc
-  ];
-
-  final recentSearches = [
-    "One thing",
-    "Two thing",
-    "Three thing",
-    "Four thing",
-  ];*/
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -109,19 +51,6 @@ class SearchBar extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    //I think this should return the pdf of the protocol....
-    //This is just a placeholder to see if it does something
-    /*
-    return Container(
-      height: 100,
-      width: 100,
-      child: Card(
-        color: Colors.red,
-        child: Center(
-          child: Text(query),
-        ),
-      ),
-    );*/
     final List<String> allSearch = allSearchResults
         .where(
           (searchFor) => searchFor.toLowerCase().contains(
@@ -139,32 +68,6 @@ class SearchBar extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    /*
-    final suggestionList = query.isEmpty
-        ? searchSuggestions
-        : allSearchResults
-            .where((typedWord) => typedWord.contains(query))
-            .toList();
-
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-        onTap: () {
-          showResults(context);
-        },
-        title: RichText(
-            text: TextSpan(
-                text: suggestionList[index].substring(0, query.length),
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-                children: [
-              TextSpan(
-                  text: suggestionList[index].substring(query.length),
-                  style: const TextStyle(color: Colors.grey))
-            ])),
-      ),
-      itemCount: suggestionList.length,
-    );*/
-
     final List<String> allSuggestions = searchSuggestions
         .where(
           (suggestion) => suggestion.toLowerCase().contains(
@@ -176,11 +79,12 @@ class SearchBar extends SearchDelegate<String> {
     return ListView.builder(
         itemCount: allSuggestions.length,
         itemBuilder: (context, index) => ListTile(
-              title: Text(allSuggestions[index]),
-              onTap: () {
+            title: Text(allSuggestions[index]),
+            onTap: () {
                 query = allSuggestions[index];
                 close(context, query);
               },
-            ));
+            )
+        );
   }
 }

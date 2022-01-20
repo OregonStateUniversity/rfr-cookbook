@@ -52,18 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     selectedResult = finalResult!;
                   });
                 }),
-            selectedResult == ''
-                ? Container()
-                : Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 35.0, vertical: 15.0),
-                    color: Colors.deepOrange,
-                    child: Text(
-                      selectedResult,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.white),
-                    ),
-                  ),
           ],
         ),
         body: ListView.builder(

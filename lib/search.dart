@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/styles.dart';
 
 class SearchBar extends SearchDelegate<String> {
+  final List<String> allSearchResults;
+  final List<String> searchSuggestions;
+
+  SearchBar({required this.allSearchResults, required this.searchSuggestions});
+  /*
   //change this to use firebase
   final searchFor = [
     //0-Preface
@@ -58,7 +63,7 @@ class SearchBar extends SearchDelegate<String> {
     "Two thing",
     "Three thing",
     "Four thing",
-  ];
+  ];*/
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -106,6 +111,7 @@ class SearchBar extends SearchDelegate<String> {
   Widget buildResults(BuildContext context) {
     //I think this should return the pdf of the protocol....
     //This is just a placeholder to see if it does something
+    /*
     return Container(
       height: 100,
       width: 100,
@@ -115,14 +121,30 @@ class SearchBar extends SearchDelegate<String> {
           child: Text(query),
         ),
       ),
-    );
+    );*/
+    final List<String> allSearch = allSearchResults
+        .where(
+          (searchFor) => searchFor.toLowerCase().contains(
+                query.toLowerCase(),
+              ),
+        )
+        .toList();
+
+    return ListView.builder(
+        itemCount: allSearch.length,
+        itemBuilder: (context, index) => ListTile(
+              title: Text(allSearch[index]),
+            ));
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    /*
     final suggestionList = query.isEmpty
-        ? recentSearches
-        : searchFor.where((typedWord) => typedWord.startsWith(query)).toList();
+        ? searchSuggestions
+        : allSearchResults
+            .where((typedWord) => typedWord.contains(query))
+            .toList();
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
@@ -141,6 +163,24 @@ class SearchBar extends SearchDelegate<String> {
             ])),
       ),
       itemCount: suggestionList.length,
-    );
+    );*/
+
+    final List<String> allSuggestions = searchSuggestions
+        .where(
+          (suggestion) => suggestion.toLowerCase().contains(
+                query.toLowerCase(),
+              ),
+        )
+        .toList();
+
+    return ListView.builder(
+        itemCount: allSuggestions.length,
+        itemBuilder: (context, index) => ListTile(
+              title: Text(allSuggestions[index]),
+              onTap: () {
+                query = allSuggestions[index];
+                close(context, query);
+              },
+            ));
   }
 }

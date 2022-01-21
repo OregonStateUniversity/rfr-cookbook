@@ -51,8 +51,8 @@ class _AdminPanelState extends State<AdminPanel> {
         children: [
           SpeedDialChild(
             child: const Icon(Icons.folder),
-            label: 'Add Folder',
-            onTap: () => _handleFolderAddition(context),
+            label: 'Add Category',
+            onTap: () => _handleCategoryAddition(context),
           ),
           SpeedDialChild(
             child: const Icon(Icons.file_copy),
@@ -185,7 +185,7 @@ class _AdminPanelState extends State<AdminPanel> {
     );
   }
 
-  Future<void> _handleFolderAddition(BuildContext context) async {
+  Future<void> _handleCategoryAddition(BuildContext context) async {
     
   }
 

@@ -5,7 +5,11 @@ class SearchBar extends SearchDelegate<String> {
   final List<String> allSearchResults;
   final List<String> searchSuggestions;
 
+  //const SearchBar({Key? key}) : super(key: key);
   SearchBar({required this.allSearchResults, required this.searchSuggestions});
+
+  //final StorageHelper _storageHelper = StorageHelper();
+  //Map<String, List<StoredItem>> _storageMap = {};
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -63,6 +67,10 @@ class SearchBar extends SearchDelegate<String> {
         itemCount: allSearch.length,
         itemBuilder: (context, index) => ListTile(
               title: Text(allSearch[index]),
+              onTap: () {
+                query = allSearch[index];
+                close(context, query);
+              },
             ));
   }
 
@@ -79,12 +87,11 @@ class SearchBar extends SearchDelegate<String> {
     return ListView.builder(
         itemCount: allSuggestions.length,
         itemBuilder: (context, index) => ListTile(
-            title: Text(allSuggestions[index]),
-            onTap: () {
+              title: Text(allSuggestions[index]),
+              onTap: () {
                 query = allSuggestions[index];
                 close(context, query);
               },
-            )
-        );
+            ));
   }
 }

@@ -51,8 +51,8 @@ class _AdminPanelState extends State<AdminPanel> {
         children: [
           SpeedDialChild(
             child: const Icon(Icons.folder),
-            label: 'Add Category',
-            onTap: () => _handleCategoryAddition(context),
+            label: 'Add Folder',
+            onTap: () => _handleFolderAddition(context),
           ),
           SpeedDialChild(
             child: const Icon(Icons.file_copy),
@@ -185,8 +185,26 @@ class _AdminPanelState extends State<AdminPanel> {
     );
   }
 
-  Future<void> _handleCategoryAddition(BuildContext context) async {
-    
+  void _handleFolderAddition(BuildContext context) {
+    showPlatformDialog(
+      context: context,
+      builder: (context) => BasicDialogAlert(
+        actions: [
+          BasicDialogAction(
+            title: Text('Cancel', style: Styles.textDefault),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          BasicDialogAction(
+            title: Text('Ok', style: Styles.textDefault),
+            onPressed: () => Navigator.of(context).pop(),
+          )
+        ],
+        title: Text('Enter name of folder to be created:', style: Styles.textDefault),
+        content: SizedBox(
+          height: 75.0,
+        ),
+      )
+    );
   }
 
   Future<void> _handleFileAddition(BuildContext context) async {

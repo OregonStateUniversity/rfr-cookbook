@@ -18,6 +18,9 @@ class AdminPanel extends StatefulWidget {
 class _AdminPanelState extends State<AdminPanel> {
   final StorageHelper _storageHelper = StorageHelper();
   Map<String, List<StoredItem>> _storageMap = {};
+  final _formKey = GlobalKey<FormState>();
+
+  String? _newFolder;
 
   @override
   void initState() {
@@ -188,21 +191,13 @@ class _AdminPanelState extends State<AdminPanel> {
   void _handleFolderAddition(BuildContext context) {
     showPlatformDialog(
       context: context,
-      builder: (context) => BasicDialogAlert(
-        actions: [
-          BasicDialogAction(
-            title: Text('Cancel', style: Styles.textDefault),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          BasicDialogAction(
-            title: Text('Ok', style: Styles.textDefault),
-            onPressed: () => Navigator.of(context).pop(),
-          )
-        ],
-        title: Text('Enter name of folder to be created:', style: Styles.textDefault),
-        content: SizedBox(
-          height: 75.0,
-        ),
+      builder: (context) => Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            
+          ]
+        )
       )
     );
   }

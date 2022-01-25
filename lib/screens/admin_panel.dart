@@ -185,7 +185,7 @@ class _AdminPanelState extends State<AdminPanel> {
           BasicDialogAction(
             title: Text('Ok', style: Styles.textDefault),
             onPressed: () => {
-              // validate input here
+              // TODO: validate input here
               _handleFolderAddition(context, textController.text)
             },
           )

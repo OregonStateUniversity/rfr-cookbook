@@ -16,6 +16,7 @@ class AdminPanel extends StatefulWidget {
 }
 
 class _AdminPanelState extends State<AdminPanel> {
+  final textController = TextEditingController();
   final StorageHelper _storageHelper = StorageHelper();
   Map<String, List<StoredItem>> _storageMap = {};
 
@@ -51,8 +52,8 @@ class _AdminPanelState extends State<AdminPanel> {
         children: [
           SpeedDialChild(
             child: const Icon(Icons.folder),
-            label: 'Add Category',
-            onTap: () => _handleCategoryAddition(context),
+            label: 'Add Folder',
+            onTap: () => _renderFolderAdder(context),
           ),
           SpeedDialChild(
             child: const Icon(Icons.file_copy),
@@ -172,7 +173,35 @@ class _AdminPanelState extends State<AdminPanel> {
     );
   }
 
-  Future<void> _handleCategoryAddition(BuildContext context) async {
+  void _renderFolderAdder(BuildContext context) {
+    showPlatformDialog(
+      context: context,
+      builder: (context) => BasicDialogAlert(
+        actions: [
+          BasicDialogAction(
+            title: Text('Cancel', style: Styles.textDefault),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          BasicDialogAction(
+            title: Text('Ok', style: Styles.textDefault),
+            onPressed: () => {
+              // validate input here
+              _handleFolderAddition(context, textController.text)
+            },
+          )
+        ],
+        title: Text('Enter name of folder to be created:', style: Styles.textDefault),
+        content: SizedBox(
+          height: 75.0,
+          child: TextField(
+            controller: textController
+          )
+        ),
+      )
+    );
+  }
+
+  Future<void> _handleFolderAddition(BuildContext context, String text) {
     
   }
 

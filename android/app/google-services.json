@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "191248409079",
+    "project_id": "rfr-cookbook",
+    "storage_bucket": "rfr-cookbook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191248409079:android:04dd5348a8824a1f7c0ef2",
+        "android_client_info": {
+          "package_name": "com.example.rfr_cookbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191248409079-mpj6sqintok33rep32llj65odcts8dqh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3edKdlCVgtpaA7FxgKEXBS3gVfeitQSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191248409079-mpj6sqintok33rep32llj65odcts8dqh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "191248409079-iequ66of318qompqp4pf9n636i6reu73.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rfrCookbook"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

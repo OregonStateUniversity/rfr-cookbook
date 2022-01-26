@@ -29,9 +29,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^1.8.0
-  firebase_storage: ^10.0.6
-  firebase_auth: ^3.1.4
+  firebase_core: ^1.11.0
+  firebase_storage: ^10.2.5
+  firebase_auth: ^3.3.5
 
   crypto: ^3.0.1
   email_validator: ^2.0.1

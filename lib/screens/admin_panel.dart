@@ -16,7 +16,7 @@ class AdminPanel extends StatefulWidget {
 }
 
 class _AdminPanelState extends State<AdminPanel> {
-  final textController = TextEditingController();
+  final _textController = TextEditingController();
   final StorageHelper _storageHelper = StorageHelper();
   Map<String, List<StoredItem>> _storageMap = {};
 
@@ -187,7 +187,7 @@ class _AdminPanelState extends State<AdminPanel> {
             onPressed: () {
               // TODO: validate input here
               Navigator.of(context).pop();
-              _handleFolderAddition(context, textController.text);
+              _handleFolderAddition(_textController.text);
             },
           )
         ],
@@ -195,14 +195,14 @@ class _AdminPanelState extends State<AdminPanel> {
         content: SizedBox(
 
           child: Material(
-            child:TextField(controller: textController)
+            child:TextField(controller: _textController)
           )
         ),
       )
     );
   }
 
-  Future<void> _handleFolderAddition(BuildContext context, String text) async {
+  Future<void> _handleFolderAddition(String text) async {
     
   }
 

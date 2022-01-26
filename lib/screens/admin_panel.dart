@@ -184,24 +184,25 @@ class _AdminPanelState extends State<AdminPanel> {
           ),
           BasicDialogAction(
             title: Text('Ok', style: Styles.textDefault),
-            onPressed: () => {
+            onPressed: () {
               // TODO: validate input here
-              _handleFolderAddition(context, textController.text)
+              Navigator.of(context).pop();
+              _handleFolderAddition(context, textController.text);
             },
           )
         ],
         title: Text('Enter name of folder to be created:', style: Styles.textDefault),
         content: SizedBox(
-          height: 75.0,
-          child: TextField(
-            controller: textController
+
+          child: Material(
+            child:TextField(controller: textController)
           )
         ),
       )
     );
   }
 
-  Future<void> _handleFolderAddition(BuildContext context, String text) {
+  Future<void> _handleFolderAddition(BuildContext context, String text) async {
     
   }
 

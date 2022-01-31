@@ -61,8 +61,12 @@ class StorageHelper {
     }
   }
 
-  Future<void> createDirectory(String text) async {
+  void createDirectory(String text) {
     _storageInstance.ref('protocols/$text/.keep').putString('');
+  }
+
+  void deleteDirectory(String text) {
+    
   }
 
   void deleteFile(StoredItem file) {

@@ -201,8 +201,26 @@ class _AdminPanelState extends State<AdminPanel> {
                   title: Text(parentDirectories[index], style: Styles.textDefault),
                   onTap: () {
                     Navigator.of(context).pop();
-                    // TODO: confirmation prompt
-                    // TODO: delete directory
+                    showPlatformDialog(
+                      context: context,
+                      builder: (context) => BasicDialogAlert(
+                        title: Text('Delete "${parentDirectories[index]}"?'),
+                        actions: [
+                          BasicDialogAction(
+                            title: Text('Yes', style: Styles.textDefault),
+                            onPressed: () {
+                              _storageHelper.deleteDirectory(parentDirectories[index]);
+                              _loadFiles();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          BasicDialogAction(
+                            title: Text('No', style: Styles.textDefault),
+                            onPressed: () => Navigator.of(context).pop(),
+                          )
+                        ],
+                      )
+                    );
                   },
                 )
               );

@@ -180,30 +180,29 @@ class _AdminPanelState extends State<AdminPanel> {
         actions: [
           BasicDialogAction(
             title: Text('Cancel', style: Styles.textDefault),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () {
+              Navigator.of(context).pop();
+              _textController.clear();
+            }
           ),
           BasicDialogAction(
             title: Text('Ok', style: Styles.textDefault),
             onPressed: () {
               // TODO: validate input here
               Navigator.of(context).pop();
-              _handleFolderAddition(_textController.text);
+              _storageHelper.createDirectory(_textController.text);
+              _textController.clear();
             },
           )
         ],
         title: Text('Enter name of folder to be created:', style: Styles.textDefault),
         content: SizedBox(
-
           child: Material(
-            child:TextField(controller: _textController)
+            child: TextField(controller: _textController)
           )
         ),
       )
     );
-  }
-
-  Future<void> _handleFolderAddition(String text) async {
-    
   }
 
   Future<void> _handleFileAddition(BuildContext context) async {

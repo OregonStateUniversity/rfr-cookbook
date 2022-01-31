@@ -204,7 +204,7 @@ class _AdminPanelState extends State<AdminPanel> {
                     showPlatformDialog(
                       context: context,
                       builder: (context) => BasicDialogAlert(
-                        title: Text('Delete "${parentDirectories[index]}"?'),
+                        title: Text('Delete "${parentDirectories[index]}" and all its contents?'),
                         actions: [
                           BasicDialogAction(
                             title: Text('Yes', style: Styles.textDefault),

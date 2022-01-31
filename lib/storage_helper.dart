@@ -23,15 +23,18 @@ class StorageHelper {
 
       await for (final file in directory.list()) {
         final fileName = file.path.split('/').last;
-        final parentDirectory = file.parent.toString().split('/').last.replaceAll('\'', '');
-        storageMap[directory.path]!.add(
-          StoredItem(
-            name: fileName.split('.').first,
-            localFile: file as File,
-            remoteReference: _storageInstance
-              .ref('protocols/$parentDirectory/$fileName')
-          )
-        );
+        
+        if (fileName != '.keep') {
+          final parentDirectory = file.parent.toString().split('/').last.replaceAll('\'', '');
+          storageMap[directory.path]!.add(
+            StoredItem(
+              name: fileName.split('.').first,
+              localFile: file as File,
+              remoteReference: _storageInstance
+                .ref('protocols/$parentDirectory/$fileName')
+            )
+          );
+        }
       }
     }
 
@@ -56,6 +59,10 @@ class StorageHelper {
     } on FirebaseException catch (e) {
       throw e.code;
     }
+  }
+
+  Future<void> createDirectory(String text) async {
+    _storageInstance.ref('protocols/$text/.keep').putString('');
   }
 
   void deleteFile(StoredItem file) {

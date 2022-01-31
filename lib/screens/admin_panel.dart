@@ -51,9 +51,14 @@ class _AdminPanelState extends State<AdminPanel> {
         backgroundColor: Styles.themeColor,
         children: [
           SpeedDialChild(
+            child: const Icon(Icons.delete),
+            label: 'Delete Directory',
+            onTap:() => _renderDirectoryDeleter(context),
+          ),
+          SpeedDialChild(
             child: const Icon(Icons.folder),
-            label: 'Add Folder',
-            onTap: () => _renderFolderAdder(context),
+            label: 'Add Directory',
+            onTap: () => _renderDirectoryAdder(context),
           ),
           SpeedDialChild(
             child: const Icon(Icons.file_copy),
@@ -173,7 +178,11 @@ class _AdminPanelState extends State<AdminPanel> {
     );
   }
 
-  void _renderFolderAdder(BuildContext context) {
+  void _renderDirectoryDeleter(BuildContext context) {
+
+  }
+
+  void _renderDirectoryAdder(BuildContext context) {
     showPlatformDialog(
       context: context,
       builder: (context) => BasicDialogAlert(

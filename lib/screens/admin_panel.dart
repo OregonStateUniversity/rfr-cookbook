@@ -179,7 +179,38 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   void _renderDirectoryDeleter(BuildContext context) {
+    final parentDirectories = _storageMap.keys.map((name) => name.split('/').last).toList();
 
+    showPlatformDialog(
+      context: context,
+      builder: (context) => BasicDialogAlert(
+        actions: [
+          BasicDialogAction(
+            title: Text('Cancel', style: Styles.textDefault),
+            onPressed: () => Navigator.of(context).pop(),
+          )
+        ],
+        title: Text('Select a directory to delete:', style: Styles.textDefault),
+        content: SizedBox(
+          height: 400.0,
+          child: ListView.builder(
+            itemCount: parentDirectories.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  title: Text(parentDirectories[index], style: Styles.textDefault),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    // TODO: confirmation prompt
+                    // TODO: delete directory
+                  },
+                )
+              );
+            }
+          ),
+        )
+      )
+    );
   }
 
   void _renderDirectoryAdder(BuildContext context) {

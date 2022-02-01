@@ -103,7 +103,8 @@ class _HomeScreenState extends State<HomeScreen> {
       .showSnackBar(
         SnackBar(
           backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Checking for new files...', textAlign: TextAlign.center)
+          content: const Text('Checking for new files...', textAlign: TextAlign.center),
+          duration: const Duration(seconds: 2)
         )
       );
   }

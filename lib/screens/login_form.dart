@@ -101,7 +101,8 @@ class _LoginFormState extends State<LoginForm> {
       .showSnackBar(
         SnackBar(
           backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Logged in as administrator.', textAlign: TextAlign.center)
+          content: const Text('Logged in as administrator.', textAlign: TextAlign.center),
+          duration: const Duration(seconds: 2)
         )
       );
   }
@@ -111,7 +112,8 @@ class _LoginFormState extends State<LoginForm> {
       .showSnackBar(
         SnackBar(
           backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Invalid credientails.', textAlign: TextAlign.center)
+          content: const Text('Invalid credientails.', textAlign: TextAlign.center),
+          duration: const Duration(seconds: 2)
         )
       );
   }

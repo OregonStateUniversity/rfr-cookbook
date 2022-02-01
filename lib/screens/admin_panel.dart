@@ -111,7 +111,8 @@ class _AdminPanelState extends State<AdminPanel> {
       .showSnackBar(
         SnackBar(
           backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Checking for new files...', textAlign: TextAlign.center)
+          content: const Text('Checking for new files...', textAlign: TextAlign.center),
+          duration: const Duration(seconds: 2)
         )
       );
   }
@@ -316,7 +317,8 @@ class _AdminPanelState extends State<AdminPanel> {
       .showSnackBar(
         SnackBar(
           backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Uploading file to server...', textAlign: TextAlign.center)
+          content: const Text('Uploading file to server...', textAlign: TextAlign.center),
+          duration: const Duration(seconds: 2)
         )
       );
   }

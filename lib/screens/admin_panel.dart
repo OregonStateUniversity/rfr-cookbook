@@ -212,7 +212,6 @@ class _AdminPanelState extends State<AdminPanel> {
                             onPressed: () {
                               _storageHelper.deleteDirectory(parentDirectories[index]);
                               Navigator.of(context).pop();
-                              _loadFiles();
                             },
                           ),
                           BasicDialogAction(

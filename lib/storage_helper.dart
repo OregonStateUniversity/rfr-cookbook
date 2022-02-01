@@ -65,8 +65,15 @@ class StorageHelper {
     _storageInstance.ref('protocols/$text/.keep').putString('');
   }
 
-  void deleteDirectory(String text) {
-    
+  Future<void> deleteDirectory(String directory) async {
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    final files = await _storageInstance.ref('protocols/$directory').listAll();
+
+    for (Reference file in files.items) {
+      file.delete();
+    }
+
+    Directory('${appDocDir.path}/protocols/$directory').delete(recursive: true);
   }
 
   void deleteFile(StoredItem file) {
@@ -89,7 +96,7 @@ class StorageHelper {
   }
 
   Future<void> _updateLocalFiles() async {
-    var remoteParentDirectories = 
+    final remoteParentDirectories = 
       await _storageInstance.ref('protocols/').listAll();
 
     for (Reference parentDirectory in remoteParentDirectories.prefixes) {

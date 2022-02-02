@@ -7,11 +7,8 @@ class FileList extends StatelessWidget {
   final List<StoredItem> _fileList;
   final String _sectionTitle;
 
-  const FileList(
-    this._fileList,
-    this._sectionTitle,
-    {Key? key}
-  ) : super(key: key);
+  const FileList(this._fileList, this._sectionTitle, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +27,14 @@ class FileList extends StatelessWidget {
   Widget _listViewItemBuilder(BuildContext context, int index) {
     final pdf = _fileList[index];
     return Card(
-      child: ListTile(
-        trailing: const Icon(Icons.arrow_forward_ios_rounded),
-        title: Text(pdf.name, style: Styles.textDefault),
-        onTap: () => _navigationToDetail(context, pdf)
-      )
-    );
+        child: ListTile(
+            trailing: const Icon(Icons.arrow_forward_ios_rounded),
+            title: Text(pdf.name, style: Styles.textDefault),
+            onTap: () => _navigationToDetail(context, pdf)));
   }
 
   void _navigationToDetail(BuildContext context, StoredItem file) {
     Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => FileDetail(file)
-      )
-    );
+        context, MaterialPageRoute(builder: (context) => FileDetail(file)));
   }
-
 }

@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/styles.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+//import 'storage_helper.dart';
+//import 'package:rfr_cookbook/screens/file_list.dart';
+//import 'package:rfr_cookbook/models/stored_item.dart';
+//import 'package:rfr_cookbook/screens/home_screen.dart';
+//import 'package:rfr_cookbook/models/stored_item.dart';
+//import 'package:rfr_cookbook/screens/file_detail.dart';
 
+//-import storage helper
+//-use storage map function
+//-get function to return list of string that contains
+// all pdfs without folders
 class SearchBar extends SearchDelegate<String> {
   final List<String> allSearchResults;
   final List<String> searchSuggestions;
@@ -53,8 +64,18 @@ class SearchBar extends SearchDelegate<String> {
         });
   }
 
+  //
   @override
-  Widget buildResults(BuildContext context) {
+  Widget buildResults(
+      BuildContext
+          context) /*
+    => FutureBuilder<StoredItem>(
+      future: add_something_here(name: query),
+      builder: (context, snapshot)*/
+  {
+    //final targetDirectory = _storageMap.keys.toList()[index];
+    //final directoryName = targetDirectory.split('/').last;
+    //final fileList = _storageMap[targetDirectory];
     final List<String> allSearch = allSearchResults
         .where(
           (searchFor) => searchFor.toLowerCase().contains(
@@ -70,6 +91,13 @@ class SearchBar extends SearchDelegate<String> {
               onTap: () {
                 query = allSearch[index];
                 close(context, query);
+                /*
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            FileDetail(allSearch[index])));
+             */
               },
             ));
   }
@@ -94,4 +122,11 @@ class SearchBar extends SearchDelegate<String> {
               },
             ));
   }
+/*
+  void findPDF(BuildContext context, String sectionTitle, int index) {
+    final targetDirectory = _storageMap.keys.toList()[index];
+    final directoryName = targetDirectory.split('/').last;
+    final fileList = _storageMap[targetDirectory];
+    FileList(fileList!, sectionTitle);
+  }*/
 }

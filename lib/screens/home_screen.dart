@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
@@ -7,6 +9,7 @@ import 'package:rfr_cookbook/styles.dart';
 import 'admin_panel.dart';
 import 'file_list.dart';
 import 'login_form.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final StorageHelper _storageHelper = StorageHelper();
   Map<String, List<StoredItem>> _storageMap = {};
-  String selectedResult = '';
+  String selectedResult = "";
 
   @override
   void initState() {
@@ -43,14 +46,15 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
                 icon: const Icon(Icons.search),
                 onPressed: () async {
-                  final finalResult = await showSearch(
+                  //final finalResult = await
+                  showSearch(
                       context: context,
                       delegate: SearchBar(
-                          allSearchResults: titleList,
-                          searchSuggestions: titleList));
-                  setState(() {
-                    selectedResult = finalResult!;
-                  });
+                          allSearchResults: searchList(context, 1),
+                          searchSuggestions: searchList(context, 1)));
+                  //setState(() {
+                  //selectedResult = finalResult!;
+                  //});
                 }),
           ],
         ),
@@ -108,6 +112,35 @@ class _HomeScreenState extends State<HomeScreen> {
         content: const Text('Checking for new files...',
             textAlign: TextAlign.center)));
   }
+
+  List<String> searchList(BuildContext context, int index) {
+    final targetDirectory = _storageMap.keys.toList()[index];
+    final directoryName = targetDirectory.split('/').last;
+    final fileList = _storageMap[targetDirectory];
+    List<String> list = fileList!.map((file) => file.name).toList();
+    return list;
+  }
+
+  firebase_storage.ListResult listPDFs() /*async*/ {
+    //List<String> list = [];
+    firebase_storage.ListResult result = /*await*/ firebase_storage
+        .FirebaseStorage.instance
+        .ref()
+        .child('protocols')
+        .child('01-preface')
+        .listAll() as firebase_storage.ListResult;
+/*
+    for (var ref in result.items) {
+      print('Found file: $ref');
+      list.add(ref as String);
+    }*/
+/*
+    result.prefixes.forEach((firebase_storage.Reference ref) {
+      print('Found directory: $ref');
+    });*/
+
+    return result;
+  }
 }
 
 final titleList = [
@@ -153,6 +186,21 @@ final titleList = [
   "10-250 Submerged Patient",
   "10-260 Traumatic Brain Injury",
   //2-Medications
+  "20-010 Acetaminophen",
+  "20-020 Activated Carcoal",
+  "20-030 Adenosine",
+  "20-040 Albuterol",
+  "20-041 Albuterol & Altrovent",
+  "20-050 Amiodarone",
+  "20-060 Asprin",
+  "20-070 Atrophine Sulfate",
+  "20-080 Calcium Chloride 10-",
+  "20-081 Calcium Gluconate",
+  "20-090 Dextrose",
+  "20-100 Diltiazem",
+  "20-110 Diphenhydramine",
+  "20-120 Dopamine",
+  "20-130 Epinephrine",
   //3-Procedures
   //4-Operations
   //5-Trauma

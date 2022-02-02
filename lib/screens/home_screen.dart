@@ -50,8 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   showSearch(
                       context: context,
                       delegate: SearchBar(
-                          allSearchResults: searchList(context, 1),
-                          searchSuggestions: searchList(context, 1)));
+                          allSearchResults: searchList(context),
+                          searchSuggestions: searchList(context),
+                          storedItemList: storedItemList(context)));
                   //setState(() {
                   //selectedResult = finalResult!;
                   //});
@@ -113,33 +114,17 @@ class _HomeScreenState extends State<HomeScreen> {
             textAlign: TextAlign.center)));
   }
 
-  List<String> searchList(BuildContext context, int index) {
-    final targetDirectory = _storageMap.keys.toList()[index];
-    final directoryName = targetDirectory.split('/').last;
+  List<String> searchList(BuildContext context) {
+    final targetDirectory = _storageMap.keys.toList()[2];
     final fileList = _storageMap[targetDirectory];
     List<String> list = fileList!.map((file) => file.name).toList();
     return list;
   }
 
-  firebase_storage.ListResult listPDFs() /*async*/ {
-    //List<String> list = [];
-    firebase_storage.ListResult result = /*await*/ firebase_storage
-        .FirebaseStorage.instance
-        .ref()
-        .child('protocols')
-        .child('01-preface')
-        .listAll() as firebase_storage.ListResult;
-/*
-    for (var ref in result.items) {
-      print('Found file: $ref');
-      list.add(ref as String);
-    }*/
-/*
-    result.prefixes.forEach((firebase_storage.Reference ref) {
-      print('Found directory: $ref');
-    });*/
-
-    return result;
+  List<StoredItem>? storedItemList(BuildContext context) {
+    final targetDirectory = _storageMap.keys.toList()[2];
+    final fileList = _storageMap[targetDirectory];
+    return fileList;
   }
 }
 

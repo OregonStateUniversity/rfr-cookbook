@@ -1,31 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/styles.dart';
-//import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-//import 'storage_helper.dart';
-//import 'package:rfr_cookbook/screens/file_list.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
-//import 'package:rfr_cookbook/screens/home_screen.dart';
-//import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/screens/file_detail.dart';
-//import 'package:collection/src/iterable_extensions.dart';
 
-//-import storage helper
-//-use storage map function
-//-get function to return list of string that contains
-// all pdfs without folders
 class SearchBar extends SearchDelegate<String> {
   final List<String> allSearchResults;
   final List<String> searchSuggestions;
   final List<StoredItem>? storedItemList;
 
-  //const SearchBar({Key? key}) : super(key: key);
   SearchBar(
       {required this.allSearchResults,
       required this.searchSuggestions,
       required this.storedItemList});
 
-  //final StorageHelper _storageHelper = StorageHelper();
-  //Map<String, List<StoredItem>> _storageMap = {};
+  StoredItem findPDF(String name) => storedItemList!
+      .firstWhere((pdf) => pdf.name == name, orElse: () => storedItemList![0]);
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -69,7 +58,6 @@ class SearchBar extends SearchDelegate<String> {
         });
   }
 
-  //
   @override
   Widget buildResults(BuildContext context) {
     final List<String> allSearch = allSearchResults
@@ -79,10 +67,6 @@ class SearchBar extends SearchDelegate<String> {
               ),
         )
         .toList();
-
-    StoredItem findPDF(String name) =>
-        storedItemList!.firstWhere((pdf) => pdf.name == name,
-            orElse: () => storedItemList![0]);
 
     return ListView.builder(
         itemCount: allSearch.length,
@@ -116,15 +100,12 @@ class SearchBar extends SearchDelegate<String> {
               title: Text(allSuggestions[index]),
               onTap: () {
                 query = allSuggestions[index];
-                close(context, query);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            FileDetail(findPDF(allSuggestions[index]))));
               },
             ));
   }
-/*
-  void findPDF(BuildContext context, String sectionTitle, int index) {
-    final targetDirectory = _storageMap.keys.toList()[index];
-    final directoryName = targetDirectory.split('/').last;
-    final fileList = _storageMap[targetDirectory];
-    FileList(fileList!, sectionTitle);
-  }*/
 }

@@ -115,14 +115,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<String> searchList(BuildContext context) {
-    final targetDirectory = _storageMap.keys.toList()[2];
+    final targetDirectory = _storageMap.keys.toList()[0];
     final fileList = _storageMap[targetDirectory];
     List<String> list = fileList!.map((file) => file.name).toList();
     return list;
   }
 
   List<StoredItem>? storedItemList(BuildContext context) {
-    final targetDirectory = _storageMap.keys.toList()[2];
+    final targetDirectory = _storageMap.keys.toList()[0];
     final fileList = _storageMap[targetDirectory];
     return fileList;
   }

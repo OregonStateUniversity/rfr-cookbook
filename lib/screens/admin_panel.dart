@@ -57,7 +57,7 @@ class _AdminPanelState extends State<AdminPanel> {
           ),
           SpeedDialChild(
             child: const Icon(Icons.folder),
-            label: 'Add Directory',
+            label: 'Create Directory',
             onTap: () => _renderDirectoryAdder(context),
           ),
           SpeedDialChild(
@@ -329,7 +329,8 @@ class _AdminPanelState extends State<AdminPanel> {
       .showSnackBar(
         SnackBar(
           backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('You have been logged out.', textAlign: TextAlign.center)
+          content: const Text('You have been logged out.', textAlign: TextAlign.center),
+          duration: const Duration(seconds: 2)
         )
       );
   }

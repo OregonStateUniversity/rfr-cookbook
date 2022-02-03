@@ -16,8 +16,8 @@ class AdminPanel extends StatefulWidget {
 }
 
 class _AdminPanelState extends State<AdminPanel> {
-  final _textController = TextEditingController();
   final StorageHelper _storageHelper = StorageHelper();
+  final _textController = TextEditingController();
   Map<String, List<StoredItem>> _storageMap = {};
 
   @override
@@ -246,14 +246,13 @@ class _AdminPanelState extends State<AdminPanel> {
           BasicDialogAction(
             title: Text('Ok', style: Styles.textDefault),
             onPressed: () {
-              // TODO: validate input here
               Navigator.of(context).pop();
               _storageHelper.createDirectory(_textController.text);
               _textController.clear();
             },
           )
         ],
-        title: Text('Enter name of folder to be created:', style: Styles.textDefault),
+        title: Text('Enter name of directory:', style: Styles.textDefault),
         content: SizedBox(
           child: Material(
             child: TextField(controller: _textController)

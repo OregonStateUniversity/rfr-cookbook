@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/styles.dart';
+import 'package:rfr_cookbook/utils/snackbar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class AdminPanel extends StatefulWidget {
@@ -107,14 +108,7 @@ class _AdminPanelState extends State<AdminPanel> {
   Future<void> _updateFiles(BuildContext context) async {
     _loadFiles();
 
-    ScaffoldMessenger.of(context)
-      .showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Checking for new files...', textAlign: TextAlign.center),
-          duration: const Duration(seconds: 2)
-        )
-      );
+    displaySnackbar(context, 'Checking for new files...');
   }
 
   Widget _renderPopupMenu(BuildContext context) {
@@ -311,26 +305,12 @@ class _AdminPanelState extends State<AdminPanel> {
       _storageHelper.uploadFileWithMetadata(file, '/protocols/$directory/$fileName');
     }
 
-    ScaffoldMessenger.of(context)
-      .showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Uploading file to server...', textAlign: TextAlign.center),
-          duration: const Duration(seconds: 2)
-        )
-      );
+    displaySnackbar(context, 'Uploading file to server...');
   }
 
   void _handleLogout(BuildContext context) {
     FirebaseAuth.instance.signOut();
     Navigator.of(context).pop();
-    ScaffoldMessenger.of(context)
-      .showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('You have been logged out.', textAlign: TextAlign.center),
-          duration: const Duration(seconds: 2)
-        )
-      );
+    displaySnackbar(context, 'You have been logged out.');
   }
 }

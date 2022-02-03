@@ -4,6 +4,7 @@ import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/search.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/styles.dart';
+import 'package:rfr_cookbook/utils/snackbar.dart';
 import 'admin_panel.dart';
 import 'file_list.dart';
 import 'login_form.dart';
@@ -98,14 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _updateFiles(BuildContext context) async {
     _loadFiles();
-
-    ScaffoldMessenger.of(context)
-      .showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Checking for new files...', textAlign: TextAlign.center),
-          duration: const Duration(seconds: 2)
-        )
-      );
+    displaySnackbar(context, 'Checking for new files...');
   }
 }

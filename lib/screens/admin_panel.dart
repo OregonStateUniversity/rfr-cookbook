@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/styles.dart';
+import 'package:rfr_cookbook/utils/snackbar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class AdminPanel extends StatefulWidget {
@@ -17,6 +18,7 @@ class AdminPanel extends StatefulWidget {
 
 class _AdminPanelState extends State<AdminPanel> {
   final StorageHelper _storageHelper = StorageHelper();
+  final _textController = TextEditingController();
   Map<String, List<StoredItem>> _storageMap = {};
 
   @override
@@ -50,9 +52,14 @@ class _AdminPanelState extends State<AdminPanel> {
         backgroundColor: Styles.themeColor,
         children: [
           SpeedDialChild(
+            child: const Icon(Icons.delete),
+            label: 'Delete Directory',
+            onTap:() => _renderDirectoryDeleter(context),
+          ),
+          SpeedDialChild(
             child: const Icon(Icons.folder),
-            label: 'Add Folder',
-            onTap: () => _handleFolderAddition(context),
+            label: 'Create Directory',
+            onTap: () => _renderDirectoryAdder(context),
           ),
           SpeedDialChild(
             child: const Icon(Icons.file_copy),
@@ -101,13 +108,7 @@ class _AdminPanelState extends State<AdminPanel> {
   Future<void> _updateFiles(BuildContext context) async {
     _loadFiles();
 
-    ScaffoldMessenger.of(context)
-      .showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Checking for new files...', textAlign: TextAlign.center)
-        )
-      );
+    displaySnackbar(context, 'Checking for new files...');
   }
 
   Widget _renderPopupMenu(BuildContext context) {
@@ -172,8 +173,87 @@ class _AdminPanelState extends State<AdminPanel> {
     );
   }
 
-  Future<void> _handleFolderAddition(BuildContext context) async {
-    
+  void _renderDirectoryDeleter(BuildContext context) {
+    final parentDirectories = _storageMap.keys.map((name) => name.split('/').last).toList();
+
+    showPlatformDialog(
+      context: context,
+      builder: (context) => BasicDialogAlert(
+        actions: [
+          BasicDialogAction(
+            title: Text('Cancel', style: Styles.textDefault),
+            onPressed: () => Navigator.of(context).pop(),
+          )
+        ],
+        title: Text('Select a directory to delete:', style: Styles.textDefault),
+        content: SizedBox(
+          height: 400.0,
+          child: ListView.builder(
+            itemCount: parentDirectories.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  title: Text(parentDirectories[index], style: Styles.textDefault),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    showPlatformDialog(
+                      context: context,
+                      builder: (context) => BasicDialogAlert(
+                        title: Text('Delete "${parentDirectories[index]}" and all its contents?'),
+                        actions: [
+                          BasicDialogAction(
+                            title: Text('Yes', style: Styles.textDefault),
+                            onPressed: () {
+                              _storageHelper.deleteDirectory(parentDirectories[index]);
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          BasicDialogAction(
+                            title: Text('No', style: Styles.textDefault),
+                            onPressed: () => Navigator.of(context).pop(),
+                          )
+                        ],
+                      )
+                    );
+                  },
+                )
+              );
+            }
+          ),
+        )
+      )
+    );
+  }
+
+  void _renderDirectoryAdder(BuildContext context) {
+    showPlatformDialog(
+      context: context,
+      builder: (context) => BasicDialogAlert(
+        actions: [
+          BasicDialogAction(
+            title: Text('Cancel', style: Styles.textDefault),
+            onPressed: () {
+              Navigator.of(context).pop();
+              _textController.clear();
+            }
+          ),
+          BasicDialogAction(
+            title: Text('Ok', style: Styles.textDefault),
+            onPressed: () {
+              Navigator.of(context).pop();
+              _storageHelper.createDirectory(_textController.text);
+              _textController.clear();
+            },
+          )
+        ],
+        title: Text('Enter name of directory:', style: Styles.textDefault),
+        content: SizedBox(
+          child: Material(
+            child: TextField(controller: _textController)
+          )
+        ),
+      )
+    );
   }
 
   Future<void> _handleFileAddition(BuildContext context) async {
@@ -225,24 +305,12 @@ class _AdminPanelState extends State<AdminPanel> {
       _storageHelper.uploadFileWithMetadata(file, '/protocols/$directory/$fileName');
     }
 
-    ScaffoldMessenger.of(context)
-      .showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Uploading file to server...', textAlign: TextAlign.center)
-        )
-      );
+    displaySnackbar(context, 'Uploading file to server...');
   }
 
   void _handleLogout(BuildContext context) {
     FirebaseAuth.instance.signOut();
     Navigator.of(context).pop();
-    ScaffoldMessenger.of(context)
-      .showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('You have been logged out.', textAlign: TextAlign.center)
-        )
-      );
+    displaySnackbar(context, 'You have been logged out.');
   }
 }

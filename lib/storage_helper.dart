@@ -23,15 +23,18 @@ class StorageHelper {
 
       await for (final file in directory.list()) {
         final fileName = file.path.split('/').last;
-        final parentDirectory = file.parent.toString().split('/').last.replaceAll('\'', '');
-        storageMap[directory.path]!.add(
-          StoredItem(
-            name: fileName.split('.').first,
-            localFile: file as File,
-            remoteReference: _storageInstance
-              .ref('protocols/$parentDirectory/$fileName')
-          )
-        );
+        
+        if (fileName != '.keep') {
+          final parentDirectory = file.parent.toString().split('/').last.replaceAll('\'', '');
+          storageMap[directory.path]!.add(
+            StoredItem(
+              name: fileName.split('.').first,
+              localFile: file as File,
+              remoteReference: _storageInstance
+                .ref('protocols/$parentDirectory/$fileName')
+            )
+          );
+        }
       }
     }
 
@@ -58,6 +61,21 @@ class StorageHelper {
     }
   }
 
+  void createDirectory(String text) {
+    _storageInstance.ref('protocols/$text/.keep').putString('');
+  }
+
+  Future<void> deleteDirectory(String directory) async {
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    final files = await _storageInstance.ref('protocols/$directory').listAll();
+
+    for (Reference file in files.items) {
+      file.delete();
+    }
+
+    Directory('${appDocDir.path}/protocols/$directory').delete(recursive: true);
+  }
+
   void deleteFile(StoredItem file) {
     file.localFile.delete();
     file.remoteReference.delete();
@@ -78,7 +96,7 @@ class StorageHelper {
   }
 
   Future<void> _updateLocalFiles() async {
-    var remoteParentDirectories = 
+    final remoteParentDirectories = 
       await _storageInstance.ref('protocols/').listAll();
 
     for (Reference parentDirectory in remoteParentDirectories.prefixes) {

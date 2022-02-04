@@ -3,6 +3,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/screens/admin_panel.dart';
 import 'package:rfr_cookbook/styles.dart';
+import 'package:rfr_cookbook/utils/snackbar.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -65,7 +66,7 @@ class _LoginFormState extends State<LoginForm> {
                   form.save();
                   await _signIn()
                       ? _successfulSignIn(context)
-                      : _invalidCredentialsSnackbar(context);
+                      : displaySnackbar(context, 'Invalid credientails.');
                 }
               },
             ),
@@ -97,22 +98,6 @@ class _LoginFormState extends State<LoginForm> {
       )
     );
 
-    ScaffoldMessenger.of(context)
-      .showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Logged in as administrator.', textAlign: TextAlign.center)
-        )
-      );
-  }
-
-  void _invalidCredentialsSnackbar(BuildContext context) {
-    ScaffoldMessenger.of(context)
-      .showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.black.withOpacity(0.5),
-          content: const Text('Invalid credientails.', textAlign: TextAlign.center)
-        )
-      );
+    displaySnackbar(context, 'Logged in as administrator.');
   }
 }

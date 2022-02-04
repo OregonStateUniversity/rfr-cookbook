@@ -107,44 +107,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<String> searchList(BuildContext context) {
-    final pdfList = _storageMap.values.toList()[0];
-    final pdfList1 = _storageMap.values.toList()[1];
-    final pdfList2 = _storageMap.values.toList()[2];
-    final pdfList3 = _storageMap.values.toList()[3];
-    final pdfList4 = _storageMap.values.toList()[4];
-    final pdfList5 = _storageMap.values.toList()[5];
-    final pdfList6 = _storageMap.values.toList()[6];
-    final pdfList7 = _storageMap.values.toList()[7];
-    List<StoredItem> finalList = pdfList +
-        pdfList1 +
-        pdfList2 +
-        pdfList3 +
-        pdfList4 +
-        pdfList5 +
-        pdfList6 +
-        pdfList7;
-
-    List<String> list = finalList.map((file) => file.name).toList();
+    List<String> list =
+        storedItemList(context)!.map((file) => file.name).toList();
     return list;
   }
 
   List<StoredItem>? storedItemList(BuildContext context) {
-    final pdfList = _storageMap.values.toList()[0];
-    final pdfList1 = _storageMap.values.toList()[1];
-    final pdfList2 = _storageMap.values.toList()[2];
-    final pdfList3 = _storageMap.values.toList()[3];
-    final pdfList4 = _storageMap.values.toList()[4];
-    final pdfList5 = _storageMap.values.toList()[5];
-    final pdfList6 = _storageMap.values.toList()[6];
-    final pdfList7 = _storageMap.values.toList()[7];
-    List<StoredItem> finalList = pdfList +
-        pdfList1 +
-        pdfList2 +
-        pdfList3 +
-        pdfList4 +
-        pdfList5 +
-        pdfList6 +
-        pdfList7;
-    return finalList;
+    List<StoredItem> pdfList = [];
+    for (int i = 0; i <= 7; i++) {
+      pdfList += _storageMap.values.toList()[i];
+    }
+    return pdfList;
   }
 }

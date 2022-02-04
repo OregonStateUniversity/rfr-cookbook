@@ -107,59 +107,44 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<String> searchList(BuildContext context) {
-    final targetDirectory = _storageMap.keys.toList()[0];
-    final targetDirectory1 = _storageMap.keys.toList()[1];
-    final targetDirectory2 = _storageMap.keys.toList()[2];
-    final targetDirectory3 = _storageMap.keys.toList()[3];
-    final targetDirectory4 = _storageMap.keys.toList()[4];
-    final targetDirectory5 = _storageMap.keys.toList()[5];
-    final targetDirectory6 = _storageMap.keys.toList()[6];
-    final targetDirectory7 = _storageMap.keys.toList()[7];
-    final fileList = _storageMap[targetDirectory];
-    final fileList1 = _storageMap[targetDirectory1];
-    final fileList2 = _storageMap[targetDirectory2];
-    final fileList3 = _storageMap[targetDirectory3];
-    final fileList4 = _storageMap[targetDirectory4];
-    final fileList5 = _storageMap[targetDirectory5];
-    final fileList6 = _storageMap[targetDirectory6];
-    final fileList7 = _storageMap[targetDirectory7];
-    List<StoredItem> finalList = fileList! +
-        fileList1! +
-        fileList2! +
-        fileList3! +
-        fileList4! +
-        fileList5! +
-        fileList6! +
-        fileList7!;
+    final pdfList = _storageMap.values.toList()[0];
+    final pdfList1 = _storageMap.values.toList()[1];
+    final pdfList2 = _storageMap.values.toList()[2];
+    final pdfList3 = _storageMap.values.toList()[3];
+    final pdfList4 = _storageMap.values.toList()[4];
+    final pdfList5 = _storageMap.values.toList()[5];
+    final pdfList6 = _storageMap.values.toList()[6];
+    final pdfList7 = _storageMap.values.toList()[7];
+    List<StoredItem> finalList = pdfList +
+        pdfList1 +
+        pdfList2 +
+        pdfList3 +
+        pdfList4 +
+        pdfList5 +
+        pdfList6 +
+        pdfList7;
+
     List<String> list = finalList.map((file) => file.name).toList();
     return list;
   }
 
   List<StoredItem>? storedItemList(BuildContext context) {
-    final targetDirectory = _storageMap.keys.toList()[0];
-    final targetDirectory1 = _storageMap.keys.toList()[1];
-    final targetDirectory2 = _storageMap.keys.toList()[2];
-    final targetDirectory3 = _storageMap.keys.toList()[3];
-    final targetDirectory4 = _storageMap.keys.toList()[4];
-    final targetDirectory5 = _storageMap.keys.toList()[5];
-    final targetDirectory6 = _storageMap.keys.toList()[6];
-    final targetDirectory7 = _storageMap.keys.toList()[7];
-    final fileList = _storageMap[targetDirectory];
-    final fileList1 = _storageMap[targetDirectory1];
-    final fileList2 = _storageMap[targetDirectory2];
-    final fileList3 = _storageMap[targetDirectory3];
-    final fileList4 = _storageMap[targetDirectory4];
-    final fileList5 = _storageMap[targetDirectory5];
-    final fileList6 = _storageMap[targetDirectory6];
-    final fileList7 = _storageMap[targetDirectory7];
-    List<StoredItem> finalList = fileList! +
-        fileList1! +
-        fileList2! +
-        fileList3! +
-        fileList4! +
-        fileList5! +
-        fileList6! +
-        fileList7!;
+    final pdfList = _storageMap.values.toList()[0];
+    final pdfList1 = _storageMap.values.toList()[1];
+    final pdfList2 = _storageMap.values.toList()[2];
+    final pdfList3 = _storageMap.values.toList()[3];
+    final pdfList4 = _storageMap.values.toList()[4];
+    final pdfList5 = _storageMap.values.toList()[5];
+    final pdfList6 = _storageMap.values.toList()[6];
+    final pdfList7 = _storageMap.values.toList()[7];
+    List<StoredItem> finalList = pdfList +
+        pdfList1 +
+        pdfList2 +
+        pdfList3 +
+        pdfList4 +
+        pdfList5 +
+        pdfList6 +
+        pdfList7;
     return finalList;
   }
 }

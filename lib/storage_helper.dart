@@ -7,11 +7,6 @@ import 'package:rfr_cookbook/models/stored_item.dart';
 class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
 
-  void updateFileState() {
-    _verifyRootExists();
-    _updateLocalFiles();
-  }
-
   Future<Map<String, List<StoredItem>>> storageMap() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     Map<String, List<StoredItem>> storageMap = {};
@@ -26,9 +21,12 @@ class StorageHelper {
         
         if (fileName != '.keep') {
           final parentDirectory = file.parent.toString().split('/').last.replaceAll('\'', '');
+          final metadata = await _storageInstance.ref('protocols/$parentDirectory/$fileName').getMetadata();
+          
           storageMap[directory.path]!.add(
             StoredItem(
               name: fileName.split('.').first,
+              uploadedAt: metadata.timeCreated!,
               localFile: file as File,
               remoteReference: _storageInstance
                 .ref('protocols/$parentDirectory/$fileName')
@@ -95,7 +93,9 @@ class StorageHelper {
     }
   }
 
-  Future<void> _updateLocalFiles() async {
+  Future<void> updateFileState() async {
+    await _verifyRootExists();
+
     final remoteParentDirectories = 
       await _storageInstance.ref('protocols/').listAll();
 

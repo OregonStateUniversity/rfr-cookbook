@@ -10,6 +10,7 @@ import 'package:rfr_cookbook/utils/snackbar.dart';
 import 'admin_panel.dart';
 import 'file_list.dart';
 import 'login_form.dart';
+import 'package:wiredash/wiredash.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -32,33 +33,39 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('theCookbook', style: Styles.navBarTitle),
-          backgroundColor: Styles.themeColor,
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () => _navigationToAdminPanel(context),
-          ),
-          actions: [
-            IconButton(
-                onPressed: () => _updateFiles(context),
-                icon: const Icon(Icons.refresh)),
-            IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () async {
-                  showSearch(
-                      context: context,
-                      delegate: SearchBar(
-                          allSearchResults: searchList(context),
-                          searchSuggestions: searchList(context),
-                          storedItemList: storedItemList(context)));
-                }),
-          ],
+      appBar: AppBar(
+        title: const Text('theCookbook', style: Styles.navBarTitle),
+        backgroundColor: Styles.themeColor,
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () => _navigationToAdminPanel(context),
         ),
-        body: ListView.builder(
-          itemCount: _storageMap.length,
-          itemBuilder: _listViewItemBuilder,
-        ));
+        actions: [
+          IconButton(
+              onPressed: () => _updateFiles(context),
+              icon: const Icon(Icons.refresh)),
+          IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () async {
+                showSearch(
+                    context: context,
+                    delegate: SearchBar(
+                        allSearchResults: searchList(context),
+                        searchSuggestions: searchList(context),
+                        storedItemList: storedItemList(context)));
+              }),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: _storageMap.length,
+        itemBuilder: _listViewItemBuilder,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => Wiredash.of(context)!.show(),
+          label: const Text('Feedback'),
+          icon: const Icon(Icons.comment_outlined),
+          backgroundColor: Styles.themeColor),
+    );
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {

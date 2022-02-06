@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/screens/file_detail.dart';
 import 'package:rfr_cookbook/styles.dart';
+import 'package:wiredash/wiredash.dart';
 
 class FileList extends StatelessWidget {
   final List<StoredItem> _fileList;
@@ -13,15 +14,19 @@ class FileList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_sectionTitle, style: Styles.navBarTitle),
-        backgroundColor: Styles.themeColor,
-      ),
-      body: ListView.builder(
-        itemCount: _fileList.length,
-        itemBuilder: _listViewItemBuilder,
-      ),
-    );
+        appBar: AppBar(
+          title: Text(_sectionTitle, style: Styles.navBarTitle),
+          backgroundColor: Styles.themeColor,
+        ),
+        body: ListView.builder(
+          itemCount: _fileList.length,
+          itemBuilder: _listViewItemBuilder,
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+            onPressed: () => Wiredash.of(context)!.show(),
+            label: const Text('Feedback'),
+            icon: const Icon(Icons.comment_outlined),
+            backgroundColor: Styles.themeColor));
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {

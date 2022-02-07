@@ -21,12 +21,10 @@ class StorageHelper {
         
         if (fileName != '.keep') {
           final parentDirectory = file.parent.toString().split('/').last.replaceAll('\'', '');
-          final metadata = await _storageInstance.ref('protocols/$parentDirectory/$fileName').getMetadata();
           
           storageMap[directory.path]!.add(
             StoredItem(
               name: fileName.split('.').first,
-              uploadedAt: metadata.timeCreated!,
               localFile: file as File,
               remoteReference: _storageInstance
                 .ref('protocols/$parentDirectory/$fileName')

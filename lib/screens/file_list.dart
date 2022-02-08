@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/screens/file_detail.dart';
-import 'package:rfr_cookbook/styles.dart';
+import 'package:rfr_cookbook/config/styles.dart';
 import 'package:wiredash/wiredash.dart';
 
 class FileList extends StatelessWidget {

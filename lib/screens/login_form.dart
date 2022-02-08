@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/screens/admin_panel.dart';
-import 'package:rfr_cookbook/styles.dart';
+import 'package:rfr_cookbook/config/styles.dart';
 import 'package:rfr_cookbook/utils/snackbar.dart';
 
 class LoginForm extends StatefulWidget {

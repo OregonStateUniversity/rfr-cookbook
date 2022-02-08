@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/search.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
-import 'package:rfr_cookbook/styles.dart';
+import 'package:rfr_cookbook/config/styles.dart';
 import 'package:rfr_cookbook/utils/snackbar.dart';
 import 'admin_panel.dart';
 import 'file_list.dart';

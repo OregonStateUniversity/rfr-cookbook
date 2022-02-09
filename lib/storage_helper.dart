@@ -6,12 +6,13 @@ import 'package:rfr_cookbook/models/stored_item.dart';
 
 class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
+  static const _rootDir = 'protocols';
 
   Future<Map<String, List<StoredItem>>> storageMap() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     Map<String, List<StoredItem>> storageMap = {};
 
-    await for (final directory in Directory('${appDocDir.path}/protocols').list()) {
+    await for (final directory in Directory('${appDocDir.path}/$_rootDir').list()) {
       directory as Directory;
 
       storageMap[directory.path] = [];
@@ -27,7 +28,7 @@ class StorageHelper {
               name: fileName.split('.').first,
               localFile: file as File,
               remoteReference: _storageInstance
-                .ref('protocols/$parentDirectory/$fileName')
+                .ref('$_rootDir/$parentDirectory/$fileName')
             )
           );
         }
@@ -58,18 +59,18 @@ class StorageHelper {
   }
 
   void createDirectory(String text) {
-    _storageInstance.ref('protocols/$text/.keep').putString('');
+    _storageInstance.ref('$_rootDir/$text/.keep').putString('');
   }
 
   Future<void> deleteDirectory(String directory) async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
-    final files = await _storageInstance.ref('protocols/$directory').listAll();
+    final files = await _storageInstance.ref('$_rootDir/$directory').listAll();
 
     for (Reference file in files.items) {
       file.delete();
     }
 
-    Directory('${appDocDir.path}/protocols/$directory').delete(recursive: true);
+    Directory('${appDocDir.path}/$_rootDir/$directory').delete(recursive: true);
   }
 
   void deleteFile(StoredItem file) {
@@ -79,12 +80,12 @@ class StorageHelper {
 
   Future<void> deleteLocalRootDirectory() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
-    Directory(appDocDir.path + '/protocols').delete(recursive: true);
+    Directory('${appDocDir.path}/$_rootDir').delete(recursive: true);
   }
 
   Future<void> _verifyRootExists() async {
     final appDocDir = await getApplicationDocumentsDirectory();
-    final rootProtocolDir = Directory(appDocDir.path + '/protocols');
+    final rootProtocolDir = Directory('${appDocDir.path}/$_rootDir');
     
     if (!await rootProtocolDir.exists()) {
       rootProtocolDir.create();
@@ -95,7 +96,7 @@ class StorageHelper {
     await _verifyRootExists();
 
     final remoteParentDirectories = 
-      await _storageInstance.ref('protocols/').listAll();
+      await _storageInstance.ref('$_rootDir/').listAll();
 
     for (Reference parentDirectory in remoteParentDirectories.prefixes) {
       final ListResult directoryListing = 

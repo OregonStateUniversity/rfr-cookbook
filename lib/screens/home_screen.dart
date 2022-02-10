@@ -21,7 +21,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final StorageHelper _storageHelper = StorageHelper();
-  Map<String, List<StoredItem>> _storageMap = {};
   String selectedResult = "";
 
   @override
@@ -57,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         body: ListView.builder(
-          itemCount: _storageMap.length,
+          itemCount: _storageHelper.localStorageMap.length,
           itemBuilder: _listViewItemBuilder,
         ),
         floatingActionButton: FloatingActionButton.extended(
@@ -68,9 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
-    final targetDirectory = _storageMap.keys.toList()[index];
+    final targetDirectory = _storageHelper.localStorageMap.keys.toList()[index];
     final directoryName = targetDirectory.split('/').last;
-    final fileList = _storageMap[targetDirectory];
+    final fileList = _storageHelper.localStorageMap[targetDirectory];
     return Card(
       child: ListTile(
           trailing: const Icon(Icons.arrow_forward_ios_rounded),
@@ -100,15 +99,11 @@ class _HomeScreenState extends State<HomeScreen> {
     EasyLoading.show(
       status: 'Refreshing file state...'
     );
-    await _storageHelper.updateFiles();
-    final storageMap = await _storageHelper.localStorageMap();
+    await _storageHelper.refreshFileState();
+    await _storageHelper.updateLocalStorageMap();
     EasyLoading.dismiss();
 
-    if (mounted) {
-      setState(() {
-        _storageMap = storageMap;
-      });
-    }
+    setState(() {});
   }
 
   List<String> searchList(BuildContext context) {
@@ -120,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<StoredItem>? storedItemList(BuildContext context) {
     List<StoredItem> pdfList = [];
     for (int i = 0; i <= 7; i++) {
-      pdfList += _storageMap.values.toList()[i];
+      pdfList += _storageHelper.localStorageMap.values.toList()[i];
     }
     return pdfList;
   }

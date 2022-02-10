@@ -6,8 +6,19 @@ import 'package:rfr_cookbook/models/stored_item.dart';
 class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
   static const _rootDir = 'protocols';
+  static Map<String, List<StoredItem>> _localStorageMap = {};
 
-  Future<void> updateFiles() async {
+  static StorageHelper? _instance;
+  
+  StorageHelper._internal() {
+    _instance = this;
+  }
+
+  factory StorageHelper() => _instance ?? StorageHelper._internal();
+
+  get localStorageMap => _localStorageMap;
+
+  Future<void> refreshFileState() async {
     await _verifyRootExists();
 
     final remoteStorage = await _mapRemoteStorage();
@@ -83,7 +94,7 @@ class StorageHelper {
     return remoteMap;
   }
 
-  Future<Map<String, List<StoredItem>>> localStorageMap() async {
+  Future<void> updateLocalStorageMap() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     Map<String, List<StoredItem>> storageMap = {};
 
@@ -119,7 +130,7 @@ class StorageHelper {
       list.sort((a, b) => a.name.compareTo(b.name));
     }
 
-    return storageMap;
+    _localStorageMap = storageMap;
   }
 
   Future<void> uploadFile(File file, String remotePath) async {

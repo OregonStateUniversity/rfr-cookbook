@@ -20,7 +20,6 @@ class AdminPanel extends StatefulWidget {
 class _AdminPanelState extends State<AdminPanel> {
   final StorageHelper _storageHelper = StorageHelper();
   final _textController = TextEditingController();
-  Map<String, List<StoredItem>> _storageMap = {};
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,7 @@ class _AdminPanelState extends State<AdminPanel> {
         ],
       ),
       body: ListView.builder(
-        itemCount: _storageMap.length,
+        itemCount: _storageHelper.localStorageMap.length,
         itemBuilder: _listViewItemBuilder
       ),
       floatingActionButton: SpeedDial(
@@ -67,9 +66,9 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   Widget _listViewItemBuilder(BuildContext context, int index) {
-    final targetDirectory = _storageMap.keys.toList()[index];
+    final targetDirectory = _storageHelper.localStorageMap.keys.toList()[index];
     final directoryName = targetDirectory.split('/').last;
-    final fileList = _storageMap[targetDirectory];
+    final fileList = _storageHelper.localStorageMap[targetDirectory];
     return Card(
       child: ExpansionTile(
         title: Text(directoryName, style: Styles.textDefault),
@@ -93,15 +92,11 @@ class _AdminPanelState extends State<AdminPanel> {
     EasyLoading.show(
       status: 'Refreshing file state...'
     );
-    await _storageHelper.updateFiles();
-    final storageMap = await _storageHelper.localStorageMap();
+    await _storageHelper.refreshFileState();
+    await _storageHelper.updateLocalStorageMap();
     EasyLoading.dismiss();
 
-    if (mounted) {
-      setState(() {
-        _storageMap = storageMap;
-      });
-    }
+    setState(() {});
   }
 
   Widget _renderPopupMenu(BuildContext context) {
@@ -167,7 +162,7 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   void _renderDirectoryDeleter(BuildContext context) {
-    final parentDirectories = _storageMap.keys.map((name) => name.split('/').last).toList();
+    final parentDirectories = _storageHelper.localStorageMap.keys.map((name) => name.split('/').last).toList();
 
     showPlatformDialog(
       context: context,
@@ -258,7 +253,7 @@ class _AdminPanelState extends State<AdminPanel> {
 
     if (result != null) {
       final List<File> files = result.paths.map((path) => File(path!)).toList();
-      final parentDirectories = _storageMap.keys.map((name) => name.split('/').last).toList();
+      final parentDirectories = _storageHelper.localStorageMap.keys.map((name) => name.split('/').last).toList();
 
       showPlatformDialog(
         context: context,

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:crypto/crypto.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
@@ -7,6 +6,82 @@ import 'package:rfr_cookbook/models/stored_item.dart';
 class StorageHelper {
   static final FirebaseStorage _storageInstance = FirebaseStorage.instance;
   static const _rootDir = 'protocols';
+
+  Future<void> updateFiles() async {
+    await _verifyRootExists();
+
+    final remoteStorage = await _mapRemoteStorage();
+    final localStorage = await _mapLocalStorage();
+
+    for (final entry in remoteStorage.entries) {
+      if (localStorage.containsKey(entry.key)) {
+        
+        for (final file in entry.value) {
+          try {
+            final localFile = localStorage[entry.key]!
+              .where((element) => element.path.split('/').last == file.name).first;
+            final localLastModified = await localFile.lastModified();
+            final remoteTimeCreated = await file.getMetadata()
+              .then((value) => value.timeCreated);
+
+            if (localLastModified.compareTo(remoteTimeCreated!).isNegative) {
+              localFile.delete();
+              _downloadFile(file.fullPath);
+            }
+
+            localStorage[entry.key]!.remove(localFile);
+          } on StateError {
+            _downloadFile(file.fullPath);
+          }
+        }
+      } else {
+        for (final file in entry.value) {
+          _downloadFile(file.fullPath);
+        }
+      }
+    }
+
+    for (final fileList in localStorage.values) {
+      for (final file in fileList) {
+        file.delete();
+      }
+    }
+  }
+
+  Future<Map<String, List<File>>> _mapLocalStorage() async {
+    final appDocDir = await getApplicationDocumentsDirectory();
+    final localMap = <String, List<File>>{};
+
+    await for (final directory in Directory('${appDocDir.path}/$_rootDir').list()) {
+      directory as Directory;
+      final directoryName = directory.path.split('/').last;
+
+      localMap[directoryName] = [];
+
+      await for (final file in directory.list()) {
+        localMap[directoryName]!.add(file as File);
+      }
+    }
+
+    return localMap;
+  }
+
+  Future<Map<String, List<Reference>>> _mapRemoteStorage() async {
+    final remoteMap = <String, List<Reference>>{};
+    final remoteParentDirectories = await _storageInstance.ref('$_rootDir/').listAll();
+
+    for (final parentDirectory in remoteParentDirectories.prefixes) {
+      final ListResult directoryListing = await _storageInstance.ref(parentDirectory.fullPath).listAll();
+
+      remoteMap[parentDirectory.name] = [];
+
+      for (final file in directoryListing.items) {
+        remoteMap[parentDirectory.name]!.add(file);
+      }
+    }
+
+    return remoteMap;
+  }
 
   Future<Map<String, List<StoredItem>>> storageMap() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -47,12 +122,9 @@ class StorageHelper {
     return storageMap;
   }
 
-  Future<void> uploadFileWithMetadata(File file, String remotePath) async {
-    SettableMetadata metadata = SettableMetadata(
-        customMetadata: <String, String>{'md5Hash': await _generateMd5(file)});
-
+  Future<void> uploadFile(File file, String remotePath) async {
     try {
-      _storageInstance.ref(remotePath).putFile(file, metadata);
+      _storageInstance.ref(remotePath).putFile(file);
     } on FirebaseException catch (e) {
       throw e.code;
     }
@@ -92,24 +164,6 @@ class StorageHelper {
     }
   }
 
-  Future<void> updateFileState() async {
-    await _verifyRootExists();
-
-    final remoteParentDirectories = 
-      await _storageInstance.ref('$_rootDir/').listAll();
-
-    for (Reference parentDirectory in remoteParentDirectories.prefixes) {
-      final ListResult directoryListing = 
-        await _storageInstance.ref(parentDirectory.fullPath).listAll();
-
-      for (Reference file in directoryListing.items) {
-        if (!await _md5Match(file)) {
-          _downloadFile(file.fullPath);
-        }
-      }
-    }
-  }
-
   Future<void> _downloadFile(String path) async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     final File downloadToFile = File('${appDocDir.path}/$path');
@@ -123,22 +177,5 @@ class StorageHelper {
     } on FirebaseException catch (e) {
       throw e.code;
     }
-  }
-
-  Future<bool> _md5Match(Reference file) async {
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
-    final File localFile = File('${appDocDir.path}/${file.fullPath}');
-    final FullMetadata metadata = await file.getMetadata();
-
-    if (await localFile.exists()) {
-      return await _generateMd5(localFile) == metadata.customMetadata!['md5Hash'];
-    }
-
-    return false;
-  }
-
-  Future<String> _generateMd5(File file) async {
-    final fileStream = file.openRead();
-    return (await md5.bind(fileStream).first).toString();
   }
 }

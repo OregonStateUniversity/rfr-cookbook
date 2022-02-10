@@ -97,7 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadFiles() async {
-    _storageHelper.updateFileState();
+    // start loading widget
+    await _storageHelper.updateFiles();
+    // end loading widget
     final storageMap = await _storageHelper.storageMap();
 
     if (mounted) {
@@ -109,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _updateFiles(BuildContext context) async {
     _loadFiles();
-    displaySnackbar(context, 'Checking for new files...');
+    displaySnackbar(context, 'Updating files...');
   }
 
   List<String> searchList(BuildContext context) {

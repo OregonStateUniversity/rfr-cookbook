@@ -52,9 +52,18 @@ class StorageHelper {
       }
     }
 
+    // delete files that don't have corresponding remote file
     for (final fileList in localStorage.values) {
       for (final file in fileList) {
         file.delete();
+      }
+    }
+
+    // delete directories that don't exist in Firebase
+    final appDocDir = await getApplicationDocumentsDirectory();
+    for (final directory in localStorage.keys) {
+      if (!remoteStorage.keys.contains(directory)) {
+        Directory('${appDocDir.path}/$_rootDir/$directory').delete(recursive: true);
       }
     }
   }
@@ -146,18 +155,14 @@ class StorageHelper {
   }
 
   Future<void> deleteDirectory(String directory) async {
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
     final files = await _storageInstance.ref('$_rootDir/$directory').listAll();
 
     for (Reference file in files.items) {
       file.delete();
     }
-
-    Directory('${appDocDir.path}/$_rootDir/$directory').delete(recursive: true);
   }
 
   void deleteFile(StoredItem file) {
-    file.localFile.delete();
     file.remoteReference.delete();
   }
 

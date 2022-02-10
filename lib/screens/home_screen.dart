@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/search.dart';
@@ -53,6 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           searchSuggestions: searchList(context),
                           storedItemList: storedItemList(context)));
                 }),
+            IconButton(
+                onPressed: () => _handleRootDeletion(context),
+                icon: const Icon(Icons.delete))
           ],
         ),
         body: ListView.builder(
@@ -104,6 +108,30 @@ class _HomeScreenState extends State<HomeScreen> {
     await EasyLoading.dismiss();
 
     setState(() {});
+  }
+
+  _handleRootDeletion(BuildContext context) {
+    showPlatformDialog(
+      context: context,
+      builder: (context) => BasicDialogAlert(
+        title: const Text('Delete local files?'),
+        actions: [
+          BasicDialogAction(
+            title: Text('Yes', style: Styles.textDefault),
+            onPressed: () async {
+              await _storageHelper.deleteLocalRootDirectory();
+              await _storageHelper.updateLocalStorageMap();
+              Navigator.of(context).pop();
+              setState(() {});
+            },
+          ),
+          BasicDialogAction(
+            title: Text('No', style: Styles.textDefault),
+            onPressed: () => Navigator.of(context).pop(),
+          )
+        ],
+      )
+    );
   }
 
   List<String> searchList(BuildContext context) {

@@ -104,16 +104,6 @@ class _AdminPanelState extends State<AdminPanel> {
       onSelected: (item) => _selectedItem(context, item as int),
       itemBuilder: (context) => [
         PopupMenuItem(
-          value: 1,
-          child: Row(
-            children: [
-              Icon(Icons.delete, color: Styles.themeColor),
-              const SizedBox(width: 7),
-              const Text('Delete Local Root Directory')
-            ],
-          )
-        ),
-        PopupMenuItem(
           value: 0,
           child: Row(
             children: [
@@ -131,8 +121,10 @@ class _AdminPanelState extends State<AdminPanel> {
       case 0: // logout
         _handleLogout(context);
         break;
-      case 1: // delete root directory
+      case 1: // delete local files
         _storageHelper.deleteLocalRootDirectory();
+        _storageHelper.updateLocalStorageMap();
+        setState(() {});
         break;
       default:
     }

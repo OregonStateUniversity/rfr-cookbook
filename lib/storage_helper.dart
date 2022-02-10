@@ -37,17 +37,17 @@ class StorageHelper {
 
             if (localLastModified.compareTo(remoteTimeCreated!).isNegative) {
               localFile.delete();
-              _downloadFile(file.fullPath);
+              await _downloadFile(file.fullPath);
             }
 
             localStorage[entry.key]!.remove(localFile);
           } on StateError {
-            _downloadFile(file.fullPath);
+            await _downloadFile(file.fullPath);
           }
         }
       } else {
         for (final file in entry.value) {
-          _downloadFile(file.fullPath);
+          await _downloadFile(file.fullPath);
         }
       }
     }
@@ -132,7 +132,9 @@ class StorageHelper {
 
   Future<void> deleteLocalRootDirectory() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
-    Directory('${appDocDir.path}/$_rootDir').delete(recursive: true);
+     await for (final directory in Directory('${appDocDir.path}/$_rootDir').list()) {
+       await directory.delete(recursive: true);
+    }
   }
 
   Future<void> _verifyRootExists() async {

@@ -95,7 +95,7 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   Future<void> _loadFiles() async {
-    _storageHelper.updateFileState();
+    _storageHelper.updateFiles();
     final storageMap = await _storageHelper.storageMap();
 
     if (mounted) {
@@ -107,8 +107,7 @@ class _AdminPanelState extends State<AdminPanel> {
 
   Future<void> _updateFiles(BuildContext context) async {
     _loadFiles();
-
-    displaySnackbar(context, 'Checking for new files...');
+    displaySnackbar(context, 'Updating files...');
   }
 
   Widget _renderPopupMenu(BuildContext context) {
@@ -302,7 +301,7 @@ class _AdminPanelState extends State<AdminPanel> {
   void _handleStorage(BuildContext context, String directory, List<File> files) {
     for (final file in files) {
       final fileName = file.path.split('/').last;
-      _storageHelper.uploadFileWithMetadata(file, '/protocols/$directory/$fileName');
+      _storageHelper.uploadFile(file, '/protocols/$directory/$fileName');
     }
 
     displaySnackbar(context, 'Uploading file to server...');

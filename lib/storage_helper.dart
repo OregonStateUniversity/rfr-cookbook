@@ -83,7 +83,7 @@ class StorageHelper {
     return remoteMap;
   }
 
-  Future<Map<String, List<StoredItem>>> storageMap() async {
+  Future<Map<String, List<StoredItem>>> localStorageMap() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     Map<String, List<StoredItem>> storageMap = {};
 

@@ -3,6 +3,7 @@ import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/config/styles.dart';
@@ -22,12 +23,6 @@ class _AdminPanelState extends State<AdminPanel> {
   Map<String, List<StoredItem>> _storageMap = {};
 
   @override
-  void initState() {
-    super.initState();
-    _loadFiles();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +30,7 @@ class _AdminPanelState extends State<AdminPanel> {
         backgroundColor: Styles.themeColor,
         actions: [
           IconButton(
-            onPressed: () => _updateFiles(context),
+            onPressed: () => _loadFiles(),
             icon: const Icon(Icons.refresh)
           ),
           _renderPopupMenu(context),
@@ -95,19 +90,18 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   Future<void> _loadFiles() async {
-    _storageHelper.updateFiles();
-    final storageMap = await _storageHelper.storageMap();
+    EasyLoading.show(
+      status: 'Refreshing file state...'
+    );
+    await _storageHelper.updateFiles();
+    final storageMap = await _storageHelper.localStorageMap();
+    EasyLoading.dismiss();
 
     if (mounted) {
       setState(() {
         _storageMap = storageMap;
       });
     }
-  }
-
-  Future<void> _updateFiles(BuildContext context) async {
-    _loadFiles();
-    displaySnackbar(context, 'Updating files...');
   }
 
   Widget _renderPopupMenu(BuildContext context) {

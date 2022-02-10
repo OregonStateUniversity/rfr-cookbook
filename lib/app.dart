@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:wiredash/wiredash.dart';
+
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class App extends StatelessWidget {
           title: 'The Cookbook',
           navigatorKey: _navigatorKey,
           home: const HomeScreen(),
+          builder: EasyLoading.init(),
         )
       );
   }

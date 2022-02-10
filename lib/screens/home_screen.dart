@@ -2,11 +2,11 @@ import 'dart:core';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/search.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/config/styles.dart';
-import 'package:rfr_cookbook/utils/snackbar.dart';
 import 'admin_panel.dart';
 import 'file_list.dart';
 import 'login_form.dart';
@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: [
             IconButton(
-                onPressed: () => _updateFiles(context),
+                onPressed: () => _loadFiles(),
                 icon: const Icon(Icons.refresh)),
             IconButton(
                 icon: const Icon(Icons.search),
@@ -97,21 +97,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadFiles() async {
-    // start loading widget
+    EasyLoading.show(
+      status: 'Refreshing file state...'
+    );
     await _storageHelper.updateFiles();
-    // end loading widget
-    final storageMap = await _storageHelper.storageMap();
+    final storageMap = await _storageHelper.localStorageMap();
+    EasyLoading.dismiss();
 
     if (mounted) {
       setState(() {
         _storageMap = storageMap;
       });
     }
-  }
-
-  Future<void> _updateFiles(BuildContext context) async {
-    _loadFiles();
-    displaySnackbar(context, 'Updating files...');
   }
 
   List<String> searchList(BuildContext context) {

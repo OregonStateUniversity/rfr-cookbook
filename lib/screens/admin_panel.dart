@@ -94,7 +94,7 @@ class _AdminPanelState extends State<AdminPanel> {
     );
     await _storageHelper.refreshFileState();
     await _storageHelper.updateLocalStorageMap();
-    EasyLoading.dismiss();
+    await EasyLoading.dismiss();
 
     setState(() {});
   }

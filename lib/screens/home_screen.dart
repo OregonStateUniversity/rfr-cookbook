@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     await _storageHelper.refreshFileState();
     await _storageHelper.updateLocalStorageMap();
-    EasyLoading.dismiss();
+    await EasyLoading.dismiss();
 
     setState(() {});
   }

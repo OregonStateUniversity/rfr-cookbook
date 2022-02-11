@@ -42,9 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: [
             IconButton(
-                onPressed: () => _loadFiles(),
-                icon: const Icon(Icons.refresh)),
-            IconButton(
                 icon: const Icon(Icons.search),
                 onPressed: () async {
                   showSearch(
@@ -54,6 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           searchSuggestions: searchList(context),
                           storedItemList: storedItemList(context)));
                 }),
+            IconButton(
+                onPressed: () => _loadFiles(),
+                icon: const Icon(Icons.refresh)),
             IconButton(
                 onPressed: () => _handleLocalFileDeletion(context),
                 icon: const Icon(Icons.delete))

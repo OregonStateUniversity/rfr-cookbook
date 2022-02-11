@@ -130,7 +130,7 @@ class StorageHelper {
     file.remoteReference.delete();
   }
 
-  Future<void> deleteLocalRootDirectory() async {
+  Future<void> deleteLocalFiles() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
      await for (final directory in Directory('${appDocDir.path}/$_rootDir').list()) {
        await directory.delete(recursive: true);

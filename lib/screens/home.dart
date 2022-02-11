@@ -13,14 +13,14 @@ import 'file_list.dart';
 import 'login_form.dart';
 import 'package:wiredash/wiredash.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeState createState() => _HomeState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeState extends State<Home> {
   final StorageHelper _storageHelper = StorageHelper();
   String selectedResult = "";
 

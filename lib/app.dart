@@ -37,7 +37,7 @@ class App extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'The Cookbook',
           navigatorKey: _navigatorKey,
-          home: const HomeScreen(),
+          home: const Home(),
           builder: EasyLoading.init(),
         )
       );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/widgets/custom_animation.dart';
 import 'config/styles.dart';
-import 'screens/home_screen.dart';
+import 'screens/home.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:wiredash/wiredash.dart';
 

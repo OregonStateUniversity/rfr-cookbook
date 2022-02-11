@@ -180,6 +180,7 @@ class _AdminPanelState extends State<AdminPanel> {
                             title: Text('Yes', style: Styles.textDefault),
                             onPressed: () {
                               _storageHelper.deleteDirectory(parentDirectories[index]);
+                              _loadFiles();
                               Navigator.of(context).pop();
                             },
                           ),
@@ -218,6 +219,7 @@ class _AdminPanelState extends State<AdminPanel> {
               Navigator.of(context).pop();
               _storageHelper.createDirectory(_textController.text);
               _textController.clear();
+              _loadFiles();
             },
           )
         ],

@@ -121,11 +121,6 @@ class _AdminPanelState extends State<AdminPanel> {
       case 0: // logout
         _handleLogout(context);
         break;
-      case 1: // delete local files
-        _storageHelper.deleteLocalRootDirectory();
-        _storageHelper.updateLocalStorageMap();
-        setState(() {});
-        break;
       default:
     }
   }

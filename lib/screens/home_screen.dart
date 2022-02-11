@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           storedItemList: storedItemList(context)));
                 }),
             IconButton(
-                onPressed: () => _handleRootDeletion(context),
+                onPressed: () => _handleLocalFileDeletion(context),
                 icon: const Icon(Icons.delete))
           ],
         ),
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {});
   }
 
-  _handleRootDeletion(BuildContext context) {
+  _handleLocalFileDeletion(BuildContext context) {
     showPlatformDialog(
       context: context,
       builder: (context) => BasicDialogAlert(
@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BasicDialogAction(
             title: Text('Yes', style: Styles.textDefault),
             onPressed: () async {
-              await _storageHelper.deleteLocalRootDirectory();
+              await _storageHelper.deleteLocalFiles();
               await _storageHelper.updateLocalStorageMap();
               Navigator.of(context).pop();
               setState(() {});

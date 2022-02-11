@@ -55,7 +55,7 @@ class StorageHelper {
     // delete files that don't have corresponding remote file
     for (final fileList in localStorage.values) {
       for (final file in fileList) {
-        file.delete();
+        await file.delete();
       }
     }
 
@@ -63,7 +63,7 @@ class StorageHelper {
     final appDocDir = await getApplicationDocumentsDirectory();
     for (final directory in localStorage.keys) {
       if (!remoteStorage.keys.contains(directory)) {
-        Directory('${appDocDir.path}/$_rootDir/$directory').delete(recursive: true);
+        await Directory('${appDocDir.path}/$_rootDir/$directory').delete(recursive: true);
       }
     }
   }

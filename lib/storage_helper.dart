@@ -52,18 +52,18 @@ class StorageHelper {
       }
     }
 
-    // delete files that don't have corresponding remote file
-    for (final fileList in localStorage.values) {
-      for (final file in fileList) {
-        await file.delete();
-      }
-    }
-
     // delete directories that don't exist in Firebase
     final appDocDir = await getApplicationDocumentsDirectory();
     for (final directory in localStorage.keys) {
       if (!remoteStorage.keys.contains(directory)) {
         await Directory('${appDocDir.path}/$_rootDir/$directory').delete(recursive: true);
+      }
+    }
+
+    // delete files that don't have corresponding remote file
+    for (final fileList in localStorage.values) {
+      for (final file in fileList) {
+        await file.delete();
       }
     }
   }

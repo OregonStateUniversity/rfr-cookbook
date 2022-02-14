@@ -76,27 +76,30 @@ class _HomeState extends State<Home> {
     final fileList = _storageHelper.localStorageMap[targetDirectory];
     return Card(
       child: ListTile(
-          trailing: const Icon(Icons.arrow_forward_ios_rounded),
-          title: Text(directoryName, style: Styles.textDefault),
-          onTap: () => _navigationToPdfList(context, directoryName, fileList!)),
+        trailing: const Icon(Icons.arrow_forward_ios_rounded),
+        title: Text(directoryName, style: Styles.textDefault),
+        onTap: () => _navigationToPdfList(context, directoryName, fileList!)
+      ),
     );
   }
 
-  void _navigationToPdfList(
-      BuildContext context, String sectionTitle, List<StoredItem> fileList) {
+  void _navigationToPdfList(BuildContext context, String sectionTitle, List<StoredItem> fileList) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => FileList(fileList, sectionTitle)));
+      context,
+      MaterialPageRoute(
+        builder: (context) => FileList(fileList, sectionTitle)
+      )
+    );
   }
 
   void _navigationToAdminPanel(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                user == null ? const LoginForm() : const AdminPanel()));
+      context,
+      MaterialPageRoute(builder: (context) =>
+        user == null ? const LoginForm() : const AdminPanel()
+      )
+    );
   }
 
   Future<void> _loadFiles() async {

@@ -22,11 +22,12 @@ void configLoading() {
 }
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _navigatorKey = GlobalKey<NavigatorState>();
     configLoading();
 
     return Wiredash(

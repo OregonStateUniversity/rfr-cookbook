@@ -9,7 +9,7 @@ class StorageHelper {
   static Map<String, List<StoredItem>> _localStorageMap = {};
 
   static StorageHelper? _instance;
-  
+
   StorageHelper._internal() {
     _instance = this;
   }
@@ -26,14 +26,14 @@ class StorageHelper {
 
     for (final entry in remoteStorage.entries) {
       if (localStorage.containsKey(entry.key)) {
-        
         for (final file in entry.value) {
           try {
             final localFile = localStorage[entry.key]!
-              .where((element) => element.path.split('/').last == file.name).first;
+                .where((element) => element.path.split('/').last == file.name)
+                .first;
             final localLastModified = await localFile.lastModified();
-            final remoteTimeCreated = await file.getMetadata()
-              .then((value) => value.timeCreated);
+            final remoteTimeCreated =
+                await file.getMetadata().then((value) => value.timeCreated);
 
             if (localLastModified.compareTo(remoteTimeCreated!).isNegative) {
               localFile.delete();
@@ -56,7 +56,8 @@ class StorageHelper {
     final appDocDir = await getApplicationDocumentsDirectory();
     for (final directory in localStorage.keys) {
       if (!remoteStorage.keys.contains(directory)) {
-        await Directory('${appDocDir.path}/$_rootDir/$directory').delete(recursive: true);
+        await Directory('${appDocDir.path}/$_rootDir/$directory')
+            .delete(recursive: true);
       }
     }
 
@@ -72,25 +73,23 @@ class StorageHelper {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     _localStorageMap = {};
 
-    await for (final directory in Directory('${appDocDir.path}/$_rootDir').list()) {
+    await for (final directory
+        in Directory('${appDocDir.path}/$_rootDir').list()) {
       directory as Directory;
 
       _localStorageMap[directory.path] = [];
 
       await for (final file in directory.list()) {
         final fileName = file.path.split('/').last;
-        
+
         if (fileName != '.keep') {
           final parentDirectory = file.parent.toString().split('/').last;
-          
-          _localStorageMap[directory.path]!.add(
-            StoredItem(
+
+          _localStorageMap[directory.path]!.add(StoredItem(
               name: fileName.split('.').first,
               localFile: file as File,
               remoteReference: _storageInstance
-                .ref('$_rootDir/$parentDirectory/$fileName')
-            )
-          );
+                  .ref('$_rootDir/$parentDirectory/$fileName')));
         }
       }
     }
@@ -98,8 +97,8 @@ class StorageHelper {
     // sort keys
     final sortedKeys = _localStorageMap.keys.toList(growable: false)
       ..sort((k1, k2) => k1.compareTo(k2));
-    _localStorageMap = { for (final k in sortedKeys) k : _localStorageMap[k]! };
-    
+    _localStorageMap = {for (final k in sortedKeys) k: _localStorageMap[k]!};
+
     // sort lists
     for (final list in _localStorageMap.values) {
       list.sort((a, b) => a.name.compareTo(b.name));
@@ -132,25 +131,27 @@ class StorageHelper {
 
   Future<void> deleteLocalFiles() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
-     await for (final directory in Directory('${appDocDir.path}/$_rootDir').list()) {
-       await directory.delete(recursive: true);
+    await for (final directory
+        in Directory('${appDocDir.path}/$_rootDir').list()) {
+      await directory.delete(recursive: true);
     }
   }
 
   Future<void> _verifyRootExists() async {
     final appDocDir = await getApplicationDocumentsDirectory();
     final rootProtocolDir = Directory('${appDocDir.path}/$_rootDir');
-    
+
     if (!await rootProtocolDir.exists()) {
       rootProtocolDir.create();
     }
   }
 
-   Future<Map<String, List<File>>> _mapLocalStorage() async {
+  Future<Map<String, List<File>>> _mapLocalStorage() async {
     final appDocDir = await getApplicationDocumentsDirectory();
     final localMap = <String, List<File>>{};
 
-    await for (final directory in Directory('${appDocDir.path}/$_rootDir').list()) {
+    await for (final directory
+        in Directory('${appDocDir.path}/$_rootDir').list()) {
       directory as Directory;
       final directoryName = directory.path.split('/').last;
 
@@ -166,10 +167,12 @@ class StorageHelper {
 
   Future<Map<String, List<Reference>>> _mapRemoteStorage() async {
     final remoteMap = <String, List<Reference>>{};
-    final remoteParentDirectories = await _storageInstance.ref('$_rootDir/').listAll();
+    final remoteParentDirectories =
+        await _storageInstance.ref('$_rootDir/').listAll();
 
     for (final parentDirectory in remoteParentDirectories.prefixes) {
-      final ListResult directoryListing = await _storageInstance.ref(parentDirectory.fullPath).listAll();
+      final ListResult directoryListing =
+          await _storageInstance.ref(parentDirectory.fullPath).listAll();
 
       remoteMap[parentDirectory.name] = [];
 

@@ -28,9 +28,8 @@ class StorageHelper {
       if (localStorage.containsKey(entry.key)) {
         for (final file in entry.value) {
           try {
-            final localFile = localStorage[entry.key]!
-                .where((element) => element.path.split('/').last == file.name)
-                .first;
+            final localFile = localStorage[entry.key]!.firstWhere(
+                (element) => element.path.split('/').last == file.name);
             final localLastModified = await localFile.lastModified();
             final remoteTimeCreated =
                 await file.getMetadata().then((value) => value.timeCreated);

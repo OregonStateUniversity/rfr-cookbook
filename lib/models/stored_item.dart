@@ -6,9 +6,8 @@ class StoredItem {
   final File localFile;
   final Reference remoteReference;
 
-  StoredItem({
-    required this.name,
-    required this.localFile,
-    required this.remoteReference
-  });
+  StoredItem(
+      {required this.name,
+      required this.localFile,
+      required this.remoteReference});
 }

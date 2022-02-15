@@ -4,20 +4,19 @@ import 'app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   runApp(FutureBuilder(
-      future: Firebase.initializeApp(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
-        } else if (snapshot.hasData) {
-          return const App();
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
-    )
-  );
+    future: Firebase.initializeApp(),
+    builder: (context, snapshot) {
+      if (snapshot.hasError) {
+        return Text(snapshot.error.toString());
+      } else if (snapshot.hasData) {
+        return const App();
+      } else {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+    },
+  ));
 }

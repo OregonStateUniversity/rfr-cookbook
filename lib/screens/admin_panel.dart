@@ -29,16 +29,13 @@ class _AdminPanelState extends State<AdminPanel> {
         backgroundColor: Styles.themeColor,
         actions: [
           IconButton(
-            onPressed: () => _loadFiles(),
-            icon: const Icon(Icons.refresh)
-          ),
+              onPressed: () => _loadFiles(), icon: const Icon(Icons.refresh)),
           _renderPopupMenu(context),
         ],
       ),
       body: ListView.builder(
-        itemCount: _storageHelper.localStorageMap.length,
-        itemBuilder: _listViewItemBuilder
-      ),
+          itemCount: _storageHelper.localStorageMap.length,
+          itemBuilder: _listViewItemBuilder),
       floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
         spacing: 10,
@@ -48,7 +45,7 @@ class _AdminPanelState extends State<AdminPanel> {
           SpeedDialChild(
             child: const Icon(Icons.delete),
             label: 'Delete Directory',
-            onTap:() => _renderDirectoryDeleter(context),
+            onTap: () => _renderDirectoryDeleter(context),
           ),
           SpeedDialChild(
             child: const Icon(Icons.folder),
@@ -70,28 +67,25 @@ class _AdminPanelState extends State<AdminPanel> {
     final directoryName = targetDirectory.split('/').last;
     final fileList = _storageHelper.localStorageMap[targetDirectory];
     return Card(
-      child: ExpansionTile(
-        title: Text(directoryName, style: Styles.textDefault),
-        children: _buildExpandableContent(context, fileList!),
-      )
-    );
+        child: ExpansionTile(
+      title: Text(directoryName, style: Styles.textDefault),
+      children: _buildExpandableContent(context, fileList!),
+    ));
   }
 
-  List<Widget> _buildExpandableContent(BuildContext context, List<StoredItem> list) {
-    return list.map((file) => 
-      Card(
-        child: ListTile(
-          title: Text(file.name, style: Styles.textDefault),
-          onTap: () => _handleDelete(context, file),
-        )
-      )
-    ).toList();
+  List<Widget> _buildExpandableContent(
+      BuildContext context, List<StoredItem> list) {
+    return list
+        .map((file) => Card(
+                child: ListTile(
+              title: Text(file.name, style: Styles.textDefault),
+              onTap: () => _handleDelete(context, file),
+            )))
+        .toList();
   }
 
   Future<void> _loadFiles() async {
-    EasyLoading.show(
-      status: 'Refreshing file state...'
-    );
+    EasyLoading.show(status: 'Refreshing file state...');
     await _storageHelper.refreshFileState();
     await _storageHelper.updateLocalStorageMap();
     await EasyLoading.dismiss();
@@ -101,19 +95,16 @@ class _AdminPanelState extends State<AdminPanel> {
 
   Widget _renderPopupMenu(BuildContext context) {
     return PopupMenuButton(
-      onSelected: (item) => _selectedItem(context, item as int),
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          value: 0,
-          child: Row(
-            children: [
-              Icon(Icons.logout, color: Styles.themeColor),
-              const SizedBox(width: 7),
-              const Text('Logout')
-            ])
-        ),
-      ]
-    );
+        onSelected: (item) => _selectedItem(context, item as int),
+        itemBuilder: (context) => [
+              PopupMenuItem(
+                  value: 0,
+                  child: Row(children: [
+                    Icon(Icons.logout, color: Styles.themeColor),
+                    const SizedBox(width: 7),
+                    const Text('Logout')
+                  ])),
+            ]);
   }
 
   void _selectedItem(BuildContext context, int item) {
@@ -127,110 +118,110 @@ class _AdminPanelState extends State<AdminPanel> {
 
   void _handleDelete(BuildContext context, StoredItem file) {
     showPlatformDialog(
-      context: context,
-      builder: (context) => BasicDialogAlert(
-        title: Text('Delete "${file.name}"?'),
-        actions: [
-          BasicDialogAction(
-            title: Text('Yes', style: Styles.textDefault),
-            onPressed: () {
-              _storageHelper.deleteFile(file);
-              _loadFiles();
-              Navigator.of(context).pop();
-            },
-          ),
-          BasicDialogAction(
-            title: Text('No', style: Styles.textDefault),
-            onPressed: () => Navigator.of(context).pop(),
-          )
-        ],
-      )
-    );
+        context: context,
+        builder: (context) => BasicDialogAlert(
+              title: Text('Delete "${file.name}"?'),
+              actions: [
+                BasicDialogAction(
+                  title: Text('Yes', style: Styles.textDefault),
+                  onPressed: () {
+                    _storageHelper.deleteFile(file);
+                    _loadFiles();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                BasicDialogAction(
+                  title: Text('No', style: Styles.textDefault),
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+              ],
+            ));
   }
 
   void _renderDirectoryDeleter(BuildContext context) {
-    final parentDirectories = _storageHelper.localStorageMap.keys.map((name) => name.split('/').last).toList();
+    final parentDirectories = _storageHelper.localStorageMap.keys
+        .map((name) => name.split('/').last)
+        .toList();
 
     showPlatformDialog(
-      context: context,
-      builder: (context) => BasicDialogAlert(
-        actions: [
-          BasicDialogAction(
-            title: Text('Cancel', style: Styles.textDefault),
-            onPressed: () => Navigator.of(context).pop(),
-          )
-        ],
-        title: Text('Select a directory to delete:', style: Styles.textDefault),
-        content: SizedBox(
-          height: 400.0,
-          child: ListView.builder(
-            itemCount: parentDirectories.length,
-            itemBuilder: (context, index) {
-              return Card(
-                child: ListTile(
-                  title: Text(parentDirectories[index], style: Styles.textDefault),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    showPlatformDialog(
-                      context: context,
-                      builder: (context) => BasicDialogAlert(
-                        title: Text('Delete "${parentDirectories[index]}" and all its contents?'),
-                        actions: [
-                          BasicDialogAction(
-                            title: Text('Yes', style: Styles.textDefault),
-                            onPressed: () {
-                              _storageHelper.deleteDirectory(parentDirectories[index]);
-                              _loadFiles();
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          BasicDialogAction(
-                            title: Text('No', style: Styles.textDefault),
-                            onPressed: () => Navigator.of(context).pop(),
-                          )
-                        ],
-                      )
-                    );
-                  },
-                )
-              );
-            }
-          ),
-        )
-      )
-    );
+        context: context,
+        builder: (context) => BasicDialogAlert(
+                actions: [
+                  BasicDialogAction(
+                    title: Text('Cancel', style: Styles.textDefault),
+                    onPressed: () => Navigator.of(context).pop(),
+                  )
+                ],
+                title: Text('Select a directory to delete:',
+                    style: Styles.textDefault),
+                content: SizedBox(
+                  height: 400.0,
+                  child: ListView.builder(
+                      itemCount: parentDirectories.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                            child: ListTile(
+                          title: Text(parentDirectories[index],
+                              style: Styles.textDefault),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            showPlatformDialog(
+                                context: context,
+                                builder: (context) => BasicDialogAlert(
+                                      title: Text(
+                                          'Delete "${parentDirectories[index]}" and all its contents?'),
+                                      actions: [
+                                        BasicDialogAction(
+                                          title: Text('Yes',
+                                              style: Styles.textDefault),
+                                          onPressed: () {
+                                            _storageHelper.deleteDirectory(
+                                                parentDirectories[index]);
+                                            _loadFiles();
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        BasicDialogAction(
+                                          title: Text('No',
+                                              style: Styles.textDefault),
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                        )
+                                      ],
+                                    ));
+                          },
+                        ));
+                      }),
+                )));
   }
 
   void _renderDirectoryAdder(BuildContext context) {
     showPlatformDialog(
-      context: context,
-      builder: (context) => BasicDialogAlert(
-        actions: [
-          BasicDialogAction(
-            title: Text('Cancel', style: Styles.textDefault),
-            onPressed: () {
-              Navigator.of(context).pop();
-              _textController.clear();
-            }
-          ),
-          BasicDialogAction(
-            title: Text('Ok', style: Styles.textDefault),
-            onPressed: () {
-              Navigator.of(context).pop();
-              _storageHelper.createDirectory(_textController.text);
-              _textController.clear();
-              _loadFiles();
-            },
-          )
-        ],
-        title: Text('Enter name of directory:', style: Styles.textDefault),
-        content: SizedBox(
-          child: Material(
-            child: TextField(controller: _textController)
-          )
-        ),
-      )
-    );
+        context: context,
+        builder: (context) => BasicDialogAlert(
+              actions: [
+                BasicDialogAction(
+                    title: Text('Cancel', style: Styles.textDefault),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      _textController.clear();
+                    }),
+                BasicDialogAction(
+                  title: Text('Ok', style: Styles.textDefault),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _storageHelper.createDirectory(_textController.text);
+                    _textController.clear();
+                    _loadFiles();
+                  },
+                )
+              ],
+              title:
+                  Text('Enter name of directory:', style: Styles.textDefault),
+              content: SizedBox(
+                  child:
+                      Material(child: TextField(controller: _textController))),
+            ));
   }
 
   Future<void> _handleFileAddition(BuildContext context) async {
@@ -242,41 +233,43 @@ class _AdminPanelState extends State<AdminPanel> {
 
     if (result != null) {
       final List<File> files = result.paths.map((path) => File(path!)).toList();
-      final parentDirectories = _storageHelper.localStorageMap.keys.map((name) => name.split('/').last).toList();
+      final parentDirectories = _storageHelper.localStorageMap.keys
+          .map((name) => name.split('/').last)
+          .toList();
 
       showPlatformDialog(
-        context: context,
-        builder: (context) => BasicDialogAlert(
-          actions: [
-            BasicDialogAction(
-              title: Text('Cancel', style: Styles.textDefault),
-              onPressed: () => Navigator.of(context).pop(),
-            )
-          ],
-          title: Text('Select a directory in which to store:', style: Styles.textDefault),
-          content: SizedBox(
-            height: 400.0,
-            child: ListView.builder(
-              itemCount: parentDirectories.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    title: Text(parentDirectories[index], style: Styles.textDefault),
-                    onTap: () {
-                      Navigator.of(context).pop();  
-                      _handleStorage(context, parentDirectories[index], files);
-                    },
-                  )
-                );
-              }
-            ),
-          )
-        )
-      );
+          context: context,
+          builder: (context) => BasicDialogAlert(
+                  actions: [
+                    BasicDialogAction(
+                      title: Text('Cancel', style: Styles.textDefault),
+                      onPressed: () => Navigator.of(context).pop(),
+                    )
+                  ],
+                  title: Text('Select a directory in which to store:',
+                      style: Styles.textDefault),
+                  content: SizedBox(
+                    height: 400.0,
+                    child: ListView.builder(
+                        itemCount: parentDirectories.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                              child: ListTile(
+                            title: Text(parentDirectories[index],
+                                style: Styles.textDefault),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              _handleStorage(
+                                  context, parentDirectories[index], files);
+                            },
+                          ));
+                        }),
+                  )));
     }
   }
 
-  void _handleStorage(BuildContext context, String directory, List<File> files) {
+  void _handleStorage(
+      BuildContext context, String directory, List<File> files) {
     for (final file in files) {
       final fileName = file.path.split('/').last;
       _storageHelper.uploadFile(file, '/protocols/$directory/$fileName');

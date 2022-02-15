@@ -14,7 +14,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  
+
   String? _email;
   String? _password;
 
@@ -22,9 +22,8 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Admin Login', style: Styles.navBarTitle),
-        backgroundColor: Styles.themeColor
-        ),
+          title: const Text('Admin Login', style: Styles.navBarTitle),
+          backgroundColor: Styles.themeColor),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
         child: Builder(
@@ -42,7 +41,9 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           TextFormField(
             decoration: const InputDecoration(labelText: 'email'),
-            validator: (value) => EmailValidator.validate(value!) ? null : 'Please enter a valid email.',
+            validator: (value) => EmailValidator.validate(value!)
+                ? null
+                : 'Please enter a valid email.',
             onSaved: (value) => setState(() => _email = value!),
           ),
           TextFormField(
@@ -56,7 +57,8 @@ class _LoginFormState extends State<LoginForm> {
             onSaved: (value) => setState(() => _password = value!),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: ElevatedButton(
               style: Styles.buttonStyle,
               child: Text('Login', style: Styles.buttonText),
@@ -79,10 +81,7 @@ class _LoginFormState extends State<LoginForm> {
   Future<bool> _signIn() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(
-          email: _email!,
-          password: _password!
-        );
+          .signInWithEmailAndPassword(email: _email!, password: _password!);
       return userCredential.user != null;
     } on FirebaseAuthException {
       return false;
@@ -92,11 +91,7 @@ class _LoginFormState extends State<LoginForm> {
   void _successfulSignIn(BuildContext context) {
     Navigator.of(context).pop();
     Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const AdminPanel()
-      )
-    );
+        context, MaterialPageRoute(builder: (context) => const AdminPanel()));
 
     displaySnackbar(context, 'Logged in as administrator.');
   }

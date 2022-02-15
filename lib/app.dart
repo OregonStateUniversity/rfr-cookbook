@@ -7,18 +7,18 @@ import 'package:wiredash/wiredash.dart';
 
 void configLoading() {
   EasyLoading.instance
-  ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-  ..loadingStyle = EasyLoadingStyle.custom
-  ..indicatorSize = 45.0
-  ..radius = 10.0
-  ..progressColor = Colors.white
-  ..backgroundColor = Styles.themeColor
-  ..indicatorColor = Colors.white
-  ..textColor = Colors.white
-  ..maskColor = Colors.blue.withOpacity(0.5)
-  ..userInteractions = true
-  ..dismissOnTap = false
-  ..customAnimation = CustomAnimation();
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.white
+    ..backgroundColor = Styles.themeColor
+    ..indicatorColor = Colors.white
+    ..textColor = Colors.white
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = true
+    ..dismissOnTap = false
+    ..customAnimation = CustomAnimation();
 }
 
 class App extends StatelessWidget {
@@ -39,7 +39,6 @@ class App extends StatelessWidget {
           navigatorKey: _navigatorKey,
           home: const Home(),
           builder: EasyLoading.init(),
-        )
-      );
+        ));
   }
 }

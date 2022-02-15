@@ -52,8 +52,7 @@ class _HomeState extends State<Home> {
                           storedItemList: _storedItemList(context)));
                 }),
             IconButton(
-                onPressed: () => _loadFiles(),
-                icon: const Icon(Icons.refresh)),
+                onPressed: () => _loadFiles(), icon: const Icon(Icons.refresh)),
             IconButton(
                 onPressed: () => _handleLocalFileDeletion(context),
                 icon: const Icon(Icons.delete))
@@ -76,36 +75,31 @@ class _HomeState extends State<Home> {
     final fileList = _storageHelper.localStorageMap[targetDirectory];
     return Card(
       child: ListTile(
-        trailing: const Icon(Icons.arrow_forward_ios_rounded),
-        title: Text(directoryName, style: Styles.textDefault),
-        onTap: () => _navigationToPdfList(context, directoryName, fileList!)
-      ),
+          trailing: const Icon(Icons.arrow_forward_ios_rounded),
+          title: Text(directoryName, style: Styles.textDefault),
+          onTap: () => _navigationToPdfList(context, directoryName, fileList!)),
     );
   }
 
-  void _navigationToPdfList(BuildContext context, String sectionTitle, List<StoredItem> fileList) {
+  void _navigationToPdfList(
+      BuildContext context, String sectionTitle, List<StoredItem> fileList) {
     Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => FileList(fileList, sectionTitle)
-      )
-    );
+        context,
+        MaterialPageRoute(
+            builder: (context) => FileList(fileList, sectionTitle)));
   }
 
   void _navigationToAdminPanel(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) =>
-        user == null ? const LoginForm() : const AdminPanel()
-      )
-    );
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                user == null ? const LoginForm() : const AdminPanel()));
   }
 
   Future<void> _loadFiles() async {
-    EasyLoading.show(
-      status: 'Refreshing file state...'
-    );
+    EasyLoading.show(status: 'Refreshing file state...');
     await _storageHelper.refreshFileState();
     await _storageHelper.updateLocalStorageMap();
     await EasyLoading.dismiss();
@@ -115,26 +109,25 @@ class _HomeState extends State<Home> {
 
   _handleLocalFileDeletion(BuildContext context) {
     showPlatformDialog(
-      context: context,
-      builder: (context) => BasicDialogAlert(
-        title: const Text('Delete local files?'),
-        actions: [
-          BasicDialogAction(
-            title: Text('Yes', style: Styles.textDefault),
-            onPressed: () async {
-              await _storageHelper.deleteLocalFiles();
-              await _storageHelper.updateLocalStorageMap();
-              Navigator.of(context).pop();
-              setState(() {});
-            },
-          ),
-          BasicDialogAction(
-            title: Text('No', style: Styles.textDefault),
-            onPressed: () => Navigator.of(context).pop(),
-          )
-        ],
-      )
-    );
+        context: context,
+        builder: (context) => BasicDialogAlert(
+              title: const Text('Delete local files?'),
+              actions: [
+                BasicDialogAction(
+                  title: Text('Yes', style: Styles.textDefault),
+                  onPressed: () async {
+                    await _storageHelper.deleteLocalFiles();
+                    await _storageHelper.updateLocalStorageMap();
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  },
+                ),
+                BasicDialogAction(
+                  title: Text('No', style: Styles.textDefault),
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+              ],
+            ));
   }
 
   List<String> _searchList(BuildContext context) {

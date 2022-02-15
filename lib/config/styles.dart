@@ -30,8 +30,7 @@ class Styles {
   );
 
   static final buttonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(_fireEngineRed)
-  );
+      backgroundColor: MaterialStateProperty.all<Color>(_fireEngineRed));
 
   static Color _hexToColor(String code) {
     return Color(int.parse(code.substring(0, 6), radix: 16) + 0xFF000000);

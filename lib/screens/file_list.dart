@@ -29,7 +29,8 @@ class FileList extends StatelessWidget {
                           allSearchResults: _searchList(context),
                           searchSuggestions: _searchList(context),
                           storedItemList: _storedItemList(context)));
-                }),],
+                }),
+          ],
         ),
         body: ListView.builder(
           itemCount: _fileList.length,

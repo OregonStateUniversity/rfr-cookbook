@@ -104,7 +104,7 @@ class StorageHelper {
     }
   }
 
-  Future<void> uploadFile(File file, String remotePath) async {
+  void uploadFile(File file, String remotePath) {
     try {
       _storageInstance.ref(remotePath).putFile(file);
     } on FirebaseException catch (e) {

@@ -55,15 +55,23 @@ class StorageHelper {
     final appDocDir = await getApplicationDocumentsDirectory();
     for (final directory in localStorage.keys) {
       if (!remoteStorage.keys.contains(directory)) {
-        await Directory('${appDocDir.path}/$_rootDir/$directory')
-            .delete(recursive: true);
+        try {
+          await Directory('${appDocDir.path}/$_rootDir/$directory')
+              .delete(recursive: true);
+        } on FileSystemException {
+          continue;
+        }
       }
     }
 
     // delete files that don't have corresponding remote file
     for (final fileList in localStorage.values) {
       for (final file in fileList) {
-        await file.delete();
+        try {
+          await file.delete();
+        } on FileSystemException {
+          continue;
+        }
       }
     }
   }
@@ -82,7 +90,8 @@ class StorageHelper {
         final fileName = file.path.split('/').last;
 
         if (fileName != '.keep') {
-          final parentDirectory = file.parent.toString().split('/').last;
+          final parentDirectory =
+              file.parent.toString().split('/').last.replaceAll('\'', '');
 
           _localStorageMap[directory.path]!.add(StoredItem(
               name: fileName.split('.').first,
@@ -104,28 +113,28 @@ class StorageHelper {
     }
   }
 
-  void uploadFile(File file, String remotePath) {
+  Future<void> uploadFile(File file, String remotePath) async {
     try {
-      _storageInstance.ref(remotePath).putFile(file);
+      await _storageInstance.ref(remotePath).putFile(file);
     } on FirebaseException catch (e) {
       throw e.code;
     }
   }
 
-  void createDirectory(String text) {
-    _storageInstance.ref('$_rootDir/$text/.keep').putString('');
+  Future<void> createDirectory(String text) async {
+    await _storageInstance.ref('$_rootDir/$text/.keep').putString('');
   }
 
   Future<void> deleteDirectory(String directory) async {
     final files = await _storageInstance.ref('$_rootDir/$directory').listAll();
 
     for (Reference file in files.items) {
-      file.delete();
+      await file.delete();
     }
   }
 
-  void deleteFile(StoredItem file) {
-    file.remoteReference.delete();
+  Future<void> deleteFile(StoredItem file) async {
+    await file.remoteReference.delete();
   }
 
   Future<void> deleteLocalFiles() async {

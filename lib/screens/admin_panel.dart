@@ -9,6 +9,7 @@ import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/config/styles.dart';
 import 'package:rfr_cookbook/utils/snackbar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:rfr_cookbook/widgets/app_bar.dart';
 
 class AdminPanel extends StatefulWidget {
   const AdminPanel({Key? key}) : super(key: key);
@@ -24,14 +25,13 @@ class _AdminPanelState extends State<AdminPanel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Admin Panel', style: Styles.navBarTitle),
-        backgroundColor: Styles.themeColor,
+      appBar: appBar(
+        title: 'Admin Panel',
         actions: [
           IconButton(
               onPressed: () => _loadFiles(), icon: const Icon(Icons.refresh)),
           _renderPopupMenu(context),
-        ],
+        ]
       ),
       body: ListView.builder(
           itemCount: _storageHelper.localStorageMap.length,
@@ -85,12 +85,14 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   Future<void> _loadFiles() async {
-    EasyLoading.show(status: 'Refreshing file state...');
+    EasyLoading.show(status: 'Refreshing files...');
     await _storageHelper.refreshFileState();
     await _storageHelper.updateLocalStorageMap();
     await EasyLoading.dismiss();
 
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Widget _renderPopupMenu(BuildContext context) {
@@ -124,10 +126,10 @@ class _AdminPanelState extends State<AdminPanel> {
               actions: [
                 BasicDialogAction(
                   title: Text('Yes', style: Styles.textDefault),
-                  onPressed: () {
-                    _storageHelper.deleteFile(file);
-                    _loadFiles();
+                  onPressed: () async {
+                    await _storageHelper.deleteFile(file);
                     Navigator.of(context).pop();
+                    _loadFiles();
                   },
                 ),
                 BasicDialogAction(
@@ -174,11 +176,12 @@ class _AdminPanelState extends State<AdminPanel> {
                                         BasicDialogAction(
                                           title: Text('Yes',
                                               style: Styles.textDefault),
-                                          onPressed: () {
-                                            _storageHelper.deleteDirectory(
-                                                parentDirectories[index]);
-                                            _loadFiles();
+                                          onPressed: () async {
+                                            await _storageHelper
+                                                .deleteDirectory(
+                                                    parentDirectories[index]);
                                             Navigator.of(context).pop();
+                                            _loadFiles();
                                           },
                                         ),
                                         BasicDialogAction(
@@ -208,10 +211,10 @@ class _AdminPanelState extends State<AdminPanel> {
                     }),
                 BasicDialogAction(
                   title: Text('Ok', style: Styles.textDefault),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    _storageHelper.createDirectory(_textController.text);
+                  onPressed: () async {
+                    await _storageHelper.createDirectory(_textController.text);
                     _textController.clear();
+                    Navigator.of(context).pop();
                     _loadFiles();
                   },
                 )
@@ -258,9 +261,10 @@ class _AdminPanelState extends State<AdminPanel> {
                             title: Text(parentDirectories[index],
                                 style: Styles.textDefault),
                             onTap: () {
-                              Navigator.of(context).pop();
                               _handleStorage(
                                   context, parentDirectories[index], files);
+                              Navigator.of(context).pop();
+                              // _loadFiles()
                             },
                           ));
                         }),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
+import 'package:rfr_cookbook/widgets/app_bar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:rfr_cookbook/config/styles.dart';
 import 'package:rfr_cookbook/search.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 
@@ -13,9 +13,8 @@ class FileDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_file.name, style: Styles.navBarTitle),
-        backgroundColor: Styles.themeColor,
+      appBar: appBar(
+        title: _file.name,
         actions: [
           IconButton(
               icon: const Icon(Icons.search),
@@ -27,8 +26,7 @@ class FileDetail extends StatelessWidget {
                         searchSuggestions: _searchList(context),
                         storedItemList: _storedItemList(context)));
               }),
-        ],
-      ),
+        ]),
       body: SfPdfViewer.file(_file.localFile),
     );
   }

@@ -3,6 +3,7 @@ import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/screens/file_detail.dart';
 import 'package:rfr_cookbook/config/styles.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
+import 'package:rfr_cookbook/widgets/app_bar.dart';
 import 'package:wiredash/wiredash.dart';
 import 'package:rfr_cookbook/search.dart';
 
@@ -16,9 +17,8 @@ class FileList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(_sectionTitle, style: Styles.navBarTitle),
-          backgroundColor: Styles.themeColor,
+        appBar: appBar(
+          title: _sectionTitle,
           actions: [
             IconButton(
                 icon: const Icon(Icons.search),
@@ -30,8 +30,7 @@ class FileList extends StatelessWidget {
                           searchSuggestions: _searchList(context),
                           storedItemList: _storedItemList(context)));
                 }),
-          ],
-        ),
+          ]),
         body: ListView.builder(
           itemCount: _fileList.length,
           itemBuilder: _listViewItemBuilder,

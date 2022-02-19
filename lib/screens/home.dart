@@ -8,6 +8,7 @@ import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:rfr_cookbook/search.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 import 'package:rfr_cookbook/config/styles.dart';
+import 'package:rfr_cookbook/widgets/app_bar.dart';
 import 'admin_panel.dart';
 import 'file_list.dart';
 import 'login_form.dart';
@@ -33,31 +34,30 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('theCookbook', style: Styles.navBarTitle),
-          backgroundColor: Styles.themeColor,
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () => _navigationToAdminPanel(context),
-          ),
-          actions: [
-            IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () async {
-                  showSearch(
-                      context: context,
-                      delegate: SearchBar(
-                          allSearchResults: _searchList(context),
-                          searchSuggestions: _searchList(context),
-                          storedItemList: _storedItemList(context)));
-                }),
-            IconButton(
-                onPressed: () => _loadFiles(), icon: const Icon(Icons.refresh)),
-            IconButton(
-                onPressed: () => _handleLocalFileDeletion(context),
-                icon: const Icon(Icons.delete))
-          ],
-        ),
+        appBar: appBar(
+            title: 'theCookbook',
+            leading: IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => _navigationToAdminPanel(context),
+            ),
+            actions: [
+              IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () async {
+                    showSearch(
+                        context: context,
+                        delegate: SearchBar(
+                            allSearchResults: _searchList(context),
+                            searchSuggestions: _searchList(context),
+                            storedItemList: _storedItemList(context)));
+                  }),
+              IconButton(
+                  onPressed: () => _loadFiles(),
+                  icon: const Icon(Icons.refresh)),
+              IconButton(
+                  onPressed: () => _handleLocalFileDeletion(context),
+                  icon: const Icon(Icons.delete))
+            ]),
         body: ListView.builder(
           itemCount: _storageHelper.localStorageMap.length,
           itemBuilder: _listViewItemBuilder,
@@ -99,12 +99,14 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _loadFiles() async {
-    EasyLoading.show(status: 'Refreshing file state...');
+    EasyLoading.show(status: 'Refreshing files...');
     await _storageHelper.refreshFileState();
     await _storageHelper.updateLocalStorageMap();
     await EasyLoading.dismiss();
 
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   _handleLocalFileDeletion(BuildContext context) {

@@ -52,6 +52,7 @@ class _LoginFormState extends State<LoginForm> {
               if (value == null || value.isEmpty) {
                 return 'Please enter a password.';
               }
+              return null;
             },
             onSaved: (value) => setState(() => _password = value!),
           ),

@@ -17,20 +17,18 @@ class FileList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(
-          title: _sectionTitle,
-          actions: [
-            IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () async {
-                  showSearch(
-                      context: context,
-                      delegate: SearchBar(
-                          allSearchResults: _searchList(context),
-                          searchSuggestions: _searchList(context),
-                          storedItemList: _storedItemList(context)));
-                }),
-          ]),
+        appBar: appBar(title: _sectionTitle, actions: [
+          IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () async {
+                showSearch(
+                    context: context,
+                    delegate: SearchBar(
+                        allSearchResults: _searchList(context),
+                        searchSuggestions: _searchList(context),
+                        storedItemList: _storedItemList(context)));
+              }),
+        ]),
         body: ListView.builder(
           itemCount: _fileList.length,
           itemBuilder: _listViewItemBuilder,

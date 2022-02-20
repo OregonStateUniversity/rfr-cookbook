@@ -13,20 +13,18 @@ class FileDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(
-        title: _file.name,
-        actions: [
-          IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () async {
-                showSearch(
-                    context: context,
-                    delegate: SearchBar(
-                        allSearchResults: _searchList(context),
-                        searchSuggestions: _searchList(context),
-                        storedItemList: _storedItemList(context)));
-              }),
-        ]),
+      appBar: appBar(title: _file.name, actions: [
+        IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () async {
+              showSearch(
+                  context: context,
+                  delegate: SearchBar(
+                      allSearchResults: _searchList(context),
+                      searchSuggestions: _searchList(context),
+                      storedItemList: _storedItemList(context)));
+            }),
+      ]),
       body: SfPdfViewer.file(_file.localFile),
     );
   }

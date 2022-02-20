@@ -25,14 +25,11 @@ class _AdminPanelState extends State<AdminPanel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(
-        title: 'Admin Panel',
-        actions: [
-          IconButton(
-              onPressed: () => _loadFiles(), icon: const Icon(Icons.refresh)),
-          _renderPopupMenu(context),
-        ]
-      ),
+      appBar: appBar(title: 'Admin Panel', actions: [
+        IconButton(
+            onPressed: () => _loadFiles(), icon: const Icon(Icons.refresh)),
+        _renderPopupMenu(context),
+      ]),
       body: ListView.builder(
           itemCount: _storageHelper.localStorageMap.length,
           itemBuilder: _listViewItemBuilder),

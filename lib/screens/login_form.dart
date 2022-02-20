@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/screens/admin_panel.dart';
 import 'package:rfr_cookbook/config/styles.dart';
 import 'package:rfr_cookbook/utils/snackbar.dart';
+import 'package:rfr_cookbook/widgets/app_bar.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -21,9 +22,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text('Admin Login', style: Styles.navBarTitle),
-          backgroundColor: Styles.themeColor),
+      appBar: appBar(title: 'Admin Login'),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
         child: Builder(

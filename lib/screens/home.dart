@@ -20,8 +20,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final StorageHelper _storageHelper = StorageHelper();
-  String selectedResult = "";
+  final _storageHelper = StorageHelper();
 
   @override
   void initState() {

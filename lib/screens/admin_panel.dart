@@ -19,7 +19,7 @@ class AdminPanel extends StatefulWidget {
 }
 
 class _AdminPanelState extends State<AdminPanel> {
-  final StorageHelper _storageHelper = StorageHelper();
+  final _storageHelper = StorageHelper();
   final _textController = TextEditingController();
 
   @override

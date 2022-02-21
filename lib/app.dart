@@ -5,7 +5,7 @@ import 'screens/home.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:wiredash/wiredash.dart';
 
-void configLoading() {
+void configEasyLoading() {
   EasyLoading.instance
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
     ..loadingStyle = EasyLoadingStyle.custom
@@ -21,14 +21,19 @@ void configLoading() {
     ..customAnimation = CustomAnimation();
 }
 
-class App extends StatelessWidget {
-  final _navigatorKey = GlobalKey<NavigatorState>();
+class App extends StatefulWidget {
+  const App({Key? key}) : super(key: key);
 
-  App({Key? key}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
-    configLoading();
+    configEasyLoading();
 
     return Wiredash(
         projectId: 'cookbook-khc6a8h',

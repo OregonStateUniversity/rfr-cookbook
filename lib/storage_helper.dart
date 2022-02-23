@@ -35,7 +35,7 @@ class StorageHelper {
                 await file.getMetadata().then((value) => value.timeCreated);
 
             if (localLastModified.compareTo(remoteTimeCreated!).isNegative) {
-              localFile.delete();
+              await localFile.delete();
               await _downloadFile(file.fullPath);
             }
 

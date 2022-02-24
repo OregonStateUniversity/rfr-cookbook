@@ -197,7 +197,7 @@ class StorageHelper {
     final File downloadToFile = File('${appDocDir.path}/$path');
 
     if (!await downloadToFile.parent.exists()) {
-      downloadToFile.parent.create();
+      await downloadToFile.parent.create();
     }
 
     try {

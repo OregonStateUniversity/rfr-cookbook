@@ -5,16 +5,24 @@ import 'package:rfr_cookbook/config/styles.dart';
 import 'package:rfr_cookbook/search.dart';
 import 'package:rfr_cookbook/storage_helper.dart';
 
-class FileDetail extends StatelessWidget {
+class FileDetail extends StatefulWidget {
   final StoredItem _file;
-
   const FileDetail(this._file, {Key? key}) : super(key: key);
+
+  @override
+  _FileDetailState createState() => _FileDetailState();
+}
+
+class _FileDetailState extends State<FileDetail> {
+  //final StoredItem _file;
+
+  //const FileDetail(this._file, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_file.name, style: Styles.navBarTitle),
+        title: Text(widget._file.name, style: Styles.navBarTitle),
         backgroundColor: Styles.themeColor,
         actions: [
           IconButton(
@@ -29,7 +37,7 @@ class FileDetail extends StatelessWidget {
               }),
         ],
       ),
-      body: SfPdfViewer.file(_file.localFile),
+      body: SfPdfViewer.file(widget._file.localFile),
     );
   }
 

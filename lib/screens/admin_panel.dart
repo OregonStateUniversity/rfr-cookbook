@@ -154,6 +154,7 @@ class _AdminPanelState extends State<AdminPanel> {
                 title: Text('Select a directory to delete:',
                     style: Styles.textDefault),
                 content: SizedBox(
+                  width: double.maxFinite,
                   height: 400.0,
                   child: ListView.builder(
                       itemCount: parentDirectories.length,
@@ -249,6 +250,7 @@ class _AdminPanelState extends State<AdminPanel> {
                   title: Text('Select a directory in which to store:',
                       style: Styles.textDefault),
                   content: SizedBox(
+                    width: double.maxFinite,
                     height: 400.0,
                     child: ListView.builder(
                         itemCount: parentDirectories.length,

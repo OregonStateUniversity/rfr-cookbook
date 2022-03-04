@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _loadFiles();
+    _initialize();
   }
 
   @override
@@ -93,6 +93,14 @@ class _HomeState extends State<Home> {
         MaterialPageRoute(
             builder: (context) =>
                 user == null ? const LoginForm() : const AdminPanel()));
+  }
+
+  Future<void> _initialize() async {
+    await _storageHelper.updateLocalStorageMap();
+
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> _loadFiles() async {

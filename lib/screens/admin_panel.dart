@@ -155,7 +155,10 @@ class _AdminPanelState extends State<AdminPanel> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => SfPdfViewer.file(file.localFile)));
+            builder: (context) => Scaffold(
+              appBar: appBar(title: file.name),
+              body: SfPdfViewer.file(file.localFile),
+            )));
   }
 
   void _renderDirectoryDeleter(BuildContext context) {

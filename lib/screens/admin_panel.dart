@@ -78,10 +78,9 @@ class _AdminPanelState extends State<AdminPanel> {
       BuildContext context, List<StoredItem> list) {
     return list
         .map((file) => Card(
-                child: ListTile(
-              title: Text(file.name, style: Styles.textDefault),
-              trailing: _renderPopupMenu(context, file)
-            )))
+            child: ListTile(
+                title: Text(file.name, style: Styles.textDefault),
+                trailing: _renderPopupMenu(context, file))))
         .toList();
   }
 
@@ -113,7 +112,7 @@ class _AdminPanelState extends State<AdminPanel> {
                   child: Row(children: [
                     Icon(Icons.preview, color: Styles.themeColor),
                     const SizedBox(width: 7),
-                    const Text('Preview')
+                    const Text('View')
                   ]))
             ]);
   }
@@ -154,9 +153,9 @@ class _AdminPanelState extends State<AdminPanel> {
 
   void _handlePreview(BuildContext context, StoredItem file) {
     Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SfPdfViewer.file(file.localFile))
-    );
+        context,
+        MaterialPageRoute(
+            builder: (context) => SfPdfViewer.file(file.localFile)));
   }
 
   void _renderDirectoryDeleter(BuildContext context) {

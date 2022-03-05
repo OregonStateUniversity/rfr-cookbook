@@ -263,7 +263,6 @@ class _AdminPanelState extends State<AdminPanel> {
                               _handleStorage(
                                   context, parentDirectories[index], files);
                               Navigator.of(context).pop();
-                              // _loadFiles()
                             },
                           ));
                         }),
@@ -278,7 +277,7 @@ class _AdminPanelState extends State<AdminPanel> {
       _storageHelper.uploadFile(file, '/protocols/$directory/$fileName');
     }
 
-    displaySnackbar(context, 'Uploading file to server...');
+    displaySnackbar(context, 'Uploading to server...');
   }
 
   void _handleLogout(BuildContext context) {

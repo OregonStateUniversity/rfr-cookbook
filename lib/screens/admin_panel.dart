@@ -10,6 +10,7 @@ import 'package:rfr_cookbook/config/styles.dart';
 import 'package:rfr_cookbook/utils/snackbar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:rfr_cookbook/widgets/app_bar.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class AdminPanel extends StatefulWidget {
   const AdminPanel({Key? key}) : super(key: key);
@@ -79,7 +80,7 @@ class _AdminPanelState extends State<AdminPanel> {
         .map((file) => Card(
                 child: ListTile(
               title: Text(file.name, style: Styles.textDefault),
-              onTap: () => _handleDelete(context, file),
+              trailing: _renderPopupMenu(context, file)
             )))
         .toList();
   }
@@ -95,28 +96,39 @@ class _AdminPanelState extends State<AdminPanel> {
     }
   }
 
-  // Widget _renderPopupMenu(BuildContext context) {
-  //   return PopupMenuButton(
-  //       onSelected: (item) => _selectedItem(context, item as int),
-  //       itemBuilder: (context) => [
-  //             PopupMenuItem(
-  //                 value: 0,
-  //                 child: Row(children: [
-  //                   Icon(Icons.logout, color: Styles.themeColor),
-  //                   const SizedBox(width: 7),
-  //                   const Text('Logout')
-  //                 ])),
-  //           ]);
-  // }
+  Widget _renderPopupMenu(BuildContext context, StoredItem file) {
+    return PopupMenuButton(
+        icon: const Icon(Icons.more_vert),
+        onSelected: (item) => _selectedItem(context, file, item as int),
+        itemBuilder: (context) => [
+              PopupMenuItem(
+                  value: 0,
+                  child: Row(children: [
+                    Icon(Icons.delete, color: Styles.themeColor),
+                    const SizedBox(width: 7),
+                    const Text('Delete')
+                  ])),
+              PopupMenuItem(
+                  value: 1,
+                  child: Row(children: [
+                    Icon(Icons.preview, color: Styles.themeColor),
+                    const SizedBox(width: 7),
+                    const Text('Preview')
+                  ]))
+            ]);
+  }
 
-  // void _selectedItem(BuildContext context, int item) {
-  //   switch (item) {
-  //     case 0: // logout
-  //       _handleLogout(context);
-  //       break;
-  //     default:
-  //   }
-  // }
+  void _selectedItem(BuildContext context, StoredItem file, int item) {
+    switch (item) {
+      case 0: // delete
+        _handleDelete(context, file);
+        break;
+      case 1: // preview
+        _handlePreview(context, file);
+        break;
+      default:
+    }
+  }
 
   void _handleDelete(BuildContext context, StoredItem file) {
     showPlatformDialog(
@@ -138,6 +150,13 @@ class _AdminPanelState extends State<AdminPanel> {
                 )
               ],
             ));
+  }
+
+  void _handlePreview(BuildContext context, StoredItem file) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SfPdfViewer.file(file.localFile))
+    );
   }
 
   void _renderDirectoryDeleter(BuildContext context) {

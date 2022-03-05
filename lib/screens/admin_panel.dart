@@ -28,7 +28,10 @@ class _AdminPanelState extends State<AdminPanel> {
       appBar: appBar(title: 'Admin Panel', actions: [
         IconButton(
             onPressed: () => _loadFiles(), icon: const Icon(Icons.refresh)),
-        _renderPopupMenu(context),
+        IconButton(
+          onPressed: () => _handleLogout(context),
+          icon: const Icon(Icons.logout),
+        )
       ]),
       body: ListView.builder(
           itemCount: _storageHelper.localStorageMap.length,
@@ -92,28 +95,28 @@ class _AdminPanelState extends State<AdminPanel> {
     }
   }
 
-  Widget _renderPopupMenu(BuildContext context) {
-    return PopupMenuButton(
-        onSelected: (item) => _selectedItem(context, item as int),
-        itemBuilder: (context) => [
-              PopupMenuItem(
-                  value: 0,
-                  child: Row(children: [
-                    Icon(Icons.logout, color: Styles.themeColor),
-                    const SizedBox(width: 7),
-                    const Text('Logout')
-                  ])),
-            ]);
-  }
+  // Widget _renderPopupMenu(BuildContext context) {
+  //   return PopupMenuButton(
+  //       onSelected: (item) => _selectedItem(context, item as int),
+  //       itemBuilder: (context) => [
+  //             PopupMenuItem(
+  //                 value: 0,
+  //                 child: Row(children: [
+  //                   Icon(Icons.logout, color: Styles.themeColor),
+  //                   const SizedBox(width: 7),
+  //                   const Text('Logout')
+  //                 ])),
+  //           ]);
+  // }
 
-  void _selectedItem(BuildContext context, int item) {
-    switch (item) {
-      case 0: // logout
-        _handleLogout(context);
-        break;
-      default:
-    }
-  }
+  // void _selectedItem(BuildContext context, int item) {
+  //   switch (item) {
+  //     case 0: // logout
+  //       _handleLogout(context);
+  //       break;
+  //     default:
+  //   }
+  // }
 
   void _handleDelete(BuildContext context, StoredItem file) {
     showPlatformDialog(
@@ -281,8 +284,26 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   void _handleLogout(BuildContext context) {
-    FirebaseAuth.instance.signOut();
-    Navigator.of(context).pop();
-    displaySnackbar(context, 'You have been logged out.');
+    showPlatformDialog(
+        context: context,
+        builder: (context) => BasicDialogAlert(
+              title: Text('Are you sure you want to log out?',
+                  style: Styles.textDefault),
+              actions: [
+                BasicDialogAction(
+                  title: Text('Yes', style: Styles.textDefault),
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    displaySnackbar(context, 'You have been logged out.');
+                  },
+                ),
+                BasicDialogAction(
+                  title: Text('No', style: Styles.textDefault),
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+              ],
+            ));
   }
 }

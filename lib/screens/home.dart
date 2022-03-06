@@ -94,8 +94,12 @@ class _HomeState extends State<Home> {
   Future<void> _initialize() async {
     await _storageHelper.updateLocalStorageMap();
 
-    if (mounted) {
-      setState(() {});
+    if (_storageHelper.localStorageMap.isEmpty) {
+      _loadFiles();
+    } else {
+      if (mounted) {
+        setState(() {});
+      }
     }
   }
 

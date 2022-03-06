@@ -77,6 +77,8 @@ class StorageHelper {
   }
 
   Future<void> updateLocalStorageMap() async {
+    await _verifyRootExists();
+    
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     _localStorageMap = {};
 

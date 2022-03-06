@@ -96,10 +96,8 @@ class _HomeState extends State<Home> {
 
     if (_storageHelper.localStorageMap.isEmpty) {
       _loadFiles();
-    } else {
-      if (mounted) {
-        setState(() {});
-      }
+    } else if (mounted) {
+      setState(() {});
     }
   }
 

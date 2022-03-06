@@ -51,9 +51,6 @@ class _HomeState extends State<Home> {
               IconButton(
                   onPressed: () => _loadFiles(),
                   icon: const Icon(Icons.refresh)),
-              IconButton(
-                  onPressed: () => _handleLocalFileDeletion(context),
-                  icon: const Icon(Icons.delete))
             ]),
         body: ListView.builder(
           itemCount: _storageHelper.localStorageMap.length,
@@ -112,29 +109,6 @@ class _HomeState extends State<Home> {
     if (mounted) {
       setState(() {});
     }
-  }
-
-  _handleLocalFileDeletion(BuildContext context) {
-    showPlatformDialog(
-        context: context,
-        builder: (context) => BasicDialogAlert(
-              title: const Text('Delete local files?'),
-              actions: [
-                BasicDialogAction(
-                  title: Text('Yes', style: Styles.textDefault),
-                  onPressed: () async {
-                    await _storageHelper.deleteLocalFiles();
-                    await _storageHelper.updateLocalStorageMap();
-                    Navigator.of(context).pop();
-                    setState(() {});
-                  },
-                ),
-                BasicDialogAction(
-                  title: Text('No', style: Styles.textDefault),
-                  onPressed: () => Navigator.of(context).pop(),
-                )
-              ],
-            ));
   }
 
   List<String> _searchList(BuildContext context) {

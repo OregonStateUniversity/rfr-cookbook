@@ -62,8 +62,9 @@ class FileList extends StatelessWidget {
 
   List<StoredItem>? _storedItemList(BuildContext context) {
     final StorageHelper _storageHelper = StorageHelper();
+    final dirCount = _storageHelper.localStorageMap.keys.length;
     List<StoredItem> pdfList = [];
-    for (int i = 0; i <= 7; i++) {
+    for (int i = 0; i < dirCount; i++) {
       pdfList += _storageHelper.localStorageMap.values.toList()[i];
     }
     return pdfList;

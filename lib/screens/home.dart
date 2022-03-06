@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _loadFiles() async {
-    EasyLoading.show(status: 'Refreshing files...');
+    EasyLoading.show(status: 'Updating files...');
     await _storageHelper.refreshFileState();
     await _storageHelper.updateLocalStorageMap();
     await EasyLoading.dismiss();

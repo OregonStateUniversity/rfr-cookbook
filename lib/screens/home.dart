@@ -117,12 +117,6 @@ class _HomeState extends State<Home> {
   }
 
   List<StoredItem> _storedItemList() {
-    final dirCount = _storageHelper.localStorageMap.keys.length;
-    final valueList = _storageHelper.localStorageMap.values.toList();
-    List<StoredItem> pdfList = [];
-    for (int i = 0; i < dirCount; i++) {
-      pdfList += valueList[i];
-    }
-    return pdfList;
+    return [for (final sublist in _storageHelper.localStorageMap.values) ...sublist];
   }
 }

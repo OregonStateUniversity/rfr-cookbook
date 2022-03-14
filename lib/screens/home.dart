@@ -43,9 +43,9 @@ class _HomeState extends State<Home> {
                     showSearch(
                         context: context,
                         delegate: SearchBar(
-                            allSearchResults: _searchList(context),
-                            searchSuggestions: _searchList(context),
-                            storedItemList: _storedItemList(context)));
+                            allSearchResults: _searchList(),
+                            searchSuggestions: _searchList(),
+                            storedItemList: _storedItemList()));
                   }),
               IconButton(
                   onPressed: () => _loadFiles(),
@@ -112,13 +112,13 @@ class _HomeState extends State<Home> {
     }
   }
 
-  List<String> _searchList(BuildContext context) {
+  List<String> _searchList() {
     List<String> list =
-        _storedItemList(context)!.map((file) => file.name).toList();
+        _storedItemList()!.map((file) => file.name).toList();
     return list;
   }
 
-  List<StoredItem>? _storedItemList(BuildContext context) {
+  List<StoredItem>? _storedItemList() {
     final dirCount = _storageHelper.localStorageMap.keys.length;
     List<StoredItem> pdfList = [];
     for (int i = 0; i < dirCount; i++) {

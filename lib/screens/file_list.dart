@@ -56,11 +56,11 @@ class FileList extends StatelessWidget {
 
   List<String> _searchList() {
     List<String> list =
-        _storedItemList()!.map((file) => file.name).toList();
+        _storedItemList().map((file) => file.name).toList();
     return list;
   }
 
-  List<StoredItem>? _storedItemList() {
+  List<StoredItem> _storedItemList() {
     final StorageHelper _storageHelper = StorageHelper();
     final dirCount = _storageHelper.localStorageMap.keys.length;
     List<StoredItem> pdfList = [];

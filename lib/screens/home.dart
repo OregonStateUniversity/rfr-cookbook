@@ -114,11 +114,11 @@ class _HomeState extends State<Home> {
 
   List<String> _searchList() {
     List<String> list =
-        _storedItemList()!.map((file) => file.name).toList();
+        _storedItemList().map((file) => file.name).toList();
     return list;
   }
 
-  List<StoredItem>? _storedItemList() {
+  List<StoredItem> _storedItemList() {
     final dirCount = _storageHelper.localStorageMap.keys.length;
     List<StoredItem> pdfList = [];
     for (int i = 0; i < dirCount; i++) {

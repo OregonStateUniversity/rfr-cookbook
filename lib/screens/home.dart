@@ -117,6 +117,8 @@ class _HomeState extends State<Home> {
   }
 
   List<StoredItem> _storedItemList() {
-    return [for (final sublist in _storageHelper.localStorageMap.values) ...sublist];
+    return [
+      for (final sublist in _storageHelper.localStorageMap.values) ...sublist
+    ];
   }
 }

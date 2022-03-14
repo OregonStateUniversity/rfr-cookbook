@@ -60,6 +60,8 @@ class FileList extends StatelessWidget {
 
   List<StoredItem> _storedItemList() {
     final StorageHelper _storageHelper = StorageHelper();
-    return [for (final sublist in _storageHelper.localStorageMap.values) ...sublist];
+    return [
+      for (final sublist in _storageHelper.localStorageMap.values) ...sublist
+    ];
   }
 }

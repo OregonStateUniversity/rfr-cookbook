@@ -55,9 +55,7 @@ class FileList extends StatelessWidget {
   }
 
   List<String> _searchList() {
-    List<String> list =
-        _storedItemList().map((file) => file.name).toList();
-    return list;
+    return _storedItemList().map((file) => file.name).toList();
   }
 
   List<StoredItem> _storedItemList() {

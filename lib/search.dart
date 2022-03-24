@@ -20,12 +20,12 @@ class SearchBar extends SearchDelegate<String> {
   ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return theme.copyWith(
-      inputDecorationTheme: InputDecorationTheme(
+      inputDecorationTheme: const InputDecorationTheme(
         hintStyle: TextStyle(color: Colors.white),
         border: InputBorder.none,
       ),
       textTheme: Theme.of(context).textTheme.copyWith(
-            headline6: TextStyle(color: Colors.white, fontSize: 25.0),
+            headline6: const TextStyle(color: Colors.white, fontSize: 25.0),
           ),
       appBarTheme: AppBarTheme(
         backgroundColor: Styles.themeColor,

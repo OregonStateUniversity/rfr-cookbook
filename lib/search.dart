@@ -18,9 +18,7 @@ class SearchBar extends SearchDelegate<String> {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    assert(context != null);
     final ThemeData theme = Theme.of(context);
-    assert(theme != null);
     return theme.copyWith(
       inputDecorationTheme: InputDecorationTheme(
         hintStyle: TextStyle(color: Colors.white),

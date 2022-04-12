@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
-//import 'package:rfr_cookbook/widgets/app_bar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-<<<<<<< HEAD
-//import 'package:rfr_cookbook/search.dart';
-//import 'package:rfr_cookbook/storage_helper.dart';
-=======
 import 'package:rfr_cookbook/config/styles.dart';
->>>>>>> search
-import 'package:syncfusion_flutter_pdf/pdf.dart';
-
-import '../config/styles.dart';
+//import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class FileDetail extends StatefulWidget {
   final StoredItem _file;
@@ -63,32 +55,6 @@ class _FileDetailState extends State<FileDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-      appBar: AppBar(
-        title: Text(widget._file.name, style: Styles.navBarTitle),
-        backgroundColor: Styles.themeColor,
-        actions: <Widget>[
-          IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () async {
-                _searchResult = await _pdfViewerController.searchText('pain',
-                    searchOption: TextSearchOption.caseSensitive);
-                if (_searchResult.totalInstanceCount == 0) {
-                }
-                setState(() {});
-
-                /*
-                showSearch(
-                    context: context,
-                    delegate: SearchBar(
-                        allSearchResults: _searchList(context),
-                        searchSuggestions: _searchList(context),
-                        storedItemList: _storedItemList(context)));
-              */
-              }),
-        ],
-      ),
-=======
       appBar: _showToolbar
           ? AppBar(
               flexibleSpace: SafeArea(
@@ -128,15 +94,6 @@ class _FileDetailState extends State<FileDetail> {
                 IconButton(
                     icon: const Icon(Icons.search),
                     onPressed: () async {
-                      /*
-                  _searchResult = await _pdfViewerController.searchText('pain',
-                    searchOption: TextSearchOption.caseSensitive);
-                  if (_searchResult.totalInstanceCount == 0) {
-                    print('No matches found.');
-                  }
-                  print(
-                      'Total instance count: ${_searchResult.totalInstanceCount}');
-                  setState(() {});*/
                       setState(() {
                         _showScrollHead = false;
                         _showToolbar = true;
@@ -147,7 +104,6 @@ class _FileDetailState extends State<FileDetail> {
               automaticallyImplyLeading: false,
               //backgroundColor: Color(0xFFFAFAFA),
             ),
->>>>>>> search
       body: SfPdfViewer.file(widget._file.localFile,
           controller: _pdfViewerController),
     );
@@ -224,11 +180,11 @@ class SearchToolbarState extends State<SearchToolbar> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          insetPadding: EdgeInsets.all(0),
-          title: Text('Search Result'),
+          insetPadding: const EdgeInsets.all(0),
+          title: const Text('Search Result'),
           content: Container(
               width: 328.0,
-              child: Text(
+              child: const Text(
                   'No more occurrences found. Would you like to continue to search from the beginning?')),
           actions: <Widget>[
             TextButton(
@@ -336,7 +292,7 @@ class SearchToolbarState extends State<SearchToolbar> {
           child: Material(
             color: Colors.transparent,
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.clear,
                 color: Color.fromRGBO(0, 0, 0, 0.54),
                 size: 24,

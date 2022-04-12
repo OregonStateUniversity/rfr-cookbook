@@ -101,7 +101,6 @@ class _FileDetailState extends State<FileDetail> {
                       });
                     }),
               ],
-              automaticallyImplyLeading: false,
               //backgroundColor: Color(0xFFFAFAFA),
             ),
       body: SfPdfViewer.file(widget._file.localFile,

@@ -37,14 +37,10 @@ class _FileDetailState extends State<FileDetail> {
           IconButton(
               icon: const Icon(Icons.search),
               onPressed: () async {
-                print("we are getting here");
                 _searchResult = await _pdfViewerController.searchText('pain',
                     searchOption: TextSearchOption.caseSensitive);
                 if (_searchResult.totalInstanceCount == 0) {
-                  print('No matches found.');
                 }
-                print(
-                    'Total instance count: ${_searchResult.totalInstanceCount}');
                 setState(() {});
 
                 /*

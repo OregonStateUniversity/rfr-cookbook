@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:rfr_cookbook/config/styles.dart';
-//import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class FileDetail extends StatefulWidget {
   final StoredItem _file;
@@ -76,7 +76,7 @@ class _FileDetailState extends State<FileDetail> {
                       setState(() {
                         _textSearchKey.currentState?._showToast = true;
                       });
-                      await Future.delayed(Duration(seconds: 1));
+                      await Future.delayed(const Duration(seconds: 1));
                       setState(() {
                         _textSearchKey.currentState?._showToast = false;
                       });
@@ -85,7 +85,7 @@ class _FileDetailState extends State<FileDetail> {
                 ),
               ),
               automaticallyImplyLeading: false,
-              backgroundColor: Color(0xFFFAFAFA),
+              backgroundColor: Colors.redAccent[700],
             )
           : AppBar(
               title: Text(widget._file.name, style: Styles.navBarTitle),
@@ -114,7 +114,7 @@ typedef SearchTapCallback = void Function(Object item);
 /// SearchToolbar widget
 class SearchToolbar extends StatefulWidget {
   ///it describe the search toolbar constructor
-  SearchToolbar({
+  const SearchToolbar({
     this.controller,
     this.onTap,
     this.showTooltip = true,
@@ -181,9 +181,9 @@ class SearchToolbarState extends State<SearchToolbar> {
         return AlertDialog(
           insetPadding: const EdgeInsets.all(0),
           title: const Text('Search Result'),
-          content: Container(
+          content: const SizedBox(
               width: 328.0,
-              child: const Text(
+              child: Text(
                   'No more occurrences found. Would you like to continue to search from the beginning?')),
           actions: <Widget>[
             TextButton(
@@ -196,7 +196,7 @@ class SearchToolbarState extends State<SearchToolbar> {
               child: Text(
                 'YES',
                 style: TextStyle(
-                    color: Color(0x00000000).withOpacity(0.87),
+                    color: const Color(0x00000000).withOpacity(0.87),
                     fontFamily: 'Roboto',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w500,
@@ -216,7 +216,7 @@ class SearchToolbarState extends State<SearchToolbar> {
               child: Text(
                 'NO',
                 style: TextStyle(
-                    color: Color(0x00000000).withOpacity(0.87),
+                    color: const Color(0x00000000).withOpacity(0.87),
                     fontFamily: 'Roboto',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w500,
@@ -236,9 +236,9 @@ class SearchToolbarState extends State<SearchToolbar> {
         Material(
           color: Colors.transparent,
           child: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Color(0x00000000).withOpacity(0.54),
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
               size: 24,
             ),
             onPressed: () {
@@ -250,8 +250,7 @@ class SearchToolbarState extends State<SearchToolbar> {
         ),
         Flexible(
           child: TextFormField(
-            style: TextStyle(
-                color: Color(0x00000000).withOpacity(0.87), fontSize: 16),
+            style: const TextStyle(color: Colors.white, fontSize: 24),
             enableInteractiveSelection: false,
             focusNode: focusNode,
             keyboardType: TextInputType.text,
@@ -260,7 +259,8 @@ class SearchToolbarState extends State<SearchToolbar> {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: 'Find...',
-              hintStyle: TextStyle(color: Color(0x00000000).withOpacity(0.34)),
+              hintStyle:
+                  TextStyle(color: const Color(0x00000000).withOpacity(0.34)),
             ),
             onChanged: (text) {
               if (_searchTextLength < _editingController.value.text.length) {
@@ -293,7 +293,7 @@ class SearchToolbarState extends State<SearchToolbar> {
             child: IconButton(
               icon: const Icon(
                 Icons.clear,
-                color: Color.fromRGBO(0, 0, 0, 0.54),
+                color: Colors.white, //Color.fromRGBO(0, 0, 0, 0.54),
                 size: 24,
               ),
               onPressed: () {
@@ -317,27 +317,30 @@ class SearchToolbarState extends State<SearchToolbar> {
               Text(
                 '${_pdfTextSearchResult.currentInstanceIndex}',
                 style: TextStyle(
-                    color: Color.fromRGBO(0, 0, 0, 0.54).withOpacity(0.87),
+                    color:
+                        const Color.fromRGBO(0, 0, 0, 0.54).withOpacity(0.87),
                     fontSize: 16),
               ),
               Text(
                 ' of ',
                 style: TextStyle(
-                    color: Color.fromRGBO(0, 0, 0, 0.54).withOpacity(0.87),
+                    color:
+                        const Color.fromRGBO(0, 0, 0, 0.54).withOpacity(0.87),
                     fontSize: 16),
               ),
               Text(
                 '${_pdfTextSearchResult.totalInstanceCount}',
                 style: TextStyle(
-                    color: Color.fromRGBO(0, 0, 0, 0.54).withOpacity(0.87),
+                    color:
+                        const Color.fromRGBO(0, 0, 0, 0.54).withOpacity(0.87),
                     fontSize: 16),
               ),
               Material(
                 color: Colors.transparent,
                 child: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.navigate_before,
-                    color: Color.fromRGBO(0, 0, 0, 0.54),
+                    color: const Color.fromRGBO(0, 0, 0, 0.54),
                     size: 24,
                   ),
                   onPressed: () {
@@ -352,9 +355,9 @@ class SearchToolbarState extends State<SearchToolbar> {
               Material(
                 color: Colors.transparent,
                 child: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.navigate_next,
-                    color: Color.fromRGBO(0, 0, 0, 0.54),
+                    color: const Color.fromRGBO(0, 0, 0, 0.54),
                     size: 24,
                   ),
                   onPressed: () {

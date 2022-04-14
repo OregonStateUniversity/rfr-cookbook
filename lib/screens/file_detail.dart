@@ -85,7 +85,7 @@ class _FileDetailState extends State<FileDetail> {
                 ),
               ),
               automaticallyImplyLeading: false,
-              backgroundColor: Colors.redAccent[700],
+              backgroundColor: Styles.themeColor,
             )
           : AppBar(
               title: Text(widget._file.name, style: Styles.navBarTitle),
@@ -237,7 +237,7 @@ class SearchToolbarState extends State<SearchToolbar> {
           color: Colors.transparent,
           child: IconButton(
             icon: const Icon(
-              Icons.arrow_back_ios_new,
+              Icons.arrow_back,
               color: Colors.white,
               size: 24,
             ),
@@ -293,7 +293,7 @@ class SearchToolbarState extends State<SearchToolbar> {
             child: IconButton(
               icon: const Icon(
                 Icons.clear,
-                color: Colors.white, //Color.fromRGBO(0, 0, 0, 0.54),
+                color: Colors.white,
                 size: 24,
               ),
               onPressed: () {

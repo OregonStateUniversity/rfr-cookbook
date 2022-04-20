@@ -339,7 +339,7 @@ class SearchToolbarState extends State<SearchToolbar> {
                 child: IconButton(
                   icon: const Icon(
                     Icons.navigate_before,
-                    color: const Color.fromRGBO(0, 0, 0, 0.54),
+                    color: Color.fromRGBO(0, 0, 0, 0.54),
                     size: 24,
                   ),
                   onPressed: () {
@@ -356,7 +356,7 @@ class SearchToolbarState extends State<SearchToolbar> {
                 child: IconButton(
                   icon: const Icon(
                     Icons.navigate_next,
-                    color: const Color.fromRGBO(0, 0, 0, 0.54),
+                    color: Color.fromRGBO(0, 0, 0, 0.54),
                     size: 24,
                   ),
                   onPressed: () {

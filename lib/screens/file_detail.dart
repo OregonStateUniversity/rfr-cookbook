@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rfr_cookbook/models/stored_item.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:rfr_cookbook/config/styles.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class FileDetail extends StatefulWidget {
   final StoredItem _file;

@@ -13,10 +13,8 @@ class FileDetail extends StatefulWidget {
 
 class _FileDetailState extends State<FileDetail> {
   late PdfViewerController _pdfViewerController;
-  late PdfTextSearchResult _searchResult;
   late GlobalKey<SearchToolbarState> _textSearchKey;
   late bool _showToolbar;
-  late bool _showScrollHead;
 
   /// Ensure the entry history of Text search.
   LocalHistoryEntry? _historyEntry;
@@ -24,9 +22,7 @@ class _FileDetailState extends State<FileDetail> {
   @override
   void initState() {
     _pdfViewerController = PdfViewerController();
-    _searchResult = PdfTextSearchResult();
     _showToolbar = false;
-    _showScrollHead = true;
     _textSearchKey = GlobalKey();
     super.initState();
   }
@@ -65,7 +61,6 @@ class _FileDetailState extends State<FileDetail> {
                     if (toolbarItem.toString() == 'Cancel Search') {
                       setState(() {
                         _showToolbar = false;
-                        _showScrollHead = true;
                         if (Navigator.canPop(context)) {
                           Navigator.maybePop(context);
                         }
@@ -94,13 +89,11 @@ class _FileDetailState extends State<FileDetail> {
                     icon: const Icon(Icons.search),
                     onPressed: () async {
                       setState(() {
-                        _showScrollHead = false;
                         _showToolbar = true;
                         _ensureHistoryEntry();
                       });
                     }),
               ],
-              //backgroundColor: Color(0xFFFAFAFA),
             ),
       body: SfPdfViewer.file(widget._file.localFile,
           controller: _pdfViewerController),
@@ -110,9 +103,7 @@ class _FileDetailState extends State<FileDetail> {
 
 typedef SearchTapCallback = void Function(Object item);
 
-/// SearchToolbar widget
 class SearchToolbar extends StatefulWidget {
-  ///it describe the search toolbar constructor
   const SearchToolbar({
     this.controller,
     this.onTap,

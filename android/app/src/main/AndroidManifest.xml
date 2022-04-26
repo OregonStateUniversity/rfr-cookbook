@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rfr_cookbook">
+    package="org.redmondfireandrescue.cookbook">
    <application
-        android:label="rfr_cookbook"
+        android:label="RFR Cookbook"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
@@ -38,4 +38,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET" android:maxSdkVersion="19" />
 </manifest>

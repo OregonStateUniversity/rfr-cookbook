@@ -1,4 +1,4 @@
-package com.example.rfr_cookbook
+package org.redmondfireandrescue.cookbook
 
 import io.flutter.embedding.android.FlutterActivity
 

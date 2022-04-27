@@ -1,6 +1,6 @@
 # Redmond Fire & Rescue Cookbook
 
-<a href=https://github.com/osu-cascades/rfr-cookbook.git>theCookbook GitHub Repo</a>
+<a href="https://github.com/osu-cascades/rfr-cookbook.git"><img src="https://www.vectorlogo.zone/logos/github/github-icon.svg" alt="github" width="25" height="25"/>theCookbook GitHub Repo</a>
 
 The Redmond Fire & Rescue (RFR) cookbook is a mobile app that lists and displays RFR's field protocols as PDFs. Individuals who have access to the admin panel can add and remove files. 
 

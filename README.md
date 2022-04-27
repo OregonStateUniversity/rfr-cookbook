@@ -6,20 +6,20 @@ The Redmond Fire & Rescue (RFR) cookbook is a mobile app that lists and displays
 
 ## Language and Tools  <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="25" height="25"/> </a> <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="25" height="25"/> </a>
 
-The app utalizes Flutter and Firebase Storage. 
+The app utilizes Flutter and Firebase Storage. 
 
 ### <a href=https://docs.flutter.dev/get-started/install> Get started with Flutter </a>
 
 I recommend using VS Code instead of Android Studio for your dev environment. You will need to use Android studio to get 
 started but beyond that, I found that VS Code was easier to use and runs much faster.
 
-The Flutter documentation is great so be sure to utalize it. 
+The Flutter documentation is great so be sure to utilize it. 
 
 <a href="https://fluttercrashcourse.com/">Here is good flutter tutorial</a>.
 
 ### <a href="https://firebase.google.com/docs/flutter/setup?platform=ios">Get started with Firebase</a>
 
-To view the pdfs from Firebase Storage in our app we used the <a href="https://pub.dev/documentation/syncfusion_flutter_pdfviewer/latest/pdfviewer/pdfviewer-library.html">Syncfusion pdfviewer library</a>.
+To view the PDFs from Firebase Storage in our app we used the <a href="https://pub.dev/documentation/syncfusion_flutter_pdfviewer/latest/pdfviewer/pdfviewer-library.html">Syncfusion pdfviewer library</a>.
 
 We also used Syncfusion for <a href="https://help.syncfusion.com/flutter/pdf-viewer/text-search#how-to-create-and-display-a-custom-search-toolbar-with-the-search-features">in text search</a>.
 

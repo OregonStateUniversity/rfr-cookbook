@@ -1,23 +1,22 @@
 # Redmond Fire & Rescue Cookbook
 
-The Redmond Fire & Rescue (RFR) cookbook is a mobile app that lists and displays RFR's field protocols as PDFs. Individuals who have access to the admin panel can add and remove files. 
+> <a href=https://github.com/osu-cascades/rfr-cookbook.git>theCookbook GitHub Repo</a>
 
-## Language and Tools
+> The Redmond Fire & Rescue (RFR) cookbook is a mobile app that lists and displays RFR's field protocols as PDFs. Individuals who have access to the admin panel can add and remove files. 
 
-The app utalizes Flutter and Firebase Storage. 
+## Language and Tools  <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="25" height="25"/> </a> <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="25" height="25"/> </a>
 
-To get started with flutter:
-https://docs.flutter.dev/get-started/install
+> The app utalizes Flutter and Firebase Storage. 
 
-I recommend using VS Code instead of Android Studio for your dev environment. You will need to use Android studio to get started but beyond that, I found that VS Code was easier to use and runs much faster.
+> <a href=https://docs.flutter.dev/get-started/install> **Get started with Flutter** </a>
 
-The Flutter documentation is great so be sure to utalize it. 
+>I recommend using VS Code instead of Android Studio for your dev environment. You will need to use Android studio to get started but beyond that, I found that VS Code was easier to use and runs much faster.
 
-Here is another good resource for getting started:
-https://fluttercrashcourse.com/
+>The Flutter documentation is great so be sure to utalize it. 
 
+> <a href=https://fluttercrashcourse.com>Here is good flutter tutorial</a>
 
-To get started with Firebase:
+### To get started with Firebase:
 https://firebase.google.com/docs/flutter/setup?platform=ios
 
 To view the pdfs from Firebase Storage in our app we used the Syncfusion pdfviewer library:

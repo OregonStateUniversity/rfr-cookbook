@@ -25,7 +25,7 @@ We also used Syncfusion for <a href="https://help.syncfusion.com/flutter/pdf-vie
 
 ### <a href="https://wiredash.io/">Wiredash</a>
 
-We are utalizing wiredash as a way to track feedback from users. 
+We are utilizing wiredash as a way to track feedback from users. 
 
 ## Deployment
 

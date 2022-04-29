@@ -13,10 +13,6 @@ The app utilizes Flutter and Firebase Storage.
 I recommend using VS Code instead of Android Studio for your dev environment. You will need to use Android studio to get 
 started but beyond that, I found that VS Code was easier to use and runs much faster.
 
-The Flutter documentation is great so be sure to utilize it. 
-
-<a href="https://fluttercrashcourse.com/">Here is good flutter tutorial</a>.
-
 ### <a href="https://firebase.google.com/docs/flutter/setup?platform=ios">Get started with Firebase</a>
 
 To view the PDFs from Firebase Storage in our app we used the <a href="https://pub.dev/documentation/syncfusion_flutter_pdfviewer/latest/pdfviewer/pdfviewer-library.html">Syncfusion pdfviewer library</a>.

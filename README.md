@@ -1,30 +1,34 @@
 # Redmond Fire & Rescue Cookbook
 
-<a href="https://github.com/osu-cascades/rfr-cookbook.git"><img src="https://www.vectorlogo.zone/logos/github/github-icon.svg" alt="github" width="25" height="25"/>theCookbook GitHub Repo</a>
+[theCookbook GitHub Repo](https://github.com/osu-cascades/rfr-cookbook.git)
 
 The Redmond Fire & Rescue (RFR) cookbook is a mobile app that lists and displays RFR's field protocols as PDFs. Individuals who have access to the admin panel can add and remove files. 
 
-## Language and Tools  <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="25" height="25"/> </a> <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="25" height="25"/> </a>
+## Built With
+---
+- [Flutter](https://docs.flutter.dev/get-started/install)
+- [Firebase Storage](https://firebase.google.com/docs/flutter/setup?platform=ios)
+- [Syncfusion pdf viewer](https://pub.dev/documentation/syncfusion_flutter_pdfviewer/latest/pdfviewer/pdfviewer-library.html)
+- [Wiredash](https://wiredash.io/)
 
-The app utilizes Flutter and Firebase Storage. 
+## Installation
+---
+1. Clone the repo
+    ```
+    git clone https://github.com/osu-cascades/rfr-cookbook.git
+    ```
+2. Install packages
+    ```
+    flutter pub get
+    ```
 
-### <a href=https://docs.flutter.dev/get-started/install> Get started with Flutter </a>
+## Client
+---
+Dusty Miller - Dustin.Miller@redmondfireandrescue.org
 
-I recommend using VS Code instead of Android Studio for your dev environment. You will need to use Android studio to get 
-started but beyond that, I found that VS Code was easier to use and runs much faster.
-
-### <a href="https://firebase.google.com/docs/flutter/setup?platform=ios">Get started with Firebase</a>
-
-To view the PDFs from Firebase Storage in our app we used the <a href="https://pub.dev/documentation/syncfusion_flutter_pdfviewer/latest/pdfviewer/pdfviewer-library.html">Syncfusion pdfviewer library</a>.
-
-We also used Syncfusion for <a href="https://help.syncfusion.com/flutter/pdf-viewer/text-search#how-to-create-and-display-a-custom-search-toolbar-with-the-search-features">in text search</a>.
-
-### <a href="https://wiredash.io/">Wiredash</a>
-
-We are utilizing wiredash as a way to track feedback from users. 
 
 ## Deployment
-
+---
 When you are ready to distribute a new version of the application, your first step
 is to bump the build number, or version number and build number, in _pubspec.yml_.
 

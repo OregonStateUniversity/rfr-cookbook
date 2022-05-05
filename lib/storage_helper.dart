@@ -30,15 +30,19 @@ class StorageHelper {
           try {
             final localFile = localStorage[entry.key]!.firstWhere(
                 (element) => element.path.split('/').last == file.name);
+
             final localLastModified = await localFile.lastModified();
             final remoteTimeCreated =
                 await file.getMetadata().then((value) => value.timeCreated);
 
+            // check if remote file has been updated; if so, delete (outdated)
+            // local file and download new remote file
             if (localLastModified.compareTo(remoteTimeCreated!).isNegative) {
               await localFile.delete();
               await _downloadFile(file.fullPath);
             }
 
+            // remove target local file from local storage map
             localStorage[entry.key]!.remove(localFile);
           } on StateError {
             await _downloadFile(file.fullPath);

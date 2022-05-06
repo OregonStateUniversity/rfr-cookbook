@@ -6,12 +6,12 @@ The Redmond Fire & Rescue (RFR) cookbook is a mobile app that lists and displays
 
 ## Built With
 
-- [Flutter](https://docs.flutter.dev/get-started/install)
+- [Flutter v2.10.4](https://docs.flutter.dev/get-started/install)
 - [Firebase Storage](https://firebase.google.com/docs/flutter/setup?platform=ios)
 - [Syncfusion pdf viewer](https://pub.dev/documentation/syncfusion_flutter_pdfviewer/latest/pdfviewer/pdfviewer-library.html)
 - [Wiredash](https://wiredash.io/)
 
-## Installation
+## Development
 
 1. Clone the repo
     ```
@@ -21,6 +21,10 @@ The Redmond Fire & Rescue (RFR) cookbook is a mobile app that lists and displays
     ```
     flutter pub get
     ```
+
+## Tests
+
+No unit or system tests.
 
 ## Deployment
 

@@ -22,11 +22,6 @@ The Redmond Fire & Rescue (RFR) cookbook is a mobile app that lists and displays
     flutter pub get
     ```
 
-## Client
-
-Dusty Miller - Dustin.Miller@redmondfireandrescue.org
-
-
 ## Deployment
 
 When you are ready to distribute a new version of the application, your first step

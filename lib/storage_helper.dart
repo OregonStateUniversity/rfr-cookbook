@@ -18,6 +18,8 @@ class StorageHelper {
 
   get localStorageMap => _localStorageMap;
 
+  // refreshFileState is used to synchonize the local cache with
+  // files as they currently exist on Firebase Storage.
   Future<void> refreshFileState() async {
     await _verifyRootExists();
 
@@ -32,8 +34,7 @@ class StorageHelper {
                 (element) => element.path.split('/').last == file.name);
 
             final localLastModified = await localFile.lastModified();
-            final remoteTimeCreated =
-                await file.getMetadata().then((value) => value.timeCreated);
+            final remoteTimeCreated = await file.getMetadata().then((value) => value.timeCreated);
 
             // check if remote file has been updated; if so, delete (outdated)
             // local file and download new remote file
@@ -60,8 +61,7 @@ class StorageHelper {
     for (final directory in localStorage.keys) {
       if (!remoteStorage.keys.contains(directory)) {
         try {
-          await Directory('${appDocDir.path}/$_rootDir/$directory')
-              .delete(recursive: true);
+          await Directory('${appDocDir.path}/$_rootDir/$directory').delete(recursive: true);
         } on FileSystemException {
           continue;
         }
@@ -80,14 +80,15 @@ class StorageHelper {
     }
   }
 
+  // updateLocalStorageMap populates _localStorageMap with StoredItem
+  // objects which point to files in the cache.
   Future<void> updateLocalStorageMap() async {
     await _verifyRootExists();
     
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     _localStorageMap = {};
 
-    await for (final directory
-        in Directory('${appDocDir.path}/$_rootDir').list()) {
+    await for (final directory in Directory('${appDocDir.path}/$_rootDir').list()) {
       directory as Directory;
 
       _localStorageMap[directory.path] = [];
@@ -96,8 +97,7 @@ class StorageHelper {
         final fileName = file.path.split('/').last;
 
         if (fileName != '.keep') {
-          final parentDirectory =
-              file.parent.toString().split('/').last.replaceAll('\'', '');
+          final parentDirectory = file.parent.toString().split('/').last.replaceAll('\'', '');
 
           _localStorageMap[directory.path]!.add(StoredItem(
               name: fileName.split('.').first,
@@ -156,8 +156,7 @@ class StorageHelper {
     final appDocDir = await getApplicationDocumentsDirectory();
     final localMap = <String, List<File>>{};
 
-    await for (final directory
-        in Directory('${appDocDir.path}/$_rootDir').list()) {
+    await for (final directory in Directory('${appDocDir.path}/$_rootDir').list()) {
       directory as Directory;
       final directoryName = directory.path.split('/').last;
 
@@ -173,12 +172,10 @@ class StorageHelper {
 
   Future<Map<String, List<Reference>>> _mapRemoteStorage() async {
     final remoteMap = <String, List<Reference>>{};
-    final remoteParentDirectories =
-        await _storageInstance.ref('$_rootDir/').listAll();
+    final remoteParentDirectories = await _storageInstance.ref('$_rootDir/').listAll();
 
     for (final parentDirectory in remoteParentDirectories.prefixes) {
-      final ListResult directoryListing =
-          await _storageInstance.ref(parentDirectory.fullPath).listAll();
+      final directoryListing = await _storageInstance.ref(parentDirectory.fullPath).listAll();
 
       remoteMap[parentDirectory.name] = [];
 

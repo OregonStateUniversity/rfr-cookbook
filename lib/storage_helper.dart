@@ -20,6 +20,8 @@ class StorageHelper {
 
   // refreshFileState is used to synchonize the local cache with
   // files as they currently exist on Firebase Storage.
+  //
+  // within the screen files, it is typically run before updateLocalStorageMap
   Future<void> refreshFileState() async {
     await _verifyRootExists();
 
@@ -30,8 +32,8 @@ class StorageHelper {
       if (localStorage.containsKey(entry.key)) {
         for (final file in entry.value) {
           try {
-            final localFile = localStorage[entry.key]!.firstWhere(
-                (element) => element.path.split('/').last == file.name);
+            final localFile = localStorage[entry.key]!.firstWhere((element) => 
+              element.path.split('/').last == file.name);
 
             final localLastModified = await localFile.lastModified();
             final remoteTimeCreated = await file.getMetadata().then((value) => value.timeCreated);

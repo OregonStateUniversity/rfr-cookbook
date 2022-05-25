@@ -50,8 +50,7 @@ class FileList extends StatelessWidget {
   }
 
   void _navigationToDetail(BuildContext context, StoredItem file) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => FileDetail(file)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => FileDetail(file)));
   }
 
   List<String> _searchList() {

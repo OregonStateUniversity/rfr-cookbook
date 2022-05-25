@@ -74,12 +74,10 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _navigationToPdfList(
-      BuildContext context, String sectionTitle, List<StoredItem> fileList) {
+  void _navigationToPdfList(BuildContext context, String sectionTitle, List<StoredItem> fileList) {
     Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (context) => FileList(fileList, sectionTitle)));
+        MaterialPageRoute(builder: (context) => FileList(fileList, sectionTitle)));
   }
 
   void _navigationToAdminPanel(BuildContext context) {

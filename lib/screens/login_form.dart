@@ -57,8 +57,7 @@ class _LoginFormState extends State<LoginForm> {
             onSaved: (value) => setState(() => _password = value!),
           ),
           Container(
-            padding:
-                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: ElevatedButton(
               style: Styles.buttonStyle,
               child: Text('Login', style: Styles.buttonText),
@@ -90,8 +89,7 @@ class _LoginFormState extends State<LoginForm> {
 
   void _successfulSignIn(BuildContext context) {
     Navigator.of(context).pop();
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const AdminPanel()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminPanel()));
 
     displaySnackbar(context, 'Logged in as administrator.');
   }
